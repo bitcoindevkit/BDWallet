@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">btcdk-example-app</string>
+    <string name="title_balance">Balance</string>
+    <string name="title_deposit">Deposit</string>
+    <string name="title_withdraw">Withdraw</string>
+    <string name="title_init">Init</string>
+    <string name="init_inst">Write down your wallet seed words, below, and then click OK.</string>
+    <string name="init_ok">OK</string>
+</resources>

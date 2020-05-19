@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_balance">
+
+    <fragment
+        android:id="@+id/navigation_balance"
+        android:name="org.btcdk.app.ui.balance.BalanceFragment"
+        android:label="@string/title_balance"
+        tools:layout="@layout/fragment_balance" />
+
+    <fragment
+        android:id="@+id/navigation_deposit"
+        android:name="org.btcdk.app.ui.deposit.DepositFragment"
+        android:label="@string/title_deposit"
+        tools:layout="@layout/fragment_deposit" />
+
+    <fragment
+        android:id="@+id/navigation_withdraw"
+        android:name="org.btcdk.app.ui.withdraw.WithdrawFragment"
+        android:label="@string/title_withdraw"
+        tools:layout="@layout/fragment_withdraw" />
+
+    <fragment
+        android:id="@+id/navigation_init"
+        android:name="org.btcdk.app.ui.init.InitFragment"
+        android:label="@string/title_init"
+        tools:layout="@layout/fragment_init" />
+
+</navigation>
