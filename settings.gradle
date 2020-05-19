@@ -1,0 +1,2 @@
+rootProject.name='btcdk-example-app'
+include ':app'
