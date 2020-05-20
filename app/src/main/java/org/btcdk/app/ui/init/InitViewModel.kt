@@ -12,15 +12,14 @@ private const val TAG = "INIT_MODEL"
 
 class InitViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val workDir: Path = application.filesDir.toPath()
-
-    private val _words = MutableLiveData<String>().apply {
+    private val _words = MutableLiveData<List<String>>().apply {
         val app = application as ExampleApp
+        val workDir: Path = app.filesDir.toPath()
         val btcDkApi = app.btcDkApi
         val network = app.network
         val config = btcDkApi.loadConfig(workDir, network)
         if (config.isPresent) {
-            value = "ERROR: Wallet already initialized."
+            value = listOf("ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR", "ERROR", "ERROR")
         } else {
             val initResult = btcDkApi.initConfig(
                 workDir, network,
@@ -31,9 +30,9 @@ class InitViewModel(application: Application) : AndroidViewModel(application) {
 
             Log.d(TAG, "initResult.depositAddress: ${initResult.depositAddress}")
             Log.d(TAG, "initResult.mnemonicWords: $words")
-            value = words
+            value = initResult.mnemonicWords.toList()
         }
     }
 
-    val words: LiveData<String> = _words
+    val words: LiveData<List<String>> = _words
 }
