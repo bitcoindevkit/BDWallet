@@ -37,6 +37,5 @@ class BalanceFragment : Fragment() {
 
         val mainActivity: MainActivity = activity as MainActivity
         mainActivity.showNav()
-        mainActivity.showActionBar()
     }
 }

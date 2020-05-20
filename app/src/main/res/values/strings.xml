@@ -4,6 +4,18 @@
     <string name="title_deposit">Deposit</string>
     <string name="title_withdraw">Withdraw</string>
     <string name="title_init">Init</string>
-    <string name="init_inst">Write down your wallet seed words, below, and then click OK.</string>
+    <string name="init_inst">Write down your twelve wallet seed words and click OK when done. This is the only time you will be shown these words.</string>
     <string name="init_ok">OK</string>
+    <string name="seed_index_1">1.</string>
+    <string name="seed_index_2">2.</string>
+    <string name="seed_index_3">3.</string>
+    <string name="seed_index_4">4.</string>
+    <string name="seed_index_5">5.</string>
+    <string name="seed_index_6">6.</string>
+    <string name="seed_index_7">7.</string>
+    <string name="seed_index_8">8.</string>
+    <string name="seed_index_9">9.</string>
+    <string name="seed_index_10">10.</string>
+    <string name="seed_index_11">11.</string>
+    <string name="seed_index_12">12.</string>
 </resources>
