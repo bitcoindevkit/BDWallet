@@ -44,6 +44,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+
+        val app = application as ExampleApp
+        val workDir = filesDir.toPath()
+        app.btcDkApi.start(workDir, app.network, false)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+
+        val app = application as ExampleApp
+        app.btcDkApi.stop()
+    }
+
     fun hideNav() {
         nav_view.visibility = View.GONE
     }

@@ -18,4 +18,6 @@
     <string name="seed_index_10">10.</string>
     <string name="seed_index_11">11.</string>
     <string name="seed_index_12">12.</string>
+    <string name="btc_units">BTC</string>
+    <string name="sat_units">SAT</string>
 </resources>
