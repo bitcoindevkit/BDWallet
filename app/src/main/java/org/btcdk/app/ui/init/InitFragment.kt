@@ -37,6 +37,7 @@ class InitFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         initViewModel = ViewModelProvider(this).get(InitViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_init, container, false)
         val seedWord1: TextView = root.findViewById(R.id.text_seed_word1)

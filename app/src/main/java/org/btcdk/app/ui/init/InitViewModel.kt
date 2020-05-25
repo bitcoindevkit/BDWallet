@@ -18,8 +18,8 @@ class InitViewModel(application: Application) : AndroidViewModel(application) {
         val btcDkApi = app.btcDkApi
         val network = app.network
         val config = btcDkApi.loadConfig(workDir, network)
-        if (config.isPresent) {
-            value = listOf("ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR", "ERROR", "ERROR")
+        value = if (config.isPresent) {
+            listOf("ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR", "ERROR", "ERROR")
         } else {
             val initResult = btcDkApi.initConfig(
                 workDir, network,
@@ -30,7 +30,7 @@ class InitViewModel(application: Application) : AndroidViewModel(application) {
 
             Log.d(TAG, "initResult.depositAddress: ${initResult.depositAddress}")
             Log.d(TAG, "initResult.mnemonicWords: $words")
-            value = initResult.mnemonicWords.toList()
+            initResult.mnemonicWords.toList()
         }
     }
 
