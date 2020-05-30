@@ -1,4 +1,20 @@
-package org.btcdk.app.ui.init
+/*
+ * Copyright 2020 BDK Team
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.bdk.app.ui.init
 
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +28,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import org.btcdk.app.MainActivity
-import org.btcdk.app.R
+import org.bdk.app.ExampleApp
+import org.bdk.app.MainActivity
+import org.bdk.app.R
+import kotlin.concurrent.thread
+
+private const val TAG = "InitFragment"
 
 class InitFragment : Fragment() {
 
@@ -21,6 +41,19 @@ class InitFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val app = activity?.application as ExampleApp
+        val workDir = activity?.filesDir?.toPath()
+        val config = app.bdkApi.loadConfig(workDir, app.network)
+        if (config.isPresent) {
+            Log.d(TAG, "Starting bdk.")
+            thread {
+                app.bdkApi.start(workDir, app.network, false)
+                Log.d(TAG, "Stopped bdk.")
+            }
+            // show balance fragment
+            findNavController().navigate(R.id.navigation_balance)
+        }
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -83,6 +116,15 @@ class InitFragment : Fragment() {
             seedWord10.text = ""
             seedWord11.text = ""
             seedWord12.text = ""
+
+            val app = activity?.application as ExampleApp
+            val workDir = activity?.filesDir?.toPath()
+            val config = app.bdkApi.loadConfig(workDir, app.network)
+            Log.d(TAG, "Starting bdk.")
+            thread {
+                app.bdkApi.start(workDir, app.network, false)
+                Log.d(TAG, "Stopped bdk.")
+            }
 
             // show balance fragment
             findNavController().navigate(R.id.navigation_balance)
