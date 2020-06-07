@@ -31,12 +31,12 @@ class DepositFragment : Fragment() {
     private lateinit var depositViewModel: DepositViewModel
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         depositViewModel =
-                ViewModelProviders.of(this).get(DepositViewModel::class.java)
+            ViewModelProviders.of(this).get(DepositViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_deposit, container, false)
         val textView: TextView = root.findViewById(R.id.text_deposit)
         depositViewModel.text.observe(viewLifecycleOwner, Observer {

@@ -17,31 +17,21 @@
 package org.bdk.app.ui.init
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import org.bdk.app.ExampleApp
-import java.nio.file.Path
 
 private const val TAG = "INIT_MODEL"
 
 class InitViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _words = MutableLiveData<List<String>>().apply {
-        val app = application as ExampleApp
-        val config = app.getConfig()
-        value = if (config.isPresent) {
-            listOf("ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR", "ERROR", "ERROR")
-        } else {
-            val initResult = app.initConfig().get()
-            val words = initResult.mnemonicWords.joinToString()
-
-            Log.d(TAG, "initResult.depositAddress: ${initResult.depositAddress}")
-            Log.d(TAG, "initResult.mnemonicWords: $words")
-            initResult.mnemonicWords.toList()
-        }
+        value = listOf("", "", "", "", "", "", "", "", "", "", "", "")
     }
 
     val words: LiveData<List<String>> = _words
+
+    fun setWords(words: List<String>) {
+        _words.value = words
+    }
 }

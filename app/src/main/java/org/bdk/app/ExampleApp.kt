@@ -30,7 +30,7 @@ class ExampleApp : Application() {
     private val bdkApi = BdkApi()
     private val network = Network.Testnet
 
-    private lateinit var bdkThread: Thread;
+    private var bdkThread: Thread? = null;
 
     init {
         bdkApi.initLogger()
@@ -45,7 +45,7 @@ class ExampleApp : Application() {
     }
 
     fun startBdk() {
-        if (getConfig().isPresent) {
+        if (getConfig().isPresent && bdkThread?.isAlive != true) {
             Log.d(TAG, "starting bdk thread")
             val workDir = filesDir.toPath()
             bdkThread = thread {
@@ -62,15 +62,13 @@ class ExampleApp : Application() {
 
     fun initConfig(): Optional<InitResult> {
         return bdkApi.initConfig(
-            getWorkDir(), network,
-            "test passphrase",
-            ""
+            getWorkDir(), network, "test passphrase", ""
         )
     }
 
     fun getBalance(): String {
         return if (getConfig().isPresent) {
-            if (bdkThread.isAlive) {
+            if (bdkThread?.isAlive == true) {
                 val balance = bdkApi.balance().map(BalanceAmt::getBalance);
                 if (balance.isPresent) {
                     balance.get().toString()
