@@ -30,18 +30,11 @@ class InitViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _words = MutableLiveData<List<String>>().apply {
         val app = application as ExampleApp
-        val workDir: Path = app.filesDir.toPath()
-        val bdkApi = app.bdkApi
-        val network = app.network
-        val config = bdkApi.loadConfig(workDir, network)
+        val config = app.getConfig()
         value = if (config.isPresent) {
             listOf("ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR","ERROR", "ERROR", "ERROR")
         } else {
-            val initResult = bdkApi.initConfig(
-                workDir, network,
-                "test passphrase",
-                ""
-            ).get()
+            val initResult = app.initConfig().get()
             val words = initResult.mnemonicWords.joinToString()
 
             Log.d(TAG, "initResult.depositAddress: ${initResult.depositAddress}")

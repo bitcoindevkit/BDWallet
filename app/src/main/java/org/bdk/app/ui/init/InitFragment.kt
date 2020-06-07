@@ -43,14 +43,8 @@ class InitFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         val app = activity?.application as ExampleApp
-        val workDir = activity?.filesDir?.toPath()
-        val config = app.bdkApi.loadConfig(workDir, app.network)
-        if (config.isPresent) {
-            Log.d(TAG, "Starting bdk.")
-            thread {
-                app.bdkApi.start(workDir, app.network, false)
-                Log.d(TAG, "Stopped bdk.")
-            }
+        if (app.getConfig().isPresent) {
+            app.startBdk()
             // show balance fragment
             findNavController().navigate(R.id.navigation_balance)
         }
@@ -118,14 +112,7 @@ class InitFragment : Fragment() {
             seedWord12.text = ""
 
             val app = activity?.application as ExampleApp
-            val workDir = activity?.filesDir?.toPath()
-            val config = app.bdkApi.loadConfig(workDir, app.network)
-            Log.d(TAG, "Starting bdk.")
-            thread {
-                app.bdkApi.start(workDir, app.network, false)
-                Log.d(TAG, "Stopped bdk.")
-            }
-
+            app.startBdk()
             // show balance fragment
             findNavController().navigate(R.id.navigation_balance)
         }

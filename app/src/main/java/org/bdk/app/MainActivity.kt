@@ -21,12 +21,14 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.bdk.app.R
+import kotlin.concurrent.thread
 
 private const val TAG = "MainActivity"
 
@@ -54,18 +56,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        Log.d(TAG, "onStart")
         val app = application as ExampleApp
-        val workDir = filesDir.toPath()
-        val config = app.bdkApi.loadConfig(workDir, app.network)
+        app.startBdk()
     }
 
     override fun onStop() {
         super.onStop()
         Log.d(TAG, "onStop")
-
         val app = application as ExampleApp
-        Log.d(TAG, "Stopping bdk.")
-        app.bdkApi.stop()
+        app.stopBdk()
     }
 
     fun hideNav() {
