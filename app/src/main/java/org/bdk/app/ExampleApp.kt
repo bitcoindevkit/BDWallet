@@ -17,11 +17,71 @@
 package org.bdk.app
 
 import android.app.Application
-import org.bdk.jni.BdkApi
-import org.bdk.jni.Network
+import android.util.Log
+import org.bdk.jni.*
+import java.nio.file.Path
+import java.util.*
+import kotlin.concurrent.thread
+
+private const val TAG = "ExampleApp"
 
 class ExampleApp : Application() {
 
-    val bdkApi = BdkApi()
-    val network = Network.Testnet
+    private val bdkApi = BdkApi()
+    private val network = Network.Testnet
+
+    private lateinit var bdkThread: Thread;
+
+    init {
+        bdkApi.initLogger()
+    }
+
+    private fun getWorkDir(): Path {
+        return filesDir.toPath()
+    }
+
+    fun getConfig(): Optional<Config> {
+        return bdkApi.loadConfig(getWorkDir(), network)
+    }
+
+    fun startBdk() {
+        if (getConfig().isPresent) {
+            Log.d(TAG, "starting bdk thread")
+            val workDir = filesDir.toPath()
+            bdkThread = thread {
+                bdkApi.start(workDir, network, false)
+                Log.d(TAG, "bdk thread stopped")
+            }
+        }
+    }
+
+    fun stopBdk() {
+        Log.d(TAG, "stopping bdk thread")
+        bdkApi.stop()
+    }
+
+    fun initConfig(): Optional<InitResult> {
+        return bdkApi.initConfig(
+            getWorkDir(), network,
+            "test passphrase",
+            ""
+        )
+    }
+
+    fun getBalance(): String {
+        return if (getConfig().isPresent) {
+            if (bdkThread.isAlive) {
+                val balance = bdkApi.balance().map(BalanceAmt::getBalance);
+                if (balance.isPresent) {
+                    balance.get().toString()
+                } else {
+                    "NO VALUE"
+                }
+            } else {
+                "DEAD THREAD"
+            }
+        } else {
+            "NO CONFIG"
+        }
+    }
 }

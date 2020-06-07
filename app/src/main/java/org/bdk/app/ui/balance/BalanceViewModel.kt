@@ -21,21 +21,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.bdk.app.ExampleApp
+import org.bdk.jni.BalanceAmt
 import java.nio.file.Path
 
 class BalanceViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _balance = MutableLiveData<String>().apply {
         val app = application as ExampleApp
-        val workDir: Path = app.filesDir.toPath()
-        val bdkApi = app.bdkApi
-        val network = app.network
-        val config = bdkApi.loadConfig(workDir, network)
-        value = if (config.isPresent) {
-            bdkApi.balance().balance.toString()
-        } else {
-            "UNKNOWN"
-        }
+        value = app.getBalance()
     }
     val balance: LiveData<String> = _balance
 }
