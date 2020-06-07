@@ -31,7 +31,6 @@ import androidx.navigation.fragment.findNavController
 import org.bdk.app.ExampleApp
 import org.bdk.app.MainActivity
 import org.bdk.app.R
-import kotlin.concurrent.thread
 
 private const val TAG = "InitFragment"
 
@@ -41,13 +40,7 @@ class InitFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val app = activity?.application as ExampleApp
-        if (app.getConfig().isPresent) {
-            app.startBdk()
-            // show balance fragment
-            findNavController().navigate(R.id.navigation_balance)
-        }
+        initViewModel = ViewModelProvider(this).get(InitViewModel::class.java)
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -65,7 +58,7 @@ class InitFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        initViewModel = ViewModelProvider(this).get(InitViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_init, container, false)
         val seedWord1: TextView = root.findViewById(R.id.text_seed_word1)
         val seedWord2: TextView = root.findViewById(R.id.text_seed_word2)
@@ -125,6 +118,20 @@ class InitFragment : Fragment() {
 
         val mainActivity: MainActivity = activity as MainActivity
         mainActivity.hideNav()
+
+        val app = activity?.application as ExampleApp
+        if (app.getConfig().isPresent) {
+            app.startBdk()
+            // show balance fragment
+            findNavController().navigate(R.id.navigation_balance)
+        } else {
+            val initResult = app.initConfig().get()
+            val words = initResult.mnemonicWords
+            initViewModel.setWords(words.toList())
+
+            Log.d(TAG, "initResult.depositAddress: ${initResult.depositAddress}")
+            //Log.d(TAG, "initResult.mnemonicWords: $words")
+        }
     }
 }
 
