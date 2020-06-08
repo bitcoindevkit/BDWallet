@@ -29,6 +29,7 @@ class ExampleApp : Application() {
 
     private val bdkApi = BdkApi()
     private val network = Network.Testnet
+    //private val network = Network.Regtest
 
     private var bdkThread: Thread? = null;
 
@@ -61,9 +62,11 @@ class ExampleApp : Application() {
     }
 
     fun initConfig(): Optional<InitResult> {
-        return bdkApi.initConfig(
-            getWorkDir(), network, "test passphrase", ""
-        )
+        val initResult = bdkApi.initConfig(getWorkDir(), network, "test passphrase", "")
+        //val bitcoinPeers = arrayOf("127.0.0.1:9333", "127.0.0.1:19333")
+        //bdkApi.updateConfig(getWorkDir(), network, bitcoinPeers, bitcoinPeers.size, false)
+
+        return initResult
     }
 
     fun getBalance(): String {
