@@ -16,14 +16,21 @@
 
 package org.bdk.app.ui.deposit
 
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import org.bdk.app.ExampleApp
 
-class DepositViewModel : ViewModel() {
+private const val TAG = "DepositViewModel"
+
+class DepositViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is deposit Fragment"
+        val app = application as ExampleApp
+        value = app.getDepositAddress()
+        Log.d(TAG, "deposit address: $value")
     }
     val text: LiveData<String> = _text
 }
