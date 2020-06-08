@@ -69,12 +69,42 @@ class ExampleApp : Application() {
     fun getBalance(): String {
         return if (getConfig().isPresent) {
             if (bdkThread?.isAlive == true) {
-                val balance = bdkApi.balance().map(BalanceAmt::getBalance);
+                val balance = bdkApi.balance().map(BalanceAmt::getBalance)
                 if (balance.isPresent) {
                     balance.get().toString()
                 } else {
                     "NO VALUE"
                 }
+            } else {
+                "DEAD THREAD"
+            }
+        } else {
+            "NO CONFIG"
+        }
+    }
+
+    fun getDepositAddress(): String {
+        return if (getConfig().isPresent) {
+            if (bdkThread?.isAlive == true) {
+                bdkApi.depositAddress().address
+            } else {
+                "DEAD THREAD"
+            }
+        } else {
+            "NO CONFIG"
+        }
+    }
+
+    fun withdrawToAddress(
+        passphrase: String,
+        address: String,
+        feePerVByte: Long,
+        amount: Long
+    ): String {
+        return if (getConfig().isPresent) {
+            if (bdkThread?.isAlive == true) {
+                val withdrawTx = bdkApi.withdraw(passphrase, address, feePerVByte, amount)
+                "DONE"
             } else {
                 "DEAD THREAD"
             }
