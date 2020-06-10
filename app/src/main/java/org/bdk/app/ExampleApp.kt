@@ -63,8 +63,8 @@ class ExampleApp : Application() {
 
     fun initConfig(): Optional<InitResult> {
         val initResult = bdkApi.initConfig(getWorkDir(), network, "test passphrase", "")
-        //val bitcoinPeers = arrayOf("127.0.0.1:9333", "127.0.0.1:19333")
-        //bdkApi.updateConfig(getWorkDir(), network, bitcoinPeers, bitcoinPeers.size, false)
+        val bitcoinPeers = emptyArray<String>() //arrayOf("127.0.0.1:9333", "127.0.0.1:19333")
+        bdkApi.updateConfig(getWorkDir(), network, bitcoinPeers, 10, true)
 
         return initResult
     }
