@@ -26,9 +26,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import org.bdwallet.app.R
 
-class WithdrawFragment : Fragment() {
+class WithdrawFragmentOld : Fragment() {
 
-    private lateinit var withdrawViewModel: WithdrawViewModel
+    private lateinit var withdrawViewModel: WithdrawViewModelOld
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +36,7 @@ class WithdrawFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         withdrawViewModel =
-            ViewModelProviders.of(this).get(WithdrawViewModel::class.java)
+            ViewModelProviders.of(this).get(WithdrawViewModelOld::class.java)
         val root = inflater.inflate(R.layout.fragment_withdraw, container, false)
         val textView: TextView = root.findViewById(R.id.text_withdraw)
         withdrawViewModel.text.observe(viewLifecycleOwner, Observer {

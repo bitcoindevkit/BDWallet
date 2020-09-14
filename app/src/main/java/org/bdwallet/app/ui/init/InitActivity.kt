@@ -1,7 +1,8 @@
-package org.bdwallet.app
+package org.bdwallet.app.ui.init
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import org.bdwallet.app.R
 
 class InitActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -20,9 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"
+        <activity android:name=".ui.login.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
-        <activity android:name=".InitActivity"
+        <activity android:name=".ui.init.InitActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
     </application>
 

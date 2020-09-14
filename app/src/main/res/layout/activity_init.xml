@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mountain_background"
-    tools:context=".InitActivity">
+    tools:context=".ui.init.InitActivity">
 
     <ImageView
         android:id="@+id/top-rectangle"
