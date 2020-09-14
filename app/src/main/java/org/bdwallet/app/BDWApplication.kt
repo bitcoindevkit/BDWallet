@@ -17,23 +17,8 @@
 package org.bdwallet.app
 
 import android.app.Application
-import android.util.Config
-import android.util.Log
-import java.nio.file.Path
-import java.util.*
-import kotlin.concurrent.thread
 
-private const val TAG = "ExampleApp"
 
 class BDWApplication : Application() {
 
-    //private val bdkApi = BdkApi()
-    //private val network = Network.Testnet
-    //private val network = Network.Regtest
-
-    private var bdkThread: Thread? = null;
-
-    init {
-        //bdkApi.initLogger()
-    }
 }

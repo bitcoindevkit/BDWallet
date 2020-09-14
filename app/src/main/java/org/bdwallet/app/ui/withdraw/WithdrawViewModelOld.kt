@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package org.bdwallet.app.ui.balance
+package org.bdwallet.app.ui.withdraw
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import org.bdwallet.app.*
+import androidx.lifecycle.ViewModel
 
-class BalanceViewModel(application: Application) : AndroidViewModel(application) {
+class WithdrawViewModelOld : ViewModel() {
 
-    private val _balance = MutableLiveData<String>().apply {
-        //val app = application as ExampleApp
-        //value = app.getBalance()
+    private val _text = MutableLiveData<String>().apply {
+        value = "This is withdraw Fragment"
     }
-    val balance: LiveData<String> = _balance
+    val text: LiveData<String> = _text
 }

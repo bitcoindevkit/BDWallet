@@ -26,9 +26,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import org.bdwallet.app.R
 
-class BalanceFragment : Fragment() {
+class BalanceFragmentOld : Fragment() {
 
-    private lateinit var balanceViewModel: BalanceViewModel
+    private lateinit var balanceViewModel: BalanceViewModelOld
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +36,7 @@ class BalanceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
+        balanceViewModel = ViewModelProvider(this).get(BalanceViewModelOld::class.java)
         val root = inflater.inflate(R.layout.fragment_balance, container, false)
         val textView: TextView = root.findViewById(R.id.text_balance)
         balanceViewModel.balance.observe(viewLifecycleOwner, Observer {
