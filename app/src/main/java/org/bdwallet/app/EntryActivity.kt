@@ -20,9 +20,6 @@ class EntryActivity : AppCompatActivity() {
     }
 
     private fun getNextActivityName(walletInitialized: Boolean): String {
-        if (walletInitialized) {
-            return LoginActivity::class.qualifiedName!!
-        }
-        return InitActivity::class.qualifiedName!!
+        return if (walletInitialized) LoginActivity::class.qualifiedName!! else InitActivity::class.qualifiedName!!
     }
 }

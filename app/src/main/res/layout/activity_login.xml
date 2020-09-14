@@ -7,35 +7,38 @@
     android:background="@drawable/mountain_background"
     tools:context=".LoginActivity">
 
-    <View
+    <ImageView
         android:id="@+id/top-rectangle"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
-        android:background="#ffffff"
+        android:contentDescription="@string/logo_desc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/bottom-rectangle"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="355dp"
-        android:background="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/white_rectangle" />
 
     <ImageView
-        android:id="@+id/logo-background"
+        android:id="@+id/bottom-rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="355dp"
+        android:contentDescription="@string/logo_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/white_rectangle" />
+
+    <ImageView
+        android:id="@+id/logo-background-circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="265dp"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="252dp"
         android:contentDescription="@string/logo_desc"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/white_circle" />
@@ -44,24 +47,35 @@
         android:id="@+id/logo"
         android:layout_width="133dp"
         android:layout_height="133dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="264dp"
         android:contentDescription="@string/logo_desc"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
-    <TextView
-        android:id="@+id/textView"
+    <ImageView
+        android:id="@+id/password-background-rectangle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="130dp"
-        android:layout_marginBottom="185dp"
-        android:text="Login Activity"
-        android:textColor="#fff"
-        android:textSize="30sp"
+        android:layout_marginStart="68dp"
+        android:layout_marginBottom="108dp"
+        android:contentDescription="@string/password"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/white_rounded_rectangle" />
+
+    <EditText
+        android:id="@+id/password-text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="false"
+        android:ems="10"
+        android:hint="@string/prompt_password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/password-background-rectangle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
