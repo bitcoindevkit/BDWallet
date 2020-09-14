@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package org.bdk.app.ui.balance
+package org.bdwallet.app.ui.deposit
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import org.bdk.app.ExampleApp
+import org.bdwallet.app.*
 
-class BalanceViewModel(application: Application) : AndroidViewModel(application) {
+private const val TAG = "DepositViewModel"
 
-    private val _balance = MutableLiveData<String>().apply {
-        val app = application as ExampleApp
-        value = app.getBalance()
+class DepositViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val _text = MutableLiveData<String>().apply {
+        //val app = application as ExampleApp
+        //value = app.getDepositAddress()
+        //Log.d(TAG, "deposit address: $value")
     }
-    val balance: LiveData<String> = _balance
+    val text: LiveData<String> = _text
 }

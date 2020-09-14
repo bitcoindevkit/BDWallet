@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.bdk.app
+package org.bdwallet.app
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -31,8 +31,8 @@ import org.junit.runner.RunWith
 class ExampleInstrumentedTest {
     @Test
     fun useAppContext() {
-        // Context of the app under test.
+        // Context of the org.bdwallet.app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("org.bdk.app", appContext.packageName)
+        assertEquals("org.bdk.org.bdwallet.app", appContext.packageName)
     }
 }

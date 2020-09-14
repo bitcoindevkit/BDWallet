@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.bdk.app.ui.deposit
+package org.bdwallet.app.ui.deposit
 
 import android.content.Intent
 import android.os.Bundle
@@ -26,7 +26,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import org.bdk.app.R
+import org.bdwallet.app.R
 
 class DepositFragment : Fragment() {
 

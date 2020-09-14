@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-package org.bdk.app.ui.deposit
+package org.bdwallet.app.ui.withdraw
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import org.bdk.app.ExampleApp
+import androidx.lifecycle.ViewModel
 
-private const val TAG = "DepositViewModel"
-
-class DepositViewModel(application: Application) : AndroidViewModel(application) {
+class WithdrawViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        val app = application as ExampleApp
-        value = app.getDepositAddress()
-        Log.d(TAG, "deposit address: $value")
+        value = "This is withdraw Fragment"
     }
     val text: LiveData<String> = _text
 }

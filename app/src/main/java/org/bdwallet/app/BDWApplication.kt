@@ -14,16 +14,26 @@
  * limitations under the License.
  */
 
-package org.bdk.app.ui.withdraw
+package org.bdwallet.app
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.util.Config
+import android.util.Log
+import java.nio.file.Path
+import java.util.*
+import kotlin.concurrent.thread
 
-class WithdrawViewModel : ViewModel() {
+private const val TAG = "ExampleApp"
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is withdraw Fragment"
+class BDWApplication : Application() {
+
+    //private val bdkApi = BdkApi()
+    //private val network = Network.Testnet
+    //private val network = Network.Regtest
+
+    private var bdkThread: Thread? = null;
+
+    init {
+        //bdkApi.initLogger()
     }
-    val text: LiveData<String> = _text
 }

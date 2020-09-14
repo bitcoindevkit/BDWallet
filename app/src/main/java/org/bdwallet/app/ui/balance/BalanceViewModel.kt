@@ -14,24 +14,19 @@
  * limitations under the License.
  */
 
-package org.bdk.app.ui.init
+package org.bdwallet.app.ui.balance
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import org.bdwallet.app.*
 
-private const val TAG = "INIT_MODEL"
+class BalanceViewModel(application: Application) : AndroidViewModel(application) {
 
-class InitViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val _words = MutableLiveData<List<String>>().apply {
-        value = listOf("", "", "", "", "", "", "", "", "", "", "", "")
+    private val _balance = MutableLiveData<String>().apply {
+        //val app = application as ExampleApp
+        //value = app.getBalance()
     }
-
-    val words: LiveData<List<String>> = _words
-
-    fun setWords(words: List<String>) {
-        _words.value = words
-    }
+    val balance: LiveData<String> = _balance
 }

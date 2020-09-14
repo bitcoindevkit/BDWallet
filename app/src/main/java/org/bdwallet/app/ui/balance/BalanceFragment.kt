@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.bdk.app.ui.balance
+package org.bdwallet.app.ui.balance
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,8 +24,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import org.bdk.app.MainActivity
-import org.bdk.app.R
+import org.bdwallet.app.R
 
 class BalanceFragment : Fragment() {
 
@@ -49,8 +48,5 @@ class BalanceFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        val mainActivity: MainActivity = activity as MainActivity
-        mainActivity.showNav()
     }
 }

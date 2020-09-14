@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.bdk.app.ui.withdraw
+package org.bdwallet.app.ui.withdraw
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,7 +24,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import org.bdk.app.R
+import org.bdwallet.app.R
 
 class WithdrawFragment : Fragment() {
 

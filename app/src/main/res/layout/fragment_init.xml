@@ -19,7 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.bdk.app.ui.init.InitFragment">
+    tools:context="org.bdwallet.app.ui.init.InitFragment">
 
     <TextView
         android:id="@+id/text_init_inst"

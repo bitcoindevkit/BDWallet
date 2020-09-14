@@ -19,7 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.bdk.app.ui.deposit.DepositFragment">
+    tools:context="org.bdwallet.app.ui.deposit.DepositFragment">
 
     <TextView
         android:id="@+id/text_deposit"

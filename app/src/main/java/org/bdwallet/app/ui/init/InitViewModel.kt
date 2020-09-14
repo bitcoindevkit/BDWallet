@@ -14,19 +14,24 @@
  * limitations under the License.
  */
 
-package org.bdk.app
+package org.bdwallet.app.ui.init
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+private const val TAG = "INIT_MODEL"
+
+class InitViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val _words = MutableLiveData<List<String>>().apply {
+        value = listOf("", "", "", "", "", "", "", "", "", "", "", "")
+    }
+
+    val words: LiveData<List<String>> = _words
+
+    fun setWords(words: List<String>) {
+        _words.value = words
     }
 }

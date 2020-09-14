@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.bdk.app.ui.init
+package org.bdwallet.app.ui.init
 
 import android.os.Bundle
 import android.util.Log
@@ -28,9 +28,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import org.bdk.app.ExampleApp
-import org.bdk.app.MainActivity
-import org.bdk.app.R
+import org.bdwallet.app.*
 
 private const val TAG = "InitFragment"
 
@@ -104,8 +102,8 @@ class InitFragment : Fragment() {
             seedWord11.text = ""
             seedWord12.text = ""
 
-            val app = activity?.application as ExampleApp
-            app.startBdk()
+            //val app = activity?.application as ExampleApp
+            //app.startBdk()
             // show balance fragment
             findNavController().navigate(R.id.navigation_balance)
         }
@@ -116,22 +114,7 @@ class InitFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        val mainActivity: MainActivity = activity as MainActivity
-        mainActivity.hideNav()
-
-        val app = activity?.application as ExampleApp
-        if (app.getConfig().isPresent) {
-            app.startBdk()
-            // show balance fragment
-            findNavController().navigate(R.id.navigation_balance)
-        } else {
-            val initResult = app.initConfig().get()
-            val words = initResult.mnemonicWords
-            initViewModel.setWords(words.toList())
-
-            Log.d(TAG, "initResult.depositAddress: ${initResult.depositAddress}")
-            //Log.d(TAG, "initResult.mnemonicWords: $words")
-        }
+        //val app = activity?.application as ExampleApp
     }
 }
 
