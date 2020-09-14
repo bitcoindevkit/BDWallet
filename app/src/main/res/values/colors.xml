@@ -15,7 +15,11 @@
   -->
 
 <resources>
-    <color name="colorPrimary">#FF9800</color>
-    <color name="colorPrimaryDark">#ff5900</color>
-    <color name="colorAccent">#8BC34A</color>
+    <color name="darkBlue">#0A2463</color>
+    <color name="mediumBlue">#247BA0</color>
+    <color name="lightBlue">#90E0EF</color>
+    <color name="lightGray">#E2E2E2</color>
+    <color name="white">#FFFFFF</color>
+    <color name="darkGray">#605F5E</color>
+    <color name ="black">#000000</color>
 </resources>
