@@ -15,7 +15,7 @@
   -->
 
 <resources>
-    <string name="app_name">bdk-android-app</string>
+    <string name="app_name">BDWallet</string>
     <string name="logo_desc">logo</string>
     <string name="title_balance">Balance</string>
     <string name="title_deposit">Deposit</string>
@@ -39,7 +39,8 @@
     <string name="sat_units">SAT</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
+    <string name="prompt_password">Enter Wallet password</string>
+    <string name="password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
