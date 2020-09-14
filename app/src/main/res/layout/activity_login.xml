@@ -52,7 +52,7 @@
         android:contentDescription="@string/logo_desc"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/bdwallet_logo" />
 
     <ImageView
         android:id="@+id/password-background-rectangle"
