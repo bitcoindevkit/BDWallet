@@ -2,40 +2,44 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/init-layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/mountain_background"
-    tools:context=".LoginActivity">
-
-    <View
-        android:id="@+id/top-rectangle"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="300dp"
-        android:background="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/bottom-rectangle"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="355dp"
-        android:background="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".InitActivity">
 
     <ImageView
-        android:id="@+id/logo-background"
+        android:id="@+id/top-rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:contentDescription="@string/logo_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/white_rectangle" />
+
+    <ImageView
+        android:id="@+id/bottom-rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="355dp"
+        android:contentDescription="@string/logo_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/white_rectangle" />
+
+    <ImageView
+        android:id="@+id/logo-background-circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="265dp"
+        android:layout_marginStart="117dp"
+        android:layout_marginTop="252dp"
         android:contentDescription="@string/logo_desc"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/white_circle" />
@@ -44,24 +48,37 @@
         android:id="@+id/logo"
         android:layout_width="133dp"
         android:layout_height="133dp"
-        android:layout_marginTop="260dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="264dp"
         android:contentDescription="@string/logo_desc"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="130dp"
+    <Button
+        android:id="@+id/create-wallet-button"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="100dp"
-        android:text="Init Activity"
-        android:textColor="#fff"
-        android:textSize="30sp"
+        android:text="@string/create_wallet_btn"
+        android:background="#fff"
+        android:textColor="#605F5E"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/recover-wallet-button"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="#fff"
+        android:text="@string/recover_wallet_btn"
+        android:textColor="#605F5E"
+        app:layout_constraintBottom_toTopOf="@+id/create-wallet-button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
