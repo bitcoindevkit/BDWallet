@@ -23,7 +23,7 @@
         <item name="colorPrimaryDark">@color/darkBlue</item>
         <item name="colorSecondary">@color/lightGray</item>
         <item name="colorSecondaryVariant">@color/darkGray</item>
-        <item name="colorAccent">@color/lightBlue</item>
+        <item name="colorAccent">@color/darkBlue</item>
         <item name="colorButtonNormal">@color/white</item>
     </style>
     <style name="AppThemeFullScreen" parent="Theme.AppCompat.Light.NoActionBar">
@@ -31,7 +31,7 @@
         <item name="colorPrimaryDark">@color/darkBlue</item>
         <item name="colorSecondary">@color/lightGray</item>
         <item name="colorSecondaryVariant">@color/darkGray</item>
-        <item name="colorAccent">@color/lightBlue</item>
+        <item name="colorAccent">@color/darkBlue</item>
         <item name="colorButtonNormal">@color/white</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
