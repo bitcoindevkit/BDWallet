@@ -10,8 +10,6 @@ import android.widget.TextView
 import org.bdwallet.app.R
 
 class InitActivity : AppCompatActivity() {
-    private var dialogHeight: Int = 1000
-    private var dialogWidth: Int = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
