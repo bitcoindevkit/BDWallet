@@ -12,18 +12,26 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name=".EntryActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+        <activity
+            android:name=".EntryActivity"
+            android:theme="@style/AppThemeFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.login.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
-        <activity android:name=".ui.init.InitActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:theme="@style/AppThemeFullScreen" />
+        <activity
+            android:name=".ui.init.InitActivity"
+            android:theme="@style/AppThemeFullScreen" />
+        <activity android:name=".ui.init.RecoverWalletActivity"
+            android:theme="@style/AppTheme"
+            android:label="Recover Wallet"/>
+        <activity android:name=".ui.init.CreateWalletActivity"
+            android:theme="@style/AppTheme"
+            android:label="Create Wallet"/>
     </application>
 
 </manifest>
