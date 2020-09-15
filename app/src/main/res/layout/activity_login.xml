@@ -8,7 +8,7 @@
     tools:context=".ui.login.LoginActivity">
 
     <ImageView
-        android:id="@+id/top-rectangle"
+        android:id="@+id/logo_top_rectangle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/white_rectangle" />
 
     <ImageView
-        android:id="@+id/bottom-rectangle"
+        android:id="@+id/logo_bottom_rectangle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="355dp"
@@ -32,7 +32,7 @@
         app:srcCompat="@drawable/white_rectangle" />
 
     <ImageView
-        android:id="@+id/logo-background-circle"
+        android:id="@+id/logo_background_circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="117dp"
@@ -55,7 +55,7 @@
         app:srcCompat="@drawable/bdwallet_logo" />
 
     <ImageView
-        android:id="@+id/password-background-rectangle"
+        android:id="@+id/password_background_rectangle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
@@ -66,7 +66,7 @@
         app:srcCompat="@drawable/white_rounded_rectangle" />
 
     <EditText
-        android:id="@+id/password-text"
+        android:id="@+id/password_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints="false"
@@ -76,6 +76,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/password-background-rectangle" />
+        app:layout_constraintTop_toTopOf="@+id/password_background_rectangle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,7 @@
     tools:context=".ui.init.InitActivity">
 
     <ImageView
-        android:id="@+id/top-rectangle"
+        android:id="@+id/logo_top_rectangle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/white_rectangle" />
 
     <ImageView
-        android:id="@+id/bottom-rectangle"
+        android:id="@+id/logo_bottom_rectangle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="355dp"
@@ -33,7 +33,7 @@
         app:srcCompat="@drawable/white_rectangle" />
 
     <ImageView
-        android:id="@+id/logo-background-circle"
+        android:id="@+id/logo_background_circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="117dp"
@@ -56,7 +56,7 @@
         app:srcCompat="@drawable/bdwallet_logo" />
 
     <Button
-        android:id="@+id/create-wallet-button"
+        android:id="@+id/create_btn"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginBottom="100dp"
@@ -69,14 +69,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/recover-wallet-button"
+        android:id="@+id/recover_btn"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginBottom="40dp"
         android:text="@string/recover_wallet_btn"
         android:background="@color/white"
         android:textColor="@color/darkGray"
-        app:layout_constraintBottom_toTopOf="@+id/create-wallet-button"
+        app:layout_constraintBottom_toTopOf="@+id/create_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
