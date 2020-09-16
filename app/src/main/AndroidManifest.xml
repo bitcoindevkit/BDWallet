@@ -17,6 +17,7 @@
             android:theme="@style/AppThemeFullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,12 +27,16 @@
         <activity
             android:name=".ui.init.InitActivity"
             android:theme="@style/AppThemeFullScreen" />
-        <activity android:name=".ui.init.RecoverWalletActivity"
-            android:theme="@style/AppTheme"
-            android:label="Recover Wallet"/>
-        <activity android:name=".ui.init.CreateWalletActivity"
-            android:theme="@style/AppTheme"
-            android:label="Create Wallet"/>
+        <activity
+            android:name=".ui.init.RecoverWalletActivity"
+            android:label="Recover Wallet"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.init.CreateWalletSeedActivity"
+            android:label="New Wallet"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.init.CreateWalletPasswordActivity"
+            android:theme="@style/AppThemeFullScreen" />
     </application>
 
 </manifest>

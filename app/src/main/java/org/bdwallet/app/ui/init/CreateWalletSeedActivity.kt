@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.bdwallet.app.R
 
-class CreateWalletActivity : AppCompatActivity() {
+class CreateWalletSeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_wallet)
+        setContentView(R.layout.activity_create_wallet_seed)
     }
 }

@@ -2,7 +2,6 @@ package org.bdwallet.app.ui.login
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.Gravity
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -18,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun addPasswordListeners() {
-        val passwordText = findViewById<TextView>(R.id.password_text)
+        val passwordText = findViewById<TextView>(R.id.seed_text_1)
         passwordText.imeOptions = EditorInfo.IME_ACTION_DONE
         passwordText.setOnEditorActionListener(){ _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {

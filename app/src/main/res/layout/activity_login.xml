@@ -55,7 +55,7 @@
         app:srcCompat="@drawable/bdwallet_logo" />
 
     <ImageView
-        android:id="@+id/password_background_rectangle"
+        android:id="@+id/seed_background_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
@@ -66,7 +66,7 @@
         app:srcCompat="@drawable/white_rounded_rectangle" />
 
     <EditText
-        android:id="@+id/password_text"
+        android:id="@+id/seed_text_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:autofillHints="false"
@@ -77,6 +77,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/password_background_rectangle" />
+        app:layout_constraintTop_toTopOf="@+id/seed_background_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
