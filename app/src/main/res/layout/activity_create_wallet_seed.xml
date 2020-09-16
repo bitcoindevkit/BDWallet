@@ -489,11 +489,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
+                android:layout_marginBottom="20dp"
                 android:contentDescription="@string/seed_index_12"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/seed_background_11"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:srcCompat="@drawable/gray_rounded_rectangle" />
 
             <TextView

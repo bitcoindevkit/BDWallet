@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package org.bdwallet.app.ui.balance
+package org.bdwallet.app.ui.wallet.balance
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import org.bdwallet.app.*
 
 class BalanceViewModelOld(application: Application) : AndroidViewModel(application) {
 

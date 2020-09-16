@@ -6,35 +6,540 @@
     android:layout_height="match_parent"
     tools:context=".ui.init.RecoverWalletActivity">
 
+    <TextView
+        android:id="@+id/recover_subtitle"
+        android:layout_width="275dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/recover_wallet_subtitle"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="52dp"
+        android:layout_marginBottom="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/seed_background_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="68dp"
-                android:layout_marginBottom="108dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
                 android:contentDescription="@string/seed_index_1"
-                app:srcCompat="@drawable/white_rounded_rectangle" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_1"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_1"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_1" />
 
             <EditText
                 android:id="@+id/seed_text_1"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_1" />
+
+            <ImageView
+                android:id="@+id/seed_background_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autofillHints="false"
-                android:ems="10"
-                android:hint="@string/prompt_password"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword" />
-        </LinearLayout>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_1"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_2"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_2"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_2" />
+
+            <EditText
+                android:id="@+id/seed_text_2"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_2" />
+
+            <ImageView
+                android:id="@+id/seed_background_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_2"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_3"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_3"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_3" />
+
+            <EditText
+                android:id="@+id/seed_text_3"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_3" />
+
+            <ImageView
+                android:id="@+id/seed_background_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_3"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_4"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_4"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_4" />
+
+            <EditText
+                android:id="@+id/seed_text_4"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_4" />
+
+            <ImageView
+                android:id="@+id/seed_background_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_4"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_5"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_5"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_5" />
+
+            <EditText
+                android:id="@+id/seed_text_5"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_5" />
+
+            <ImageView
+                android:id="@+id/seed_background_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_5"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_6"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_6"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_6" />
+
+            <EditText
+                android:id="@+id/seed_text_6"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_6" />
+
+            <ImageView
+                android:id="@+id/seed_background_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_6"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_7"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_7"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_7" />
+
+            <EditText
+                android:id="@+id/seed_text_7"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_7" />
+
+            <ImageView
+                android:id="@+id/seed_background_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_7"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_8"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_8"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_8" />
+
+            <EditText
+                android:id="@+id/seed_text_8"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_8" />
+
+            <ImageView
+                android:id="@+id/seed_background_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_8"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_9"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_9"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_9" />
+
+            <EditText
+                android:id="@+id/seed_text_9"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_9" />
+
+            <ImageView
+                android:id="@+id/seed_background_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_9"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_10"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_10"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_10" />
+
+            <EditText
+                android:id="@+id/seed_text_10"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_10" />
+
+            <ImageView
+                android:id="@+id/seed_background_11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_10"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_11"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_11"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_11" />
+
+            <EditText
+                android:id="@+id/seed_text_11"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_11" />
+
+            <ImageView
+                android:id="@+id/seed_background_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="19dp"
+                android:contentDescription="@string/seed_index_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_background_11"
+                app:srcCompat="@drawable/gray_rounded_rectangle" />
+
+            <TextView
+                android:id="@+id/seed_label_12"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/seed_index_12"
+                android:textAlignment="center"
+                android:textColor="@color/darkGray"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/seed_background_12" />
+
+            <EditText
+                android:id="@+id/seed_text_12"
+                android:layout_width="197dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/replaceable_seed_word"
+                android:textAlignment="center"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seed_label_12"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/recover_btn"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="30dp"
+        android:background="@color/mediumBlue"
+        android:text="@string/recover_btn"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
