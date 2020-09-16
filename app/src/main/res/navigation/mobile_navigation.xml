@@ -21,27 +21,23 @@
     app:startDestination="@id/navigation_balance">
 
     <fragment
+        android:id="@+id/navigation_deposit"
+        android:name="org.bdwallet.app.ui.wallet.deposit.DepositFragmentOld"
+        android:label="@string/title_deposit"
+        tools:layout="@layout/fragment_deposit" />
+
+
+    <fragment
         android:id="@+id/navigation_balance"
         android:name="org.bdwallet.app.ui.wallet.balance.BalanceFragmentOld"
         android:label="@string/title_balance"
         tools:layout="@layout/fragment_balance" />
 
-    <fragment
-        android:id="@+id/navigation_deposit"
-        android:name="org.bdwallet.app.ui.wallet.deposit.DepositFragmentOld"
-        android:label="@string/title_deposit"
-        tools:layout="@layout/fragment_deposit" />
 
     <fragment
         android:id="@+id/navigation_withdraw"
         android:name="org.bdwallet.app.ui.wallet.withdraw.WithdrawFragmentOld"
         android:label="@string/title_withdraw"
         tools:layout="@layout/fragment_withdraw" />
-
-    <fragment
-        android:id="@+id/navigation_init"
-        android:name="org.bdwallet.app.ui.init.InitFragment"
-        android:label="@string/title_init"
-        tools:layout="@layout/fragment_init" />
 
 </navigation>
