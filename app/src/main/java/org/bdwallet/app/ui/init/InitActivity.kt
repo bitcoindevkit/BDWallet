@@ -31,22 +31,13 @@ class InitActivity : AppCompatActivity() {
     }
 
     private fun addButtonListeners() {
-        val recoverButton = findViewById<Button>(R.id.recover_btn)
-        val createButton = findViewById<Button>(R.id.create_btn)
-        var intent: Intent
+        val recoverButton = findViewById<Button>(R.id.back_btn)
+        val createButton = findViewById<Button>(R.id.set_password_btn)
         recoverButton.setOnClickListener {
-            intent = Intent(
-                this,
-                RecoverWalletActivity::class.java
-            )
-            startActivity(intent)
+            startActivity(Intent(this, RecoverWalletActivity::class.java))
         }
         createButton.setOnClickListener {
-            intent = Intent(
-                this,
-                CreateWalletActivity::class.java
-            )
-            startActivity(intent)
+            startActivity(Intent(this, CreateWalletPasswordActivity::class.java))
         }
     }
 }
