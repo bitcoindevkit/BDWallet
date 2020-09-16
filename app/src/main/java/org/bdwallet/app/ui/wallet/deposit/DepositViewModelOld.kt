@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package org.bdwallet.app.ui.deposit
+package org.bdwallet.app.ui.wallet.deposit
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import org.bdwallet.app.*
 
 private const val TAG = "DepositViewModel"
 

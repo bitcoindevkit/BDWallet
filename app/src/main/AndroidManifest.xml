@@ -31,12 +31,16 @@
             android:name=".ui.init.RecoverWalletActivity"
             android:label="Recover Wallet"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.init.CreateWalletSeedActivity"
+        <activity
+            android:name=".ui.init.CreateWalletSeedActivity"
             android:label="New Wallet"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.init.CreateWalletPasswordActivity"
-            android:theme="@style/AppThemeFullScreen" />
+            android:theme="@style/AppThemeFullScreen" />]
+        <activity
+            android:name=".ui.wallet.WalletActivity"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

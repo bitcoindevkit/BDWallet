@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.bdwallet.app.ui.deposit
+package org.bdwallet.app.ui.wallet.deposit
 
 import android.content.Intent
 import android.os.Bundle

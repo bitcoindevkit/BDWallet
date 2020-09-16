@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.bdwallet.app.ui.withdraw
+package org.bdwallet.app.ui.wallet.withdraw
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
