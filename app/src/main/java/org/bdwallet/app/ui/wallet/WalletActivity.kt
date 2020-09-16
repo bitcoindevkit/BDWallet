@@ -12,11 +12,12 @@ import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 
 class WalletActivity : AppCompatActivity() {
-    private val app = application as BDWApplication
+    private lateinit var app: BDWApplication
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wallet)
+        app = application as BDWApplication
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 

@@ -37,7 +37,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.init.CreateWalletPasswordActivity"
-            android:theme="@style/AppThemeFullScreen" />]
+            android:theme="@style/AppThemeFullScreen" />
         <activity
             android:name=".ui.wallet.WalletActivity"
             android:theme="@style/AppTheme"/>
