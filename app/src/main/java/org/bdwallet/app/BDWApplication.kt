@@ -17,8 +17,33 @@
 package org.bdwallet.app
 
 import android.app.Application
+import org.magicalbitcoin.wallet.Lib
+import org.magicalbitcoin.wallet.Types.WalletConstructor
+import org.magicalbitcoin.wallet.Types.WalletPtr
 
 
 class BDWApplication : Application() {
+    private lateinit var lib: Lib
+    private lateinit var walletPtr: WalletPtr
+    private lateinit var walletConstructor: WalletConstructor
+
+    companion object {
+        init {
+            Lib.load()
+        }
+    }
+
+    fun startLib(): BDWApplication {
+        // TODO: check if toml file is present
+        lib = Lib()
+        return this
+    }
+
+    fun createWallet(walletConstructor: WalletConstructor) {
+        this.walletConstructor = walletConstructor
+        // walletPtr = lib.constructor(walletConstructor)
+    }
+
+
 
 }
