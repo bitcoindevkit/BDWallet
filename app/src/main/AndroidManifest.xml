@@ -14,7 +14,7 @@
         android:supportsRtl="true">
         <activity
             android:name=".EntryActivity"
-            android:theme="@style/AppThemeFullScreen">
+            android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,10 +23,10 @@
         </activity>
         <activity
             android:name=".ui.login.LoginActivity"
-            android:theme="@style/AppThemeFullScreen" />
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".ui.init.InitActivity"
-            android:theme="@style/AppThemeFullScreen" />
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".ui.init.RecoverWalletActivity"
             android:label="Recover Wallet"
@@ -37,7 +37,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.init.CreateWalletPasswordActivity"
-            android:theme="@style/AppThemeFullScreen" />
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".ui.wallet.WalletActivity"
             android:theme="@style/AppTheme"/>

@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/logo_top_rectangle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginTop="300dp"
         android:contentDescription="@string/logo_desc"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
     <ImageView
         android:id="@+id/logo_bottom_rectangle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="20dp"
         android:layout_marginTop="355dp"
         android:contentDescription="@string/logo_desc"
         app:layout_constraintEnd_toEndOf="parent"

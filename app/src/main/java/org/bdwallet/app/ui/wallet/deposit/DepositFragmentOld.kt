@@ -17,12 +17,16 @@
 package org.bdwallet.app.ui.wallet.deposit
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -32,6 +36,7 @@ class DepositFragmentOld : Fragment() {
 
     private lateinit var depositViewModel: DepositViewModel
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,7 +57,7 @@ class DepositFragmentOld : Fragment() {
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Deposit Address")
         sharingIntent.putExtra(Intent.EXTRA_TEXT, address)
 
-        val shareButton: Button = root.findViewById(R.id.share_button)
+        val shareButton: Button = root.findViewById(R.id.share_btn)
         shareButton.setOnClickListener(View.OnClickListener {
             startActivity(
                 Intent.createChooser(
@@ -61,7 +66,9 @@ class DepositFragmentOld : Fragment() {
                 )
             )
         })
-
+        val walletActivity = activity as AppCompatActivity
+        walletActivity.supportActionBar!!.show()
+        walletActivity.window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.darkBlue)
         return root
     }
 }

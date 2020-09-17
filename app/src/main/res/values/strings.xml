@@ -42,6 +42,9 @@
     <string name="prompt_password">Enter Wallet password</string>
     <string name="prompt_create_password">Create password</string>
     <string name="prompt_conf_password">Confirm password</string>
+    <string name="prompt_address">Recipient address</string>
+    <string name="prompt_amount">Amount</string>
+    <string name="prompt_password_send">Wallet password</string>
     <string name="password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -52,15 +55,26 @@
     <string name="ok_btn">OK</string>
     <string name="recover_wallet_btn">Recover Wallet</string>
     <string name="recover_btn">Recover</string>
+    <string name="history_btn">Transaction History</string>
+    <string name="review_btn">Review Payment</string>
     <string name="create_wallet_subtitle">Your seed recovery phrase:</string>
     <string name="recover_wallet_subtitle">Enter your seed recovery phrase:</string>
+    <string name="address_subtitle">YOUR WALLET ADDRESS:</string>
     <string name="create_wallet_btn">Create Wallet</string>
     <string name="create_btn">Create</string>
     <string name="set_password_btn">Set Password</string>
     <string name="back_btn">Back</string>
+    <string name="share_btn">Share</string>
     <string name="powered_by">POWERED BY</string>
     <string name="init_dialog_title">Welcome!</string>
     <string name="continue_btn">CONTINUE</string>
     <string name="replaceable_seed_word">XXXXX</string>
+    <string name="replaceable_price">$XX,XXX.XX</string>
+    <string name="replaceable_balance">X.XXXXX</string>
+    <string name="replaceable_address">2N6wxZpsMdehgvVAPkasFDoyMySXbU7SHkP</string>
+    <string name="balance_sat_label">SAT BALANCE</string>
+    <string name="balance_btc_label">BTC BALANCE</string>
+    <string name="price_btc_label">BTC PRICE</string>
+    <string name="balance_usd_label">USD VALUE</string>
     <string name="init_dialog_body">If you\'ve already created a wallet and have your seed phrase on-hand, select recover wallet.</string>
 </resources>
