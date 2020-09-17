@@ -28,7 +28,7 @@ import androidx.lifecycle.ViewModelProvider
 import org.bdwallet.app.R
 
 
-class BalanceFragmentOld : Fragment() {
+class BalanceFragment : Fragment() {
 
     private lateinit var balanceViewModel: BalanceViewModelOld
 

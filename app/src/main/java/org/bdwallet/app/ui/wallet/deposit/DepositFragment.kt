@@ -32,7 +32,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import org.bdwallet.app.R
 
-class DepositFragmentOld : Fragment() {
+class DepositFragment : Fragment() {
 
     private lateinit var depositViewModel: DepositViewModel
 
