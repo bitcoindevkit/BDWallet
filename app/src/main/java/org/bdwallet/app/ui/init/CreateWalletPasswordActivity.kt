@@ -1,9 +1,12 @@
 package org.bdwallet.app.ui.init
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.Button
+import android.widget.Toast
 import org.bdwallet.app.R
 
 class CreateWalletPasswordActivity : AppCompatActivity() {
@@ -23,5 +26,17 @@ class CreateWalletPasswordActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             onBackPressed()
         }
+    }
+
+    private fun showInvalidPasswordToast() {
+        val myToast = Toast.makeText(applicationContext,R.string.toast_invalid_password,Toast.LENGTH_SHORT)
+        myToast.setGravity(Gravity.LEFT,200,200)
+        myToast.show()
+    }
+
+    private fun showPasswordMatchingToast() {
+        val myToast = Toast.makeText(applicationContext,R.string.toast_password_match,Toast.LENGTH_SHORT)
+        myToast.setGravity(Gravity.LEFT,200,200)
+        myToast.show()
     }
 }

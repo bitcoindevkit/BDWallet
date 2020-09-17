@@ -77,4 +77,16 @@
     <string name="price_btc_label">BTC PRICE</string>
     <string name="balance_usd_label">USD VALUE</string>
     <string name="init_dialog_body">If you\'ve already created a wallet and have your seed phrase on-hand, select recover wallet.</string>
+    <string name="reminder_dialog_title">Reminder</string>
+    <string name="reminder_dialog_body">You will not be given this phrase again!</string>
+    <string name="reminder_dialog_btn">I\'ve written it down</string>
+    <string name="backup_dialog_title">Backup Your Wallet</string>
+    <string name="backup_dialog_body">Your seed phrase can be used to recover your wallet. It will only be given to you once, so write it down in-order on a piece of paper (we do not recommend saving your phrase as a digital copy anywhere).</string>
+    <string name="toast_invalid_password">Password must be 8-20 characters</string>
+    <string name="toast_password_match">Passwords do not match</string>
+    <string name="toast_invalid_seed_phrase">Invalid seed phrase</string>
+    <string name="toast_invalid_address">Invalid recipient address</string>
+    <string name="toast_insufficient_balance">Insufficient wallet balance</string>
+    <string name="share_address_extra">Deposit Address</string>
+    <string name="share_address_extra_title">Share Deposit Address</string>
 </resources>

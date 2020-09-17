@@ -19,6 +19,7 @@ package org.bdwallet.app.ui.wallet.deposit
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import org.bdwallet.app.R
+import org.w3c.dom.Text
 
 class DepositFragmentOld : Fragment() {
 
@@ -45,30 +47,29 @@ class DepositFragmentOld : Fragment() {
         depositViewModel =
             ViewModelProviders.of(this).get(DepositViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_deposit, container, false)
-        val textView: TextView = root.findViewById(R.id.text_deposit)
+        val textView: TextView = root.findViewById(R.id.wallet_address)
         depositViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+            //textView.text = it
         })
 
-        val address = depositViewModel.text.value
-
-        val sharingIntent = Intent(Intent.ACTION_SEND)
-        sharingIntent.type = "text/plain"
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Deposit Address")
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, address)
-
-        val shareButton: Button = root.findViewById(R.id.share_btn)
-        shareButton.setOnClickListener(View.OnClickListener {
-            startActivity(
-                Intent.createChooser(
-                    sharingIntent,
-                    "Share via"
-                )
-            )
-        })
+        addButtonListener(root.findViewById(R.id.share_btn), root.findViewById<TextView>(R.id.wallet_address).text.toString())
         val walletActivity = activity as AppCompatActivity
         walletActivity.supportActionBar!!.show()
         walletActivity.window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.darkBlue)
         return root
+    }
+
+    private fun addButtonListener(button: Button, address: String) {
+        button.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, address)
+                putExtra(Intent.EXTRA_TITLE, R.string.share_address_extra_title)
+                putExtra(Intent.EXTRA_SUBJECT, R.string.share_address_extra)
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
     }
 }
