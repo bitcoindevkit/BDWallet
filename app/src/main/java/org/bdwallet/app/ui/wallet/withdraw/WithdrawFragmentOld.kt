@@ -17,10 +17,12 @@
 package org.bdwallet.app.ui.wallet.withdraw
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -48,5 +50,23 @@ class WithdrawFragmentOld : Fragment() {
         walletActivity.supportActionBar!!.show()
         walletActivity.window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.darkBlue)
         return root
+    }
+
+    private fun showInvalidPasswordToast() {
+        val myToast = Toast.makeText(context,R.string.toast_invalid_password, Toast.LENGTH_SHORT)
+        myToast.setGravity(Gravity.LEFT,200,200)
+        myToast.show()
+    }
+
+    private fun showInvalidAddressToast() {
+        val myToast = Toast.makeText(context,R.string.toast_invalid_address, Toast.LENGTH_SHORT)
+        myToast.setGravity(Gravity.LEFT,200,200)
+        myToast.show()
+    }
+
+    private fun showInsufficientBalanceToast() {
+        val myToast = Toast.makeText(context,R.string.toast_insufficient_balance, Toast.LENGTH_SHORT)
+        myToast.setGravity(Gravity.LEFT,200,200)
+        myToast.show()
     }
 }
