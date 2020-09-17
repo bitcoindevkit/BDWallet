@@ -8,8 +8,7 @@ import android.widget.Button
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.WalletActivity
-import org.jetbrains.anko.alert
-import org.magicalbitcoin.wallet.Types.WalletConstructor
+import org.bitcoindevkit.library.Types.WalletConstructor
 
 class CreateWalletSeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +52,7 @@ class CreateWalletSeedActivity : AppCompatActivity() {
             .setPositiveButton(R.string.reminder_dialog_btn) { _, _ ->
                 // TODO: create wallet in bdk
                 val walletConstructor = WalletConstructor("",
-                    org.magicalbitcoin.wallet.Types.Network.testnet,
+                    org.bitcoindevkit.library.Types.Network.testnet,
                     "",
                     "",
                     "",

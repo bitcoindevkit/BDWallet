@@ -17,9 +17,9 @@
 package org.bdwallet.app
 
 import android.app.Application
-import org.magicalbitcoin.wallet.Lib
-import org.magicalbitcoin.wallet.Types.WalletConstructor
-import org.magicalbitcoin.wallet.Types.WalletPtr
+import org.bitcoindevkit.library.Lib
+import org.bitcoindevkit.library.Types.WalletConstructor
+import org.bitcoindevkit.library.Types.WalletPtr
 
 
 class BDWApplication : Application() {
