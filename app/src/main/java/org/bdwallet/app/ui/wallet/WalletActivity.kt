@@ -1,11 +1,8 @@
 package org.bdwallet.app.ui.wallet
 
-import android.annotation.SuppressLint
-import android.graphics.drawable.ColorDrawable
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.WindowManager
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController

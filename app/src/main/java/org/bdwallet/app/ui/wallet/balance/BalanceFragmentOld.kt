@@ -18,7 +18,6 @@ package org.bdwallet.app.ui.wallet.balance
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
