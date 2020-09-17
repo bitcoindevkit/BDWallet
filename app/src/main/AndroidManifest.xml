@@ -40,7 +40,15 @@
             android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".ui.wallet.WalletActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.wallet.settings.SettingsActivity"
+            android:label="Settings"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ui.wallet.history.HistoryActivity"
+            android:label="Transaction History"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
