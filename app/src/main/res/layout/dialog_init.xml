@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/welcome_title"
+        android:id="@+id/review_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -40,13 +40,13 @@
         android:text="@string/init_dialog_title"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/welcome_body"
+        app:layout_constraintBottom_toTopOf="@+id/recipient_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/powered_by"
         app:layout_constraintVertical_bias="0.25" />
 
     <TextView
-        android:id="@+id/welcome_body"
+        android:id="@+id/recipient_label"
         android:layout_width="304dp"
         android:layout_height="88dp"
         android:layout_marginEnd="40dp"
@@ -57,11 +57,11 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/dismiss_btn_text"
+        app:layout_constraintBottom_toTopOf="@+id/continue_btn_text"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/dismiss_btn_text"
+        android:id="@+id/continue_btn_text"
         android:layout_width="122dp"
         android:layout_height="29dp"
         android:layout_marginEnd="40dp"

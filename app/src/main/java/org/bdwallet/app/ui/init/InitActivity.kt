@@ -23,7 +23,7 @@ class InitActivity : AppCompatActivity() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.dialog_init)
-        val dismissButton = dialog.findViewById<TextView>(R.id.dismiss_btn_text)
+        val dismissButton = dialog.findViewById<TextView>(R.id.continue_btn_text)
         dismissButton.setOnClickListener {
             dialog.dismiss()
         }
