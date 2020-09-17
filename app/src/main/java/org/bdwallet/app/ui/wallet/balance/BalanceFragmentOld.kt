@@ -16,37 +16,47 @@
 
 package org.bdwallet.app.ui.wallet.balance
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import org.bdwallet.app.R
 
+
 class BalanceFragmentOld : Fragment() {
 
     private lateinit var balanceViewModel: BalanceViewModelOld
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val root = inflater.inflate(R.layout.fragment_balance, container, false)
         super.onCreateView(inflater, container, savedInstanceState)
         balanceViewModel = ViewModelProvider(this).get(BalanceViewModelOld::class.java)
-        val root = inflater.inflate(R.layout.fragment_balance, container, false)
-        val textView: TextView = root.findViewById(R.id.text_balance)
+        val textView: TextView = root.findViewById(R.id.balance_crypto)
         balanceViewModel.balance.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
-
+        var walletActivity = activity as AppCompatActivity
+        walletActivity.supportActionBar?.setShowHideAnimationEnabled(false)
+        walletActivity.supportActionBar?.hide()
+        walletActivity.window.statusBarColor = Color.TRANSPARENT
+        walletActivity.window.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         return root
     }
 
     override fun onResume() {
+        (activity as AppCompatActivity).supportActionBar!!.hide()
         super.onResume()
     }
 }

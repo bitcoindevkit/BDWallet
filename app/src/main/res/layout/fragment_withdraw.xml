@@ -21,17 +21,60 @@
     android:layout_height="match_parent"
     tools:context=".ui.wallet.withdraw.WithdrawFragmentOld">
 
-    <TextView
-        android:id="@+id/text_withdraw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+    <Button
+        android:id="@+id/review_btn"
+        android:layout_width="138dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="164dp"
+        android:background="@color/mediumBlue"
+        android:text="@string/review_btn"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_password"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/input_recipient_address"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="140dp"
+        android:autofillHints="@string/prompt_address"
+        android:ems="10"
+        android:hint="@string/prompt_address"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/input_amount"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:autofillHints="@string/prompt_amount"
+        android:ems="10"
+        android:hint="@string/prompt_amount"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_recipient_address" />
+
+    <EditText
+        android:id="@+id/input_password"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:autofillHints="@string/prompt_password_send"
+        android:ems="10"
+        android:hint="@string/prompt_password_send"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_amount" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

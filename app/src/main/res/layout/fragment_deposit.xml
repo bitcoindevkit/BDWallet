@@ -21,29 +21,72 @@
     android:layout_height="match_parent"
     tools:context=".ui.wallet.deposit.DepositFragmentOld">
 
+
+    <ImageView
+        android:id="@+id/horizontal_divider"
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="40dp"
+        android:contentDescription="@string/logo_desc"
+        android:src="@drawable/dark_blue_rectangle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/share_btn" />
+
+    <ImageView
+        android:id="@+id/qr_code"
+        android:layout_width="279dp"
+        android:layout_height="239dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/logo_desc"
+        android:src="@drawable/temp_qr_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_divider" />
+
+    <TextView
+        android:id="@+id/address_subtitle"
+        android:layout_width="214dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="104dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/address_subtitle"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/text_deposit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="354dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/replaceable_address"
         android:textAlignment="center"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/share_button"
+        android:textColor="@color/mediumBlue"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="2N6wxZpsMdehgvVAPkasFDoyMySXbU7SHkP" />
+        app:layout_constraintTop_toBottomOf="@+id/address_subtitle" />
 
     <Button
-        android:id="@+id/share_button"
+        android:id="@+id/share_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SHARE"
+        android:background="@color/mediumBlue"
+        android:text="@string/share_btn"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_deposit" />
+        app:layout_constraintTop_toBottomOf="@id/text_deposit"
+        app:layout_constraintVertical_bias="0.063" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
