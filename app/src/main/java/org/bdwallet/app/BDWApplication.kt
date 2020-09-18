@@ -20,12 +20,21 @@ import android.app.Application
 import org.bitcoindevkit.library.Lib
 import org.bitcoindevkit.library.Types.WalletConstructor
 import org.bitcoindevkit.library.Types.WalletPtr
+import org.bitcoindevkit.library.Types.Network
 
 
 class BDWApplication : Application() {
     private lateinit var lib: Lib
     private lateinit var walletPtr: WalletPtr
     private lateinit var walletConstructor: WalletConstructor
+
+    override fun onCreate() {
+        super.onCreate()
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+    }
 
     companion object {
         init {
@@ -39,9 +48,17 @@ class BDWApplication : Application() {
         return this
     }
 
-    fun createWallet(walletConstructor: WalletConstructor) {
-        this.walletConstructor = walletConstructor
-        // walletPtr = lib.constructor(walletConstructor)
+    fun createWallet(
+        name: String,
+        network: Network, // ex. Network.testnet or Network.regtest
+        path: String,
+        descriptor: String,
+        change_descriptor: String?,
+        electrum_url: String,
+        electrum_proxy: String?,
+    ) {
+        this.walletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
+        this.walletPtr = this.lib.constructor(this.walletConstructor)
     }
 
 
