@@ -59,6 +59,18 @@ class CreateWalletSeedActivity : AppCompatActivity() {
                     "",
                     null
                 )
+                /*    fun createWallet(
+        name: String,
+        network: Network, // ex. Network.testnet or Network.regtest
+        path: String,
+        descriptor: String,
+        change_descriptor: String?,
+        electrum_url: String,
+        electrum_proxy: String?,
+    ) {
+        this.walletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
+        this.walletPtr = this.lib.constructor(this.walletConstructor)
+    }*/
                 val app = application as BDWApplication
                 app.startLib()
                     .createWallet(walletConstructor)

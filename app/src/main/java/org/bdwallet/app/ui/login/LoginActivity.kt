@@ -37,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun checkPassword(password: CharSequence) {
         // TODO: check if password is correct
+
         showWrongPasswordDialog()
     }
 
