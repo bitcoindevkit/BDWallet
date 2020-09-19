@@ -49,7 +49,7 @@ class BDWApplication : Application() {
     }
 
     fun createWallet(
-        name: WalletConstructor,
+        name: String,
         network: Network, // ex. Network.testnet or Network.regtest
         path: String,
         descriptor: String,
