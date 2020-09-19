@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +47,7 @@ class DepositFragment : Fragment() {
             ViewModelProviders.of(this).get(DepositViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_deposit, container, false)
         val textView: TextView = root.findViewById(R.id.wallet_address)
+        val qr_code: ImageView = root.findViewById(R.id.qr_code);
         depositViewModel.text.observe(viewLifecycleOwner, Observer {
             //textView.text = it
         })
@@ -55,6 +57,8 @@ class DepositFragment : Fragment() {
         walletActivity.supportActionBar!!.show()
         walletActivity.window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.darkBlue)
         return root
+
+        //qr_code
     }
 
     private fun addButtonListener(button: Button, address: String) {

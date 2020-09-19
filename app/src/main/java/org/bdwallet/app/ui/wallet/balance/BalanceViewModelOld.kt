@@ -21,6 +21,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
+
+
 class BalanceViewModelOld(application: Application) : AndroidViewModel(application) {
 
     private val _balance = MutableLiveData<String>().apply {
@@ -28,4 +30,6 @@ class BalanceViewModelOld(application: Application) : AndroidViewModel(applicati
         //value = app.getBalance()
     }
     val balance: LiveData<String> = _balance
+
+    //check using API to covert to the balance to the USD value
 }
