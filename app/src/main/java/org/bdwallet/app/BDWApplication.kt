@@ -46,7 +46,19 @@ class BDWApplication : Application() {
         return this
     }
 
-    fun createWallet(
+    fun createWallet(descriptor: String) {
+        // TODO these hardcoded values may need to change eventually
+        this.constructor(
+            "testnet",
+            Network.testnet,
+            "",
+            descriptor,
+            null,
+            "tcp://testnet.aranguren.org:51001",
+            null)
+    }
+
+    private fun constructor(
         name: String,
         network: Network, // ex. Network.testnet or Network.regtest
         path: String,
@@ -55,7 +67,6 @@ class BDWApplication : Application() {
         electrum_url: String,
         electrum_proxy: String?,
     ) {
-        // TODO how do we use this function? Does it always create a new wallet or can it load an existing wallet?
         this.walletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
         this.walletPtr = this.lib.constructor(this.walletConstructor)
     }
