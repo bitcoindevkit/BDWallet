@@ -32,6 +32,7 @@ class BDWApplication : Application() {
 
     override fun onTerminate() {
         super.onTerminate()
+        this.lib.destructor(this.walletPtr)
     }
 
     companion object {
@@ -69,11 +70,6 @@ class BDWApplication : Application() {
     ) {
         this.walletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
         this.walletPtr = this.lib.constructor(this.walletConstructor)
-    }
-
-    fun destructor() {
-        // TODO what is this function for?
-        this.lib.destructor(this.walletPtr)
     }
 
     // Returns a new public address for depositing into this wallet
