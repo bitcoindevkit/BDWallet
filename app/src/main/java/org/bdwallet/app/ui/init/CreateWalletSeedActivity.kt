@@ -62,7 +62,6 @@ class CreateWalletSeedActivity : AppCompatActivity() {
 
                 val app = application as BDWApplication
                 app.startLib()
-                    .createWallet(walletConstructor)
                 finish()
                 startActivity(Intent(this, WalletActivity::class.java))
             }

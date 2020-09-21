@@ -59,7 +59,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_1" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_1"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
