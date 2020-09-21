@@ -51,8 +51,7 @@ class CreateWalletSeedActivity : AppCompatActivity() {
             .setPositiveButton(R.string.reminder_dialog_btn) { _, _ ->
                 // TODO: create wallet in bdk
                 val app = application as BDWApplication
-                app.startLib()
-                    .createWallet("") //TODO descriptor goes here
+                app.startLib().createWallet("") //TODO descriptor goes here
                 finish()
                 startActivity(Intent(this, WalletActivity::class.java))
             }
