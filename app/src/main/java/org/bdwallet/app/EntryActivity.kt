@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.bdwallet.app.ui.init.InitActivity
 import org.bdwallet.app.ui.login.LoginActivity
+import org.bdwallet.app.ui.wallet.WalletActivity
 
 class EntryActivity : AppCompatActivity() {
 
@@ -23,6 +24,6 @@ class EntryActivity : AppCompatActivity() {
     }
 
     private fun getNextActivityName(walletInitialized: Boolean): String {
-        return if (walletInitialized) LoginActivity::class.qualifiedName!! else InitActivity::class.qualifiedName!!
+        return if (walletInitialized) WalletActivity::class.qualifiedName!! else InitActivity::class.qualifiedName!!
     }
 }

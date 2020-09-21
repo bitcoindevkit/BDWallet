@@ -37,7 +37,7 @@ class InitActivity : AppCompatActivity() {
             startActivity(Intent(this, RecoverWalletActivity::class.java))
         }
         createButton.setOnClickListener {
-            startActivity(Intent(this, CreateWalletPasswordActivity::class.java))
+            startActivity(Intent(this, CreateWalletSeedActivity::class.java))
         }
     }
 }
