@@ -17,8 +17,8 @@
 package org.bdwallet.app
 
 import android.app.Application
-import org.bitcoindevkit.library.Lib
-import org.bitcoindevkit.library.Types.*
+import org.bitcoindevkit.bdkjni.Lib
+import org.bitcoindevkit.bdkjni.Types.*
 
 
 class BDWApplication : Application() {
@@ -121,5 +121,13 @@ class BDWApplication : Application() {
     fun publicDescriptors(): PublicDescriptorsResponse {
         // TODO what is this function for?
         return this.lib.public_descriptors(this.walletPtr)
+    }
+
+    fun generateExtendedKey(network: Network, mnemonicWordCount: Int): ExtendedKeys {
+        return this.lib.generate_extended_key(network, mnemonicWordCount)
+    }
+
+    fun createExtendedKeys(network: Network, mnemonic: String): ExtendedKeys {
+        return this.lib.create_extended_keys(network, mnemonic)
     }
 }
