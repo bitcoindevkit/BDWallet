@@ -18,9 +18,7 @@ package org.bdwallet.app
 
 import android.app.Application
 import org.bitcoindevkit.library.Lib
-import org.bitcoindevkit.library.Types.WalletConstructor
-import org.bitcoindevkit.library.Types.WalletPtr
-import org.bitcoindevkit.library.Types.Network
+import org.bitcoindevkit.library.Types.*
 
 
 class BDWApplication : Application() {
@@ -43,7 +41,7 @@ class BDWApplication : Application() {
     }
 
     fun startLib(): BDWApplication {
-        // TODO: check if toml file is present
+        // TODO: check if toml file is present?
         lib = Lib()
         return this
     }
@@ -57,10 +55,71 @@ class BDWApplication : Application() {
         electrum_url: String,
         electrum_proxy: String?,
     ) {
+        // TODO how do we use this function? Does it always create a new wallet or can it load an existing wallet?
         this.walletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
         this.walletPtr = this.lib.constructor(this.walletConstructor)
     }
 
+    fun destructor() {
+        // TODO what is this function for?
+        this.lib.destructor(this.walletPtr)
+    }
 
+    // Returns a new public address for depositing into this wallet
+    fun getNewAddress(): String {
+        return this.lib.get_new_address(this.walletPtr)
+        // TODO does toml file need to be manually updated?
+    }
 
+    fun sync(max_address: Int?=null) {
+        // TODO what is this function for?
+        this.lib.sync(this.walletPtr, max_address)
+    }
+
+    // Returns the list of UTXOs that are spendable by this wallet
+    fun listUnspent(): List<UTXO> {
+        return this.lib.list_unspent(this.walletPtr)
+    }
+
+    // Returns the total balance of this wallet (the sum of UTXOs)
+    fun getBalance(): Long {
+        return this.lib.get_balance(this.walletPtr)
+    }
+
+    fun listTransactions(): List<TransactionDetails> {
+        // TODO does this give the transaction history??
+        return this.lib.list_transactions(this.walletPtr)
+    }
+
+    fun createTx(
+        fee_rate: Float,
+        addressees: List<Pair<String, String>>,
+        send_all: Boolean?=false,
+        utxos: List<String>?=null,
+        unspendable: List<String>?=null,
+        policy: Map<String, List<String>>?=null
+    ): CreateTxResponse {
+        // TODO how do we use this function?
+        return this.lib.create_tx(this.walletPtr, fee_rate, addressees, send_all, utxos, unspendable, policy)
+    }
+
+    fun sign(psbt: String, assume_height: Int?=null): SignResponse {
+        // TODO what is this function for?
+        return this.lib.sign(this.walletPtr, psbt, assume_height)
+    }
+
+    fun extract_psbt(psbt: String): RawTransaction {
+        // TODO what is this function for?
+        return this.lib.extract_psbt(this.walletPtr, psbt)
+    }
+
+    // Broadcasts a transaction to the bitcoin network
+    fun broadcast(raw_tx: String): Txid {
+        return this.lib.broadcast(this.walletPtr, raw_tx)
+    }
+
+    fun publicDescriptors(): PublicDescriptorsResponse {
+        // TODO what is this function for?
+        return this.lib.public_descriptors(this.walletPtr)
+    }
 }
