@@ -68,8 +68,10 @@ class BDWApplication : Application() {
         electrum_url: String,
         electrum_proxy: String?,
     ) {
-        this.walletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
-        this.walletPtr = this.lib.constructor(this.walletConstructor)
+        // TODO: uncomment below two lines when ready to start testing
+        // TODO: bottom line causes runtime exception "CantOpenDb(Io(Os{Read-only file system}))" - Ethan
+        //this.walletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
+        //this.walletPtr = this.lib.constructor(this.walletConstructor)
     }
 
     // Returns a new public address for depositing into this wallet
