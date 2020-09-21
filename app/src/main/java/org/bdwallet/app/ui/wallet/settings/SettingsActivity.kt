@@ -13,6 +13,8 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) // enable back button on action bar
     }
 
+
+
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
