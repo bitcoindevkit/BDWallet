@@ -6,6 +6,7 @@
         app:key="sat_convert"
         app:title="Display BTC as SAT"/>
 
+    <!--
     <ListPreference
         app:key="currency"
         app:title="Local currency"
@@ -14,10 +15,11 @@
         android:summary="Set your local currency to see the value of your Bitcoin"/>
 
     <EditTextPreference
-        app:key="password"
-        app:title="Password change"
+        android:inputType="textPassword"
         android:summary="Change your wallet's password"
-        android:inputType="textPassword"/>
+        app:key="password"
+        app:title="Password change" />
+        -->
 
     <ListPreference
         app:key="network"
