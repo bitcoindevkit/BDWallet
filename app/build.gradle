@@ -63,4 +63,5 @@ dependencies {
     implementation "org.jetbrains.anko:anko-commons:0.10.4"
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+"
+    //implementation "org.bitcoindevkit.bdkjni:bdk-jni:0.1.0-beta.1" UNCOMMENT WHEN EVERYONE HAS MAVEN SETUP
 }
