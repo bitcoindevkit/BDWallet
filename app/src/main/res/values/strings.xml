@@ -15,14 +15,30 @@
   -->
 
 <resources>
+    <!--High-level app strings-->
     <string name="app_name">BDWallet</string>
     <string name="logo_desc">logo</string>
     <string name="title_balance">Balance</string>
     <string name="title_deposit">Deposit</string>
     <string name="title_withdraw">Withdraw</string>
     <string name="title_init">Init</string>
-    <string name="init_inst">Write down your twelve wallet seed words and click OK when done. This is the only time you will be shown these words.</string>
-    <string name="init_ok">OK</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <!--Buttons-->
+    <string name="create_wallet_btn">Create Wallet</string>
+    <string name="create_btn">Create</string>
+    <string name="set_password_btn">Set Password</string>
+    <string name="recover_wallet_btn">Recover Wallet</string>
+    <string name="recover_btn">Recover</string>
+    <string name="review_btn">Review Payment</string>
+    <string name="ok_btn">OK</string>
+    <string name="history_btn">Transaction History</string>
+    <string name="back_btn">BACK</string>
+    <string name="share_btn">Share</string>
+    <string name="continue_btn">CONTINUE</string>
+    <string name="send_btn">SEND</string>
+
+    <!--Wallet recovery/init-->
     <string name="seed_index_1">1.</string>
     <string name="seed_index_2">2.</string>
     <string name="seed_index_3">3.</string>
@@ -37,66 +53,58 @@
     <string name="seed_index_12">12.</string>
     <string name="btc_units">BTC</string>
     <string name="sat_units">SAT</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
+    <string name="init_inst">Write down your twelve wallet seed words and click OK when done. This is the only time you will be shown these words.</string>
     <string name="prompt_password">Enter Wallet password</string>
     <string name="prompt_create_password">Create password</string>
     <string name="prompt_conf_password">Confirm password</string>
-    <string name="prompt_address">Recipient address</string>
-    <string name="prompt_amount">Amount</string>
-    <string name="prompt_password_send">Wallet password</string>
-    <string name="password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">Invalid password</string>
-    <string name="ok_btn">OK</string>
-    <string name="recover_wallet_btn">Recover Wallet</string>
-    <string name="recover_btn">Recover</string>
-    <string name="history_btn">Transaction History</string>
-    <string name="review_btn">Review Payment</string>
     <string name="create_wallet_subtitle">Your seed recovery phrase:</string>
     <string name="recover_wallet_subtitle">Enter your seed recovery phrase:</string>
-    <string name="address_subtitle">YOUR WALLET ADDRESS:</string>
-    <string name="create_wallet_btn">Create Wallet</string>
-    <string name="create_btn">Create</string>
-    <string name="set_password_btn">Set Password</string>
-    <string name="back_btn">BACK</string>
-    <string name="share_btn">Share</string>
+    <string name="login_failed">Invalid password</string>
     <string name="powered_by">POWERED BY</string>
     <string name="init_dialog_title">Welcome!</string>
-    <string name="continue_btn">CONTINUE</string>
     <string name="replaceable_seed_word">XXXXX</string>
-    <string name="replaceable_price">$XX,XXX.XX</string>
-    <string name="replaceable_price_review">X.XXXXX BTC ($XX,XXX.XX USD)</string>
-    <string name="replaceable_fee_review">X.XXXXX BTC (X.XXX%)</string>
-    <string name="replaceable_balance">X.XXXXX</string>
-    <string name="replaceable_address">2N6wxZpsMdehgvVAPkasFDoyMySXbU7SHkP</string>
-    <string name="balance_sat_label">SAT BALANCE</string>
-    <string name="balance_btc_label">BTC BALANCE</string>
-    <string name="price_btc_label">BTC PRICE</string>
-    <string name="balance_usd_label">USD VALUE</string>
     <string name="init_dialog_body">If you\'ve already created a wallet and have your seed phrase on-hand, select recover wallet.</string>
     <string name="reminder_dialog_title">Reminder</string>
     <string name="reminder_dialog_body">You will not be given this phrase again!</string>
     <string name="reminder_dialog_btn">I\'ve written it down</string>
     <string name="backup_dialog_title">Backup Your Wallet</string>
     <string name="backup_dialog_body">Your seed phrase can be used to recover your wallet. It will only be given to you once, so write it down in-order on a piece of paper (we do not recommend saving your phrase as a digital copy anywhere).</string>
-    <string name="toast_invalid_password">Password must be 8-20 characters</string>
+    <string name="toast_invalid_password">Password must be 8–20 characters</string>
+
+    <!--Withdraw fragment-->
+    <string name="prompt_address">Recipient address</string>
+    <string name="prompt_amount">Amount</string>
+    <string name="prompt_password_send">Wallet password</string>
+    <string name="replaceable_price_review">X.XXXXX BTC ($XX,XXX.XX USD)</string>
+    <string name="replaceable_fee_review">X.XXXXX BTC (X.XXX%)</string>
     <string name="toast_password_match">Passwords do not match</string>
     <string name="toast_invalid_seed_phrase">Invalid seed phrase</string>
     <string name="toast_invalid_address">Invalid recipient address</string>
     <string name="toast_insufficient_balance">Insufficient wallet balance</string>
-    <string name="share_address_extra">Deposit Address</string>
-    <string name="share_address_extra_title">Share Deposit Address</string>
     <string name="payment_dialog_title">Payment Review</string>
     <string name="payment_dialog_recipient">Recipient:</string>
     <string name="payment_dialog_amount">Amount:</string>
     <string name="payment_dialog_fee">Network fee:</string>
     <string name="payment_dialog_total">Total withdrawal:</string>
-    <string name="send_btn">SEND</string>
+
+    <!--Deposit fragment-->
+    <string name="address_subtitle">YOUR WALLET ADDRESS:</string>
+    <string name="replaceable_address">2N6wxZpsMdehgvVAPkasFDoyMySXbU7SHkP</string>
+    <string name="share_address_extra">Deposit Address</string>
+    <string name="share_address_extra_title">Share Deposit Address</string>
+
+    <!--Balance fragment-->
+    <string name="replaceable_price">$XX,XXX.XX</string>
+    <string name="replaceable_balance">X.XXXXX</string>
+    <string name="balance_sat_label">SAT BALANCE</string>
+    <string name="balance_btc_label">BTC BALANCE</string>
+    <string name="price_btc_label">BTC PRICE</string>
+    <string name="balance_usd_label">USD VALUE</string>
+
+    <!--History activity-->
+    <string name="history_empty_title">NOTHING HERE!</string>
+    <string name="history_empty_body">Your future transactions will display here.</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
@@ -108,7 +116,6 @@
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>
