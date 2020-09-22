@@ -37,7 +37,7 @@ import org.bdwallet.app.ui.wallet.settings.SettingsActivity
 
 class BalanceFragment : Fragment() {
 
-    private lateinit var balanceViewModel: BalanceViewModelOld
+    private lateinit var balanceViewModel: BalanceViewModel
 
     @SuppressLint("RestrictedApi")
     override fun onCreateView(
@@ -47,7 +47,7 @@ class BalanceFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_balance, container, false)
         super.onCreateView(inflater, container, savedInstanceState)
-        balanceViewModel = ViewModelProvider(this).get(BalanceViewModelOld::class.java)
+        balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
         val textView: TextView = root.findViewById(R.id.balance_crypto)
         balanceViewModel.balance.observe(viewLifecycleOwner, Observer {
             textView.text = it

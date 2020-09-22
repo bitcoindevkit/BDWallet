@@ -12,15 +12,10 @@ class EntryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // TEMPORARY way to check if wallet is initialized; should detect toml file instead
         val isWalletInitialized = getSharedPreferences(R.string.title_init.toString(), Context.MODE_PRIVATE)
             .getBoolean(R.string.title_init.toString(), false)
 
-        val intent = Intent(
-            this,
-            Class.forName(getNextActivityName(isWalletInitialized))
-        )
-        startActivity(intent)
+        startActivity(Intent(this, Class.forName(getNextActivityName(isWalletInitialized))))
     }
 
     private fun getNextActivityName(walletInitialized: Boolean): String {
