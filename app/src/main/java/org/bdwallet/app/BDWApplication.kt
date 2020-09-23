@@ -24,10 +24,13 @@ import org.bitcoindevkit.bdkjni.Types.*
 class BDWApplication : Application() {
     private lateinit var lib: Lib
     private lateinit var walletPtr: WalletPtr
-    private lateinit var walletConstructor: WalletConstructor
+    private lateinit var keys: ExtendedKeys
 
     override fun onCreate() {
         super.onCreate()
+        Lib.load()
+        this.lib = Lib()
+        instance = this
     }
 
     override fun onTerminate() {
@@ -36,19 +39,13 @@ class BDWApplication : Application() {
     }
 
     companion object {
-        init {
-            Lib.load()
-        }
-    }
-
-    fun startLib(): BDWApplication {
-        // TODO: check if toml file is present?
-        lib = Lib()
-        return this
+        lateinit var instance: BDWApplication
+            private set
     }
 
     fun createWallet(descriptor: String) {
         // TODO these hardcoded values may need to change eventually
+        // TODO save the descriptor so that it can be loaded
         this.constructor(
             "testnet",
             Network.testnet,
@@ -70,8 +67,8 @@ class BDWApplication : Application() {
     ) {
         // TODO: uncomment below two lines when ready to start testing
         // TODO: bottom line causes runtime exception "CantOpenDb(Io(Os{Read-only file system}))" - Ethan
-        //this.walletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
-        //this.walletPtr = this.lib.constructor(this.walletConstructor)
+        //val walletConstructor: WalletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
+        //this.walletPtr = this.lib.constructor(walletConstructor)
     }
 
     // Returns a new public address for depositing into this wallet
@@ -132,11 +129,21 @@ class BDWApplication : Application() {
         return this.lib.public_descriptors(this.walletPtr)
     }
 
+    // Generate a new mnemonic and tpriv, save the ExtendedKeys object (for creating wallet)
     fun generateExtendedKey(network: Network, mnemonicWordCount: Int): ExtendedKeys {
-        return this.lib.generate_extended_key(network, mnemonicWordCount)
+        this.keys = this.lib.generate_extended_key(network, mnemonicWordCount)
+        return this.keys
     }
 
+    // Use a mnemonic to calculate the tpriv, save the ExtendedKeys object (for recovering wallet)
     fun createExtendedKeys(network: Network, mnemonic: String): ExtendedKeys {
-        return this.lib.create_extended_keys(network, mnemonic)
+        this.keys = this.lib.create_extended_keys(network, mnemonic)
+        return this.keys
+    }
+
+    // Concatenate tpriv to create descriptor, save the ExtendedKeys object (redundant but fine)
+    fun createDescriptor(keys: ExtendedKeys): String {
+        this.keys = keys
+        return ("wpkh(" + this.keys.ext_priv_key + "/0/*)")
     }
 }
