@@ -5,17 +5,32 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.WalletActivity
+import org.bitcoindevkit.bdkjni.Types.*
 
 class CreateWalletSeedActivity : AppCompatActivity() {
+    private lateinit var keys: ExtendedKeys
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_wallet_seed)
-        addButtonListener()
-        showBackupDialog()
+        this.fillSeedWords()
+        this.addButtonListener()
+        this.showBackupDialog()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) // enable back button on action bar
+    }
+
+    private fun fillSeedWords() {
+        this.keys = BDWApplication.instance.generateExtendedKey(Network.testnet, 12)
+        val words: List<String> = this.keys.mnemonic.split(' ')
+        val seedViews: List<Int> = listOfNotNull<Int>(R.id.seed_text_1, R.id.seed_text_2, R.id.seed_text_3, R.id.seed_text_4,
+            R.id.seed_text_5, R.id.seed_text_6, R.id.seed_text_7, R.id.seed_text_8, R.id.seed_text_9, R.id.seed_text_10,
+            R.id.seed_text_11, R.id.seed_text_12)
+        for (x in 0..11)
+            findViewById<TextView>(seedViews[x]).text = words[x]
     }
 
     private fun addButtonListener() {
@@ -49,9 +64,8 @@ class CreateWalletSeedActivity : AppCompatActivity() {
             .setCancelable(false)
             .setNegativeButton(R.string.back_btn) { _, _ -> }
             .setPositiveButton(R.string.reminder_dialog_btn) { _, _ ->
-                // TODO: create wallet in bdk
-                val app = application as BDWApplication
-                app.startLib().createWallet("") //TODO descriptor goes here
+                val descriptor: String = BDWApplication.instance.createDescriptor(this.keys)
+                BDWApplication.instance.createWallet(descriptor)
                 finish()
                 startActivity(Intent(this, WalletActivity::class.java))
             }
