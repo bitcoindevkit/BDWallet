@@ -53,6 +53,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.preference:preference:1.1.0'
+    implementation 'androidx.room:room-runtime:2.2.2'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -63,5 +64,12 @@ dependencies {
     implementation "org.jetbrains.anko:anko-commons:0.10.4"
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+"
+
+
+    implementation 'com.jaredrummler:material-spinner:1.3.1' //material spinnner
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0' //retrofit
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    annotationProcessor 'androidx.room:room-compiler:2.2.2'
     //implementation "org.bitcoindevkit.bdkjni:bdk-jni:0.1.0-beta.1" UNCOMMENT WHEN EVERYONE HAS MAVEN SETUP
 }
