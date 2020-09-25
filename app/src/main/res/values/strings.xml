@@ -104,6 +104,9 @@
     <!--History activity-->
     <string name="history_empty_title">NOTHING HERE!</string>
     <string name="history_empty_body">Your future transactions will display here.</string>
+    <string name="replaceable_balance_btc">X.XXXXX BTC</string>
+    <string name="replaceable_time">XX:XX XM</string>
+    <string name="replaceable_date">XXXXXXXX XX, 20XX</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
