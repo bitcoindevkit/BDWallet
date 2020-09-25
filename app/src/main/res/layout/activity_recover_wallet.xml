@@ -34,7 +34,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_1"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
@@ -59,7 +59,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_1" />
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/seed_text_1"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -75,7 +75,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_2"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
@@ -116,7 +116,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_3"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
@@ -157,7 +157,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_4"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
@@ -198,7 +198,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_5"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
@@ -239,7 +239,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_6"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
@@ -280,7 +280,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_7"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
@@ -321,7 +321,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_8"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
@@ -362,7 +362,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_9"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
@@ -403,7 +403,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_10"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
@@ -444,7 +444,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_11"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"
@@ -485,7 +485,7 @@
 
             <ImageView
                 android:id="@+id/seed_background_12"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="19dp"

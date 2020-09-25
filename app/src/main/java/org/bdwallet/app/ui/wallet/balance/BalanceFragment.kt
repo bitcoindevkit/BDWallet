@@ -87,6 +87,7 @@ class BalanceFragment : Fragment() {
 //        val fromCoin = fromSpinner.getItems<String>()[fromSpinner.selectedIndex]
         val coinName = "BTC"
         val fromCoin = "USD"
+        coinService = Common.getCoinService() // Ethan had to add this line to prevent null pointer exception
         coinService!!.calculateValue(fromCoin, coinName).enqueue(object : retrofit2.Callback<Coin> {
             override fun onFailure(call: Call<Coin>?, t: Throwable?) {
 
