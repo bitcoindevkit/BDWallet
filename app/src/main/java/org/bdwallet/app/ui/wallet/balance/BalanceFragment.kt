@@ -53,18 +53,22 @@ class BalanceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val root = inflater.inflate(R.layout.fragment_balance, container, false)
+        coinService = Common.getCoinService()
         super.onCreateView(inflater, container, savedInstanceState)
         balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
-
+        val root = inflater.inflate(R.layout.fragment_balance, container, false)
         ////
 //        convertedValueTxtView = root.findViewById(R.id.balance_crypto)
+//        val textView: TextView = root.findViewById(R.id.text_balance)
         beforeconvertedValueTxtView = root.findViewById(R.id.balance_local)
         ////
         convertedValueTxtView = root.findViewById(R.id.balance_crypto)
-        balanceViewModel.balance.observe(viewLifecycleOwner, Observer {
-            convertedValueTxtView.text = it
-        })
+        convertedValueTxtView.text = "1"
+        //TODO: Unable to test it untile getbalace could use
+//        beforeconvertedValueTxtView.text = "12345"
+//        balanceViewModel.balance.observe(viewLifecycleOwner, Observer {
+//            beforeconvertedValueTxtView.text = it
+//        })
         calculateValue()
         var walletActivity = activity as AppCompatActivity
 //        walletActivity.supportActionBar?.setShowHideAnimationEnabled(false)
@@ -85,16 +89,17 @@ class BalanceFragment : Fragment() {
 
 //        val coinName = toSpinner.getItems<String>()[toSpinner.selectedIndex]
 //        val fromCoin = fromSpinner.getItems<String>()[fromSpinner.selectedIndex]
-        val coinName = "BTC"
-        val fromCoin = "USD"
-        coinService = Common.getCoinService() // Ethan had to add this line to prevent null pointer exception
+        val coinName = "USD"
+        val fromCoin = "BTC"
+//        coinService = Common.getCoinService() // Ethan had to add this line to prevent null pointer exception
         coinService!!.calculateValue(fromCoin, coinName).enqueue(object : retrofit2.Callback<Coin> {
             override fun onFailure(call: Call<Coin>?, t: Throwable?) {
 
             }
             override fun onResponse(call: Call<Coin>?, response: Response<Coin>?) {
                 //SUCCESS
-                showData(response!!.body()!!.BTC)
+                println("SUCCESS")
+                showData(response!!.body()!!.USD)
             }
         })
     }

@@ -89,6 +89,7 @@ class BDWApplication : Application() {
 
     // Returns the total balance of this wallet (the sum of UTXOs)
     fun getBalance(): Long {
+//        walletPtr = 100
         return this.lib.get_balance(this.walletPtr)
     }
 
