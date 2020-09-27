@@ -59,7 +59,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_1" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_1"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -100,7 +100,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_2" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_2"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -141,7 +141,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_3" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_3"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -182,7 +182,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_4" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_4"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -223,7 +223,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_5" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_5"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -264,7 +264,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_6" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_6"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -305,7 +305,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_7" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_7"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -346,7 +346,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_8" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_8"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -387,7 +387,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_9" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_9"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -428,7 +428,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_10" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_10"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -469,7 +469,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_11" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_11"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
@@ -510,7 +510,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/seed_background_12" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/seed_text_12"
                 android:layout_width="197dp"
                 android:layout_height="24dp"
