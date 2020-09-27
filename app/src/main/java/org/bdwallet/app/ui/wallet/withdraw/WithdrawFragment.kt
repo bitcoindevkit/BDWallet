@@ -31,7 +31,12 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
+import org.bitcoindevkit.bdkjni.Types.CreateTxResponse
+import org.bitcoindevkit.bdkjni.Types.RawTransaction
+import org.bitcoindevkit.bdkjni.Types.SignResponse
+import org.bitcoindevkit.bdkjni.Types.Txid
 
 class WithdrawFragment : Fragment() {
 
@@ -74,7 +79,15 @@ class WithdrawFragment : Fragment() {
         dialog.setContentView(R.layout.dialog_review)
         val sendButton = dialog.findViewById<TextView>(R.id.send_btn_text)
         sendButton.setOnClickListener {
-            // TODO: check balance and broadcast transaction
+            // TODO: check balance, verify address
+            // var fee_rate: Float = 100 // TODO?
+            // var addresses: List<Pair<String, String>> = null // TODO?
+            // var utxos: List<String>? = null // TODO?
+            // val createResp: CreateTxResponse = BDWApplication.instance.createTx(fee_rate, addresses, false, utxos, null, null)
+            // val signResp: SignResponse = BDWApplication.instance.sign(createResp.psbt)
+            // val rawTx: RawTransaction = BDWApplication.instance.extract_psbt(signResp.psbt)
+            // val txid: Txid = BDWApplication.instance.broadcast(rawTx.transaction)
+            // TODO save txid?
         }
         val backButton = dialog.findViewById<TextView>(R.id.back_btn_text)
         backButton.setOnClickListener {
