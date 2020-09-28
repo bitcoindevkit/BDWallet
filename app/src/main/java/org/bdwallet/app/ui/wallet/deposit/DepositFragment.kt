@@ -17,8 +17,10 @@
 package org.bdwallet.app.ui.wallet.deposit
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +34,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import org.bdwallet.app.R
+import java.net.URL
+
 
 class DepositFragment : Fragment() {
 
@@ -48,17 +52,36 @@ class DepositFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_deposit, container, false)
         val textView: TextView = root.findViewById(R.id.wallet_address)
         val qr_code: ImageView = root.findViewById(R.id.qr_code);
-        depositViewModel.text.observe(viewLifecycleOwner, Observer {
-            //textView.text = it
-        })
 
-        addButtonListener(root.findViewById(R.id.share_btn), root.findViewById<TextView>(R.id.wallet_address).text.toString())
+
+        //Test Mode
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+
+        StrictMode.setThreadPolicy(policy)
+        var  address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
+        depositViewModel.text.observe(viewLifecycleOwner, Observer {
+//            address = it
+        })
+        textView.text = address
+        var urlAddress = "https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address
+        val url = URL(urlAddress)
+
+        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+        qr_code.setImageBitmap(bmp)
+        addButtonListener(
+            root.findViewById(R.id.share_btn),
+            root.findViewById<TextView>(R.id.wallet_address).text.toString()
+        )
         val walletActivity = activity as AppCompatActivity
         walletActivity.supportActionBar!!.show()
-        walletActivity.window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.darkBlue)
+        walletActivity.window.statusBarColor = ContextCompat.getColor(
+            requireContext(),
+            R.color.darkBlue
+        )
         return root
 
         //qr_code
+
     }
 
     private fun addButtonListener(button: Button, address: String) {
