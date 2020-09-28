@@ -20,6 +20,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import org.bdwallet.app.BDWApplication
 
 private const val TAG = "DepositViewModel"
 
@@ -29,6 +30,8 @@ class DepositViewModel(application: Application) : AndroidViewModel(application)
         //val app = application as ExampleApp
         //value = app.getDepositAddress()
         //Log.d(TAG, "deposit address: $value")
+        //TODO: The address is not working.
+//        value = BDWApplication.instance.getNewAddress()
     }
     val text: LiveData<String> = _text
 }
