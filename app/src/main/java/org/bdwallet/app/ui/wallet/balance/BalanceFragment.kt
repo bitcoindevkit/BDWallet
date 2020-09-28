@@ -17,9 +17,11 @@
 package org.bdwallet.app.ui.wallet.balance
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +33,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.jaredrummler.materialspinner.MaterialSpinner
+import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.history.HistoryActivity
 import org.bdwallet.app.ui.wallet.settings.SettingsActivity
@@ -43,6 +46,7 @@ class BalanceFragment : Fragment() {
     private lateinit var balanceViewModel: BalanceViewModel
     lateinit var convertedValueTxtView: TextView
     lateinit var beforeconvertedValueTxtView: TextView
+    lateinit var btcPrice: TextView
     private val money = arrayOf("USD", "EUR", "GBP")
     private val coin = arrayOf("BTC", "ETH", "ETC", "XRP", "LTC", "XMR", "DASH", "MAID", "AUR", "XEM")
 
@@ -63,13 +67,17 @@ class BalanceFragment : Fragment() {
         beforeconvertedValueTxtView = root.findViewById(R.id.balance_local)
         ////
         convertedValueTxtView = root.findViewById(R.id.balance_crypto)
-        convertedValueTxtView.text = "1"
+        btcPrice = root.findViewById(R.id.price_crypto)
+//        convertedValueTxtView.text = "1"
+        var amount:String = BDWApplication.instance.getBalance().toString()
+        convertedValueTxtView.text = amount
+
         //TODO: Unable to test it untile getbalace could use
 //        beforeconvertedValueTxtView.text = "12345"
 //        balanceViewModel.balance.observe(viewLifecycleOwner, Observer {
 //            beforeconvertedValueTxtView.text = it
 //        })
-        calculateValue()
+        calculateValue(amount)
         var walletActivity = activity as AppCompatActivity
 //        walletActivity.supportActionBar?.setShowHideAnimationEnabled(false)
         walletActivity.supportActionBar?.hide()
@@ -85,7 +93,7 @@ class BalanceFragment : Fragment() {
         super.onResume()
     }
     //////
-    private fun calculateValue(){
+    private fun calculateValue(userBalance: String){
 
 //        val coinName = toSpinner.getItems<String>()[toSpinner.selectedIndex]
 //        val fromCoin = fromSpinner.getItems<String>()[fromSpinner.selectedIndex]
@@ -99,14 +107,17 @@ class BalanceFragment : Fragment() {
             override fun onResponse(call: Call<Coin>?, response: Response<Coin>?) {
                 //SUCCESS
                 println("SUCCESS")
-                showData(response!!.body()!!.USD)
+                showData(userBalance,response!!.body()!!.USD)
             }
         })
     }
     /////
 
-    private fun showData(coinName: String) {
-        beforeconvertedValueTxtView.setText(coinName);
+    private fun showData(userBalance: String, coinName: String) {
+        println(coinName)
+        var result:Double = userBalance.toDouble() * coinName.toDouble()
+        btcPrice.setText("$ " + coinName)
+        beforeconvertedValueTxtView.setText("$ " + result.toString());
     }
     private fun addButtonListener(settingsButton: ImageButton, historyButton: Button) {
         settingsButton.setOnClickListener {

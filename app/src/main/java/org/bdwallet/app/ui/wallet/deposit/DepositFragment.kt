@@ -33,6 +33,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import java.net.URL
 
@@ -58,11 +59,13 @@ class DepositFragment : Fragment() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
 
         StrictMode.setThreadPolicy(policy)
-        var address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
-        depositViewModel.text.observe(viewLifecycleOwner, Observer {
+//        var address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
+        var address:String = BDWApplication.instance.getNewAddress()
+//        depositViewModel.text.observe(viewLifecycleOwner, Observer {
 //            address = it
-        })
+//        })
         textView.text = address
+
         val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
 
         val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
