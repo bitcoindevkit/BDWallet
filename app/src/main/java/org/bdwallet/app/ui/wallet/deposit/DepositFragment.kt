@@ -58,13 +58,12 @@ class DepositFragment : Fragment() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
 
         StrictMode.setThreadPolicy(policy)
-        var  address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
+        var address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
         depositViewModel.text.observe(viewLifecycleOwner, Observer {
 //            address = it
         })
         textView.text = address
-        var urlAddress = "https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address
-        val url = URL(urlAddress)
+        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
 
         val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
         qr_code.setImageBitmap(bmp)
@@ -79,9 +78,6 @@ class DepositFragment : Fragment() {
             R.color.darkBlue
         )
         return root
-
-        //qr_code
-
     }
 
     private fun addButtonListener(button: Button, address: String) {

@@ -3,7 +3,6 @@ package org.bdwallet.app.ui.init
 import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import org.bdwallet.app.BDWApplication
@@ -14,8 +13,8 @@ import org.bitcoindevkit.bdkjni.Types.*
 class CreateWalletSeedActivity : AppCompatActivity() {
     private lateinit var keys: ExtendedKeys
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         setContentView(R.layout.activity_create_wallet_seed)
         this.fillSeedWords()
         this.addButtonListener()
