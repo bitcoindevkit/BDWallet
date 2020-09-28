@@ -17,6 +17,7 @@
 package org.bdwallet.app
 
 import android.app.Application
+import android.util.Log
 import org.bitcoindevkit.bdkjni.Lib
 import org.bitcoindevkit.bdkjni.Types.*
 
@@ -46,10 +47,11 @@ class BDWApplication : Application() {
     fun createWallet(descriptor: String) {
         // TODO these hardcoded values may need to change eventually
         // TODO save the descriptor so that it can be loaded
+        Log.d("DESCRIPTOR", "DESC: $descriptor")
         this.constructor(
             "testnet",
             Network.testnet,
-            "",
+            this.applicationContext.filesDir.toString(),
             descriptor,
             null,
             "tcp://testnet.aranguren.org:51001",
@@ -65,10 +67,8 @@ class BDWApplication : Application() {
         electrum_url: String,
         electrum_proxy: String?,
     ) {
-        // TODO: uncomment below two lines when ready to start testing
-        // TODO: bottom line causes runtime exception "CantOpenDb(Io(Os{Read-only file system}))" - Ethan
-        //val walletConstructor: WalletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
-        //this.walletPtr = this.lib.constructor(walletConstructor)
+        val walletConstructor: WalletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
+        this.walletPtr = this.lib.constructor(walletConstructor)
     }
 
     // Returns a new public address for depositing into this wallet
