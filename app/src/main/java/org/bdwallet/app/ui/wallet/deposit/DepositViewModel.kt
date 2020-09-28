@@ -17,6 +17,7 @@
 package org.bdwallet.app.ui.wallet.deposit
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,7 +32,8 @@ class DepositViewModel(application: Application) : AndroidViewModel(application)
         //value = app.getDepositAddress()
         //Log.d(TAG, "deposit address: $value")
         //TODO: The address is not working.
-//        value = BDWApplication.instance.getNewAddress()
+        value = BDWApplication.instance.getNewAddress()
+//        Log.d(TAG, "%%%%%%%%%deposit address: $value")
     }
     val text: LiveData<String> = _text
 }
