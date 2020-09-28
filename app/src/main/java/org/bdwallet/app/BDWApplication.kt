@@ -17,7 +17,8 @@
 package org.bdwallet.app
 
 import android.app.Application
-import android.util.Log
+import android.content.Context
+import android.content.SharedPreferences
 import org.bitcoindevkit.bdkjni.Lib
 import org.bitcoindevkit.bdkjni.Types.*
 
@@ -44,21 +45,38 @@ class BDWApplication : Application() {
             private set
     }
 
-    fun createWallet(descriptor: String) {
-        // TODO these hardcoded values may need to change eventually
-        // TODO save the descriptor so that it can be loaded
-        Log.d("DESCRIPTOR", "DESC: $descriptor")
-        this.constructor(
-            "testnet",
-            Network.testnet,
-            this.applicationContext.filesDir.toString(),
-            descriptor,
-            null,
-            "tcp://testnet.aranguren.org:51001",
-            null)
+    fun getNetworkMap(): Map<String, Network> {
+        return mapOf(
+            "testnet" to Network.testnet,
+            "regtest" to Network.regtest,
+            //"mainnet" to Network.mainnet,
+        )
     }
 
-    private fun constructor(
+    // To be called by the CreateWallet and RecoverWallet viewmodels
+    // Saves the wallet constructor parameters in SharedPreferences
+    fun createWallet(descriptor: String) {
+        // TODO these default values will need to change eventually
+        val name = "testnet"
+        val network = "testnet"
+        val path = this.applicationContext.filesDir.toString()
+        val electrumUrl = "tcp://testnet.aranguren.org:51001"
+
+        // Save the constructor parameters so that wallet can be reloaded
+        val editor: SharedPreferences.Editor = getSharedPreferences("saved_wallet", Context.MODE_PRIVATE).edit()
+        editor.putBoolean("initialized", true)
+        editor.putString("name", name)
+        editor.putString("network", network)
+        editor.putString("path", path)
+        editor.putString("descriptor", descriptor)
+        editor.putString("electrum_url", electrumUrl)
+        editor.commit()
+
+        this.constructor(name, this.getNetworkMap().getValue(network), path, descriptor, null, electrumUrl, null)
+    }
+
+    // To be called directly when auto-loading the wallet
+    fun constructor(
         name: String,
         network: Network, // ex. Network.testnet or Network.regtest
         path: String,
@@ -89,7 +107,6 @@ class BDWApplication : Application() {
 
     // Returns the total balance of this wallet (the sum of UTXOs)
     fun getBalance(): Long {
-//        walletPtr = 100
         return this.lib.get_balance(this.walletPtr)
     }
 
