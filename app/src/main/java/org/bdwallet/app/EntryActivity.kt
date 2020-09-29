@@ -17,16 +17,23 @@ class EntryActivity : AppCompatActivity() {
 
         val isWalletInitialized: Boolean = savedWallet.contains("initialized") && savedWallet.getBoolean("initialized", false)
         if (isWalletInitialized) {
-            val name: String = savedWallet.getString("name", "testnet")!!
-            val network: String = savedWallet.getString("network", "testnet")!!
-            val path: String = savedWallet.getString("path", "")!!
-            val descriptor: String = savedWallet.getString("descriptor", "")!!
-            val electrumUrl: String = savedWallet.getString("electrum_url", "")!!
+            val name: String = savedWallet.getString("name", null)!!
+            val network: String = savedWallet.getString("network", null)!!
+            val path: String = savedWallet.getString("path", null)!!
+            val descriptor: String = savedWallet.getString("descriptor", null)!!
+            val electrumUrl: String = savedWallet.getString("electrum_url", null)!!
 
             val networkMap: Map<String, Network> = BDWApplication.instance.getNetworkMap()
-            BDWApplication.instance.constructor(name, networkMap.getValue(network), path, descriptor, null, electrumUrl, null)
+            BDWApplication.instance.initialize(
+                name,
+                network,
+                path,
+                descriptor,
+                null,
+                electrumUrl,
+                null
+            )
         }
-
         startActivity(Intent(this, Class.forName(getNextActivityName(isWalletInitialized))))
     }
 

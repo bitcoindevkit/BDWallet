@@ -23,7 +23,7 @@ class CreateWalletSeedActivity : AppCompatActivity() {
     }
 
     private fun fillSeedWords() {
-        this.keys = BDWApplication.instance.generateExtendedKey(Network.testnet, 12)
+        this.keys = BDWApplication.instance.generateExtendedKey(12)
         val words: List<String> = this.keys.mnemonic.split(' ')
         val seedViews: List<Int> = listOfNotNull<Int>(R.id.seed_text_1, R.id.seed_text_2, R.id.seed_text_3, R.id.seed_text_4,
             R.id.seed_text_5, R.id.seed_text_6, R.id.seed_text_7, R.id.seed_text_8, R.id.seed_text_9, R.id.seed_text_10,
