@@ -26,11 +26,10 @@ import org.bdwallet.app.BDWApplication
 class BalanceViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _balance = MutableLiveData<String>().apply {
-        val app = application as BDWApplication
         //TODO: Unable to test it untile getbalace could use
-//        value = BDWApplication.instance.getBalance().toString()
+        value = BDWApplication.instance.getBalance().toString()
     }
     //TODO: Unable to test it untile getbalace could use
-//    val balance: LiveData<String> = _balance
+    val balance: LiveData<String> = _balance
 
 }
