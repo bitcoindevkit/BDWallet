@@ -14,10 +14,6 @@ import org.bdwallet.app.ui.wallet.WalletActivity
 import org.bitcoindevkit.bdkjni.Types.ExtendedKeys
 
 
-import org.bitcoindevkit.bdkjni.Types.Network
-import org.bitcoindevkit.bdkjni.Types.WalletPtr
-
-
 import java.lang.reflect.InvocationTargetException
 
 
@@ -25,6 +21,7 @@ class RecoverWalletActivity : AppCompatActivity() {
 
     private lateinit var viewList : List<Int>
     private lateinit var keys: ExtendedKeys
+    private lateinit var wordList : List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +34,12 @@ class RecoverWalletActivity : AppCompatActivity() {
     private fun addButtonListener() {
         val createButton = findViewById<Button>(R.id.recover_btn)
         createButton.setOnClickListener {
-            startActivity(Intent(this, WalletActivity::class.java))
 
             if (!this.checkSeedWords()) { //if valid seed words
-
+                this.showInvalidPhraseToast()
             } else {
                 this.loadWallet()
+                startActivity(Intent(this, WalletActivity::class.java))
             }
         }
     }
@@ -55,16 +52,28 @@ class RecoverWalletActivity : AppCompatActivity() {
     private fun checkSeedWords(): Boolean {
         //gather all text in autocompleteview and create mnemonic
 
-        var mnemonicString = findViewById<AutoCompleteTextView>(R.id.seed_text_1).text
+        var mnemonicString = findViewById<AutoCompleteTextView>(R.id.seed_text_1).text //initialize Editable! so we can append to it
+
+        if(this.wordList.contains(mnemonicString.toString())){
+            this.showInvalidPhraseToast()
+            return false
+        }
+
         for (x in 1..11) {
             val seedWord = findViewById<AutoCompleteTextView>(this.viewList[x]).text
+
+            if(this.wordList.contains(seedWord.toString())){
+                return false
+            }
             mnemonicString.append(seedWord)
         }
 
         try {
+
             this.keys = BDWApplication.instance.createExtendedKeys(mnemonicString.toString())
+
         } catch (e: InvocationTargetException) {
-            this.showInvalidPhraseToast()
+
             return false
         }
 
@@ -83,7 +92,7 @@ class RecoverWalletActivity : AppCompatActivity() {
         val inputString = applicationContext.assets.open(filename).bufferedReader().use {
             it.readText()
         }
-        val wordList: List<String> = inputString.split("\n")
+        wordList = inputString.split("\n")
 
         this.viewList = listOfNotNull<Int>(R.id.seed_text_1,R.id.seed_text_2, R.id.seed_text_3, R.id.seed_text_4, R.id.seed_text_5, //get AutoCompleteTextViews in list
             R.id.seed_text_6, R.id.seed_text_7, R.id.seed_text_8, R.id.seed_text_9, R.id.seed_text_10, R.id.seed_text_11, R.id.seed_text_12)
