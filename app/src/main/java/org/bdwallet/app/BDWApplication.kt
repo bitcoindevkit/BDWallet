@@ -26,12 +26,22 @@ import org.bitcoindevkit.bdkjni.Types.*
 class BDWApplication : Application() {
     private lateinit var lib: Lib
     private lateinit var walletPtr: WalletPtr
-    private lateinit var keys: ExtendedKeys
+    private lateinit var name: String
+    private lateinit var network: String
+    private lateinit var path: String
+    private lateinit var descriptor: String
+    private lateinit var electrumUrl: String
+
+    companion object {
+        lateinit var instance: BDWApplication
+            private set
+    }
 
     override fun onCreate() {
         super.onCreate()
         Lib.load()
         this.lib = Lib()
+        this.setDefaults()
         instance = this
     }
 
@@ -40,11 +50,15 @@ class BDWApplication : Application() {
         this.lib.destructor(this.walletPtr)
     }
 
-    companion object {
-        lateinit var instance: BDWApplication
-            private set
+    // Set default wallet settings - TODO these will have to change eventually
+    private fun setDefaults() {
+        this.name = "testnet"
+        this.network = "testnet"
+        this.path = this.applicationContext.filesDir.toString()
+        this.electrumUrl = "tcp://testnet.aranguren.org:51001"
     }
 
+    // Get mapping from String to Network enum
     fun getNetworkMap(): Map<String, Network> {
         return mapOf(
             "testnet" to Network.testnet,
@@ -53,46 +67,68 @@ class BDWApplication : Application() {
         )
     }
 
-    // To be called by the CreateWallet and RecoverWallet viewmodels
-    // Saves the wallet constructor parameters in SharedPreferences
-    fun createWallet(descriptor: String) {
-        // TODO these default values will need to change eventually
-        val name = "testnet"
-        val network = "testnet"
-        val path = this.applicationContext.filesDir.toString()
-        val electrumUrl = "tcp://testnet.aranguren.org:51001"
-
-        // Save the constructor parameters so that wallet can be reloaded
-        val editor: SharedPreferences.Editor = getSharedPreferences("saved_wallet", Context.MODE_PRIVATE).edit()
-        editor.putBoolean("initialized", true)
-        editor.putString("name", name)
-        editor.putString("network", network)
-        editor.putString("path", path)
-        editor.putString("descriptor", descriptor)
-        editor.putString("electrum_url", electrumUrl)
-        editor.commit()
-
-        this.constructor(name, this.getNetworkMap().getValue(network), path, descriptor, null, electrumUrl, null)
-    }
-
-    // To be called directly when auto-loading the wallet
-    fun constructor(
+    // To be called directly when auto-loading a saved wallet
+    // Initializes data members and creates/opens a wallet
+    fun initialize(
         name: String,
-        network: Network, // ex. Network.testnet or Network.regtest
+        network: String,
         path: String,
         descriptor: String,
         change_descriptor: String?,
         electrum_url: String,
         electrum_proxy: String?,
     ) {
-        val walletConstructor: WalletConstructor = WalletConstructor(name, network, path, descriptor, change_descriptor, electrum_url, electrum_proxy)
-        this.walletPtr = this.lib.constructor(walletConstructor)
+        this.name = name
+        this.network = network
+        this.path = path
+        this.descriptor = descriptor
+        this.electrumUrl = electrum_url
+
+        this.walletPtr = this.lib.constructor(
+            WalletConstructor(
+                name,
+                this.getNetworkMap().getValue(network),
+                path,
+                descriptor,
+                change_descriptor,
+                electrum_url,
+                electrum_proxy
+            )
+        )
+    }
+
+    // To be called by the CreateWallet and RecoverWallet viewmodels
+    // Constructs a new wallet with default values
+    // Saves the wallet constructor parameters in SharedPreferences
+    fun createWallet(descriptor: String) {
+        this.setDefaults()
+        this.initialize(
+            this.name,
+            this.network,
+            this.path,
+            descriptor,
+            null,
+            this.electrumUrl,
+            null
+        )
+        this.saveWalletPrefs()
+    }
+
+    // Save the constructor parameters so that wallet can be reloaded
+    private fun saveWalletPrefs() {
+        val editor: SharedPreferences.Editor = getSharedPreferences("saved_wallet", Context.MODE_PRIVATE).edit()
+        editor.putBoolean("initialized", true)
+        editor.putString("name", this.name)
+        editor.putString("network", this.network)
+        editor.putString("path", this.path)
+        editor.putString("descriptor", this.descriptor)
+        editor.putString("electrum_url", this.electrumUrl)
+        editor.commit()
     }
 
     // Returns a new public address for depositing into this wallet
     fun getNewAddress(): String {
         return this.lib.get_new_address(this.walletPtr)
-        // TODO does toml file need to be manually updated?
     }
 
     fun sync(max_address: Int?=null) {
@@ -147,21 +183,18 @@ class BDWApplication : Application() {
         return this.lib.public_descriptors(this.walletPtr)
     }
 
-    // Generate a new mnemonic and tpriv, save the ExtendedKeys object (for creating wallet)
-    fun generateExtendedKey(network: Network, mnemonicWordCount: Int): ExtendedKeys {
-        this.keys = this.lib.generate_extended_key(network, mnemonicWordCount)
-        return this.keys
+    // Generate a new mnemonic and tpriv (for creating wallet)
+    fun generateExtendedKey(mnemonicWordCount: Int): ExtendedKeys {
+        return this.lib.generate_extended_key(this.getNetworkMap().getValue(this.network), mnemonicWordCount)
     }
 
-    // Use a mnemonic to calculate the tpriv, save the ExtendedKeys object (for recovering wallet)
-    fun createExtendedKeys(network: Network, mnemonic: String): ExtendedKeys {
-        this.keys = this.lib.create_extended_keys(network, mnemonic)
-        return this.keys
+    // Use a mnemonic to calculate the tpriv (for recovering wallet)
+    fun createExtendedKeys(mnemonic: String): ExtendedKeys {
+        return this.lib.create_extended_keys(this.getNetworkMap().getValue(this.network), mnemonic)
     }
 
-    // Concatenate tpriv to create descriptor, save the ExtendedKeys object (redundant but fine)
+    // Concatenate tpriv to create descriptor
     fun createDescriptor(keys: ExtendedKeys): String {
-        this.keys = keys
-        return ("wpkh(" + this.keys.ext_priv_key + "/0/*)")
+        return ("wpkh(" + keys.ext_priv_key + "/0/*)")
     }
 }

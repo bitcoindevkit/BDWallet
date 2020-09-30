@@ -12,9 +12,10 @@ import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.WalletActivity
 import org.bitcoindevkit.bdkjni.Types.ExtendedKeys
+
 import org.bitcoindevkit.bdkjni.Types.Network
 import org.bitcoindevkit.bdkjni.Types.WalletPtr
-import java.io.File
+
 import java.lang.reflect.InvocationTargetException
 
 
@@ -53,15 +54,14 @@ class RecoverWalletActivity : AppCompatActivity() {
         //gather all text in autocompleteview and create mnemonic
 
         var mnemonicString = findViewById<AutoCompleteTextView>(R.id.seed_text_1).text
-        for (x in 1..11){
-            var seedWord =  findViewById<AutoCompleteTextView>(this.viewList[x]).text
+        for (x in 1..11) {
+            val seedWord = findViewById<AutoCompleteTextView>(this.viewList[x]).text
             mnemonicString.append(seedWord)
         }
 
-        try{
-            this.keys = BDWApplication.instance.createExtendedKeys(Network.testnet, mnemonicString.toString())
-
-        } catch (e: InvocationTargetException){
+        try {
+            this.keys = BDWApplication.instance.createExtendedKeys(mnemonicString.toString())
+        } catch (e: InvocationTargetException) {
             this.showInvalidPhraseToast()
             return false
         }
@@ -69,28 +69,33 @@ class RecoverWalletActivity : AppCompatActivity() {
         return true
     }
 
-    private fun loadWallet(){
+    private fun loadWallet() {
         val descriptor = BDWApplication.instance.createDescriptor(this.keys)
         BDWApplication.instance.createWallet(descriptor)
     }
 
-    private fun addAutofill(){
+    private fun addAutofill() {
 
-//        val fileName = "/BIP39/en.txt"
-//        val inputString = application.assets.open(fileName).bufferedReader().use { it.readText() }
-//        val wordList: List<String> = inputString.split("\n")
+        val filename = "BIP39/en.txt"
+        val inputString = applicationContext.assets.open(filename).bufferedReader().use {
+            it.readText()
+        }
+        val wordList: List<String> = inputString.split("\n")
+
 
         this.viewList = listOfNotNull<Int>(R.id.seed_text_1,R.id.seed_text_2, R.id.seed_text_3, R.id.seed_text_4, R.id.seed_text_5, //get AutoCompleteTextViews in list
             R.id.seed_text_6, R.id.seed_text_7, R.id.seed_text_8, R.id.seed_text_9, R.id.seed_text_10, R.id.seed_text_11, R.id.seed_text_12)
-//
-//        for (x in 0..11){ //adding autofill to each AutoCompleteTextview
-//            var currView = findViewById<AutoCompleteTextView>(this.viewList[x])
-//            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
-//                this,
-//                android.R.layout.simple_dropdown_item_1line, wordList
-//            )
-//            currView.setAdapter(adapter)
-//        }
+
+
+        for (x in 0..11){ //adding autofill to each AutoCompleteTextview
+            var currView = findViewById<AutoCompleteTextView>(this.viewList[x])
+            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_dropdown_item_1line, wordList
+            )
+            currView.setAdapter(adapter)
+        }
+        
 
     }
 
