@@ -3,7 +3,6 @@ package org.bdwallet.app.ui.init
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
@@ -12,10 +11,13 @@ import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.WalletActivity
 import org.bitcoindevkit.bdkjni.Types.ExtendedKeys
+<<<<<<< HEAD
 
 import org.bitcoindevkit.bdkjni.Types.Network
 import org.bitcoindevkit.bdkjni.Types.WalletPtr
 
+=======
+>>>>>>> bf3a34221b6ffabbfc3cef32fe87af7714d2ca3d
 import java.lang.reflect.InvocationTargetException
 
 
@@ -75,17 +77,21 @@ class RecoverWalletActivity : AppCompatActivity() {
     }
 
     private fun addAutofill() {
+<<<<<<< HEAD
 
         val filename = "BIP39/en.txt"
         val inputString = applicationContext.assets.open(filename).bufferedReader().use {
             it.readText()
         }
         val wordList: List<String> = inputString.split("\n")
+=======
+>>>>>>> bf3a34221b6ffabbfc3cef32fe87af7714d2ca3d
 
 
         this.viewList = listOfNotNull<Int>(R.id.seed_text_1,R.id.seed_text_2, R.id.seed_text_3, R.id.seed_text_4, R.id.seed_text_5, //get AutoCompleteTextViews in list
             R.id.seed_text_6, R.id.seed_text_7, R.id.seed_text_8, R.id.seed_text_9, R.id.seed_text_10, R.id.seed_text_11, R.id.seed_text_12)
 
+<<<<<<< HEAD
 
         for (x in 0..11){ //adding autofill to each AutoCompleteTextview
             var currView = findViewById<AutoCompleteTextView>(this.viewList[x])
@@ -97,6 +103,16 @@ class RecoverWalletActivity : AppCompatActivity() {
         }
         
 
+=======
+//        for (x in 0..11) { //adding autofill to each AutoCompleteTextview
+//            var currView = findViewById<AutoCompleteTextView>(this.viewList[x])
+//            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+//                this,
+//                android.R.layout.simple_dropdown_item_1line, wordList
+//            )
+//            currView.setAdapter(adapter)
+//        }
+>>>>>>> bf3a34221b6ffabbfc3cef32fe87af7714d2ca3d
     }
 
     private fun showInvalidPhraseToast() {
