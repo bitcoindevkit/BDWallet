@@ -125,7 +125,7 @@ class BDWApplication : Application() {
         editor.putString("path", this.path)
         editor.putString("descriptor", this.descriptor)
         editor.putString("electrum_url", this.electrumUrl)
-        editor.putString("denomType", this.denominationType)
+        editor.putString("denomination_type", this.denominationType)
         editor.commit()
     }
 
