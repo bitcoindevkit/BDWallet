@@ -31,6 +31,7 @@ class BDWApplication : Application() {
     private lateinit var path: String
     private lateinit var descriptor: String
     private lateinit var electrumUrl: String
+    private lateinit var denominationType : String
 
     companion object {
         lateinit var instance: BDWApplication
@@ -56,6 +57,7 @@ class BDWApplication : Application() {
         this.network = "testnet"
         this.path = this.applicationContext.filesDir.toString()
         this.electrumUrl = "tcp://testnet.aranguren.org:51001"
+        this.denominationType = "BTC"
     }
 
     // Get mapping from String to Network enum
@@ -123,6 +125,7 @@ class BDWApplication : Application() {
         editor.putString("path", this.path)
         editor.putString("descriptor", this.descriptor)
         editor.putString("electrum_url", this.electrumUrl)
+        editor.putString("denomType", this.denominationType)
         editor.commit()
     }
 
@@ -196,5 +199,10 @@ class BDWApplication : Application() {
     // Concatenate tpriv to create descriptor
     fun createDescriptor(keys: ExtendedKeys): String {
         return ("wpkh(" + keys.ext_priv_key + "/0/*)")
+    }
+
+    fun setDenomination(denom : String) {
+        this.denominationType = denom
+        this.saveWalletPrefs()
     }
 }
