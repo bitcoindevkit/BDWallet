@@ -23,7 +23,6 @@ class EntryActivity : AppCompatActivity() {
             val descriptor: String = savedWallet.getString("descriptor", null)!!
             val electrumUrl: String = savedWallet.getString("electrum_url", null)!!
 
-            val networkMap: Map<String, Network> = BDWApplication.instance.getNetworkMap()
             BDWApplication.instance.initialize(
                 name,
                 network,
@@ -33,7 +32,9 @@ class EntryActivity : AppCompatActivity() {
                 electrumUrl,
                 null
             )
-            BDWApplication.instance.setDenomination("BTC")
+
+            val denominationType: String = savedWallet.getString("denomination_type", null)!!
+            BDWApplication.instance.setDenomination(denominationType)
         }
         startActivity(Intent(this, Class.forName(getNextActivityName(isWalletInitialized))))
     }
