@@ -33,6 +33,7 @@ class EntryActivity : AppCompatActivity() {
                 electrumUrl,
                 null
             )
+            BDWApplication.instance.setDenomination("BTC")
         }
         startActivity(Intent(this, Class.forName(getNextActivityName(isWalletInitialized))))
     }
