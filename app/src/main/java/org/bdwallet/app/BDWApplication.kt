@@ -203,6 +203,6 @@ class BDWApplication : Application() {
 
     fun setDenomination(denom : String) {
         this.denominationType = denom
-        this.saveWalletPrefs()
+        this.saveWalletPrefs() //persistent memory
     }
 }
