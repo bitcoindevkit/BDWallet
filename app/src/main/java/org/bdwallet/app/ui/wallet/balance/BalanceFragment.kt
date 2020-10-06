@@ -16,12 +16,16 @@
 
 package org.bdwallet.app.ui.wallet.balance
 
-import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.os.Environment
+import android.os.StrictMode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,16 +33,20 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.jaredrummler.materialspinner.MaterialSpinner
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.history.HistoryActivity
 import org.bdwallet.app.ui.wallet.settings.SettingsActivity
 import retrofit2.Call
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
 
 
 class BalanceFragment : Fragment() {
@@ -48,15 +56,28 @@ class BalanceFragment : Fragment() {
     lateinit var beforeconvertedValueTxtView: TextView
     lateinit var btcPrice: TextView
     private val money = arrayOf("USD", "EUR", "GBP")
-    private val coin = arrayOf("BTC", "ETH", "ETC", "XRP", "LTC", "XMR", "DASH", "MAID", "AUR", "XEM")
+    private val coin = arrayOf(
+        "BTC",
+        "ETH",
+        "ETC",
+        "XRP",
+        "LTC",
+        "XMR",
+        "DASH",
+        "MAID",
+        "AUR",
+        "XEM"
+    )
 
 //    @SuppressLint("RestrictedApi")
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+): View? {
 
+        //CALL the QR generator
+        generateQRcode()
         coinService = Common.getCoinService()
         super.onCreateView(inflater, container, savedInstanceState)
         balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
@@ -88,6 +109,91 @@ class BalanceFragment : Fragment() {
         return root
     }
 
+    ///////////////////////////////////
+    private fun generateQRcode(){
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+
+        StrictMode.setThreadPolicy(policy)
+//        var address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
+        var address:String = BDWApplication.instance.getNewAddress()
+        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
+        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+
+        //Write qrcode to file as png
+        bitmapToFile(bmp, "QRCODE.png")
+    }
+
+//    private fun verifyStoragePermissions(activity: Activity) {
+//        // Check if we have write permission
+//        val REQUEST_EXTERNAL_STORAGE = 1
+//        val PERMISSIONS_STORAGE = arrayOf(
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE
+//        )
+//        val permission: Int =
+//            ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//        if (permission != PackageManager.PERMISSION_GRANTED) {
+//            // We don't have permission so prompt the user
+//            ActivityCompat.requestPermissions(
+//                activity,
+//                PERMISSIONS_STORAGE,
+//                REQUEST_EXTERNAL_STORAGE
+//            )
+//        }
+//    }
+    private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
+        //create a file to write bitmap data
+//        verifyStoragePermissions(onResume());
+        // Check whether this app has write external storage permission or not.
+        val PERMISSIONS_STORAGE = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        // Check whether this app has write external storage permission or not.
+        val writeExternalStoragePermission: Int = ContextCompat.checkSelfPermission(this.requireContext(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+// If do not grant write external storage permission.
+// If do not grant write external storage permission.
+        if (writeExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
+            // Request user to grant write external storage permission.
+
+            ActivityCompat.requestPermissions(this.requireActivity(),
+                PERMISSIONS_STORAGE,
+                1
+            )
+        }
+
+        var file: File? = null
+        return try {
+            file = File(
+                Environment.getExternalStorageDirectory()
+                    .toString() + File.separator + fileNameToSave
+            )
+//            file.mkdir()
+
+            //WHERE the permission denied happened
+            file.createNewFile()
+
+            //Convert bitmap to byte array
+            val bos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
+            val bitmapdata = bos.toByteArray()
+
+            //write the bytes in file
+            val fos = FileOutputStream(file)
+            println(file.absolutePath)
+            fos.write(bitmapdata)
+            fos.flush()
+            fos.close()
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            file // it will return null
+        }
+    }
+    ///////////////////////////////////
+
     override fun onResume() {
         (activity as AppCompatActivity).supportActionBar!!.hide()
         super.onResume()
@@ -104,10 +210,11 @@ class BalanceFragment : Fragment() {
             override fun onFailure(call: Call<Coin>?, t: Throwable?) {
 
             }
+
             override fun onResponse(call: Call<Coin>?, response: Response<Coin>?) {
                 //SUCCESS
                 println("SUCCESS")
-                showData(userBalance,response!!.body()!!.USD)
+                showData(userBalance, response!!.body()!!.USD)
             }
         })
     }
