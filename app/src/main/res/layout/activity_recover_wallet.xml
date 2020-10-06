@@ -61,17 +61,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_1"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_1" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_1" />
 
             <ImageView
                 android:id="@+id/seed_background_2"
@@ -102,17 +101,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_2"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_2" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_2" />
 
             <ImageView
                 android:id="@+id/seed_background_3"
@@ -143,17 +141,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_3"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_3" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_3" />
 
             <ImageView
                 android:id="@+id/seed_background_4"
@@ -184,17 +181,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_4"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_4" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_4" />
 
             <ImageView
                 android:id="@+id/seed_background_5"
@@ -225,17 +221,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_5"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_5" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_5" />
 
             <ImageView
                 android:id="@+id/seed_background_6"
@@ -266,17 +261,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_6"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_6" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_6" />
 
             <ImageView
                 android:id="@+id/seed_background_7"
@@ -307,17 +301,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_7"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_7" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_7" />
 
             <ImageView
                 android:id="@+id/seed_background_8"
@@ -348,17 +341,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_8"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_8" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_8" />
 
             <ImageView
                 android:id="@+id/seed_background_9"
@@ -389,17 +381,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_9"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_9" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_9" />
 
             <ImageView
                 android:id="@+id/seed_background_10"
@@ -430,17 +421,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_10"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_10" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_10" />
 
             <ImageView
                 android:id="@+id/seed_background_11"
@@ -471,17 +461,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_11"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_11" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_11" />
 
             <ImageView
                 android:id="@+id/seed_background_12"
@@ -512,19 +501,16 @@
 
             <AutoCompleteTextView
                 android:id="@+id/seed_text_12"
-                android:layout_width="197dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/replaceable_seed_word"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:text=""
                 android:textAlignment="center"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seed_label_12"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/seed_background_12" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
