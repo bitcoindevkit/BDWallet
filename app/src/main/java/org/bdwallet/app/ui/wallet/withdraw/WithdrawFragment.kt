@@ -83,9 +83,9 @@ class WithdrawFragment : Fragment() {
         val btcAmount: String = this.root.findViewById<EditText>(R.id.input_amount).text.toString()
 
         // TODO: implement these functions which check if the recipientAddress / btcAmount are valid
-        if (!validRecipientAddress(recipientAddress)) {
+        if (!this.validRecipientAddress(recipientAddress)) {
             this.showInvalidAddressToast()
-        } else if (!haveSufficientBalance(btcAmount)) {
+        } else if (!this.haveSufficientBalance(btcAmount)) {
             this.showInsufficientBalanceToast()
         } else {
             // The transaction has been validated - set the display values before showing the reviewDialog
@@ -104,7 +104,7 @@ class WithdrawFragment : Fragment() {
 
     // Create and broadcast a transaction after it's been verified and reviewed by the user (using BDK)
     private fun sendBtnOnClickListener() {
-        // TODO create / send the transaction
+        // TODO create / send the transaction - communicate with Steve to figure out how to do this
         // var fee_rate: Float = 100 // TODO?
         // var addresses: List<Pair<String, String>> = null // TODO?
         // var utxos: List<String>? = null // TODO?
