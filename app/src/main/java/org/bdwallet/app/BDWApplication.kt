@@ -34,7 +34,7 @@ class BDWApplication : Application() {
     private lateinit var denominationType : String
 
     companion object {
-        lateinit var instance: BDWApplication
+        lateinit var instance: BDWApplication // this is a global singleton for this class
             private set
     }
 
@@ -61,7 +61,7 @@ class BDWApplication : Application() {
     }
 
     // Get mapping from String to Network enum
-    fun getNetworkMap(): Map<String, Network> {
+    private fun getNetworkMap(): Map<String, Network> {
         return mapOf(
             "testnet" to Network.testnet,
             "regtest" to Network.regtest,
@@ -116,7 +116,7 @@ class BDWApplication : Application() {
         this.saveWalletPrefs()
     }
 
-    // Save the constructor parameters so that wallet can be reloaded
+    // Save the constructor parameters in SharedPreferences so that wallet can be reloaded
     private fun saveWalletPrefs() {
         val editor: SharedPreferences.Editor = getSharedPreferences("saved_wallet", Context.MODE_PRIVATE).edit()
         editor.putBoolean("initialized", true)
@@ -201,8 +201,14 @@ class BDWApplication : Application() {
         return ("wpkh(" + keys.ext_priv_key + "/0/*)")
     }
 
+    // Update the denominationType preference and save to SharedPreferences
     fun setDenomination(denom : String) {
         this.denominationType = denom
         this.saveWalletPrefs() //persistent memory
+    }
+
+    // Return the denominationType preference
+    fun getDenomination(): String {
+        return this.denominationType
     }
 }
