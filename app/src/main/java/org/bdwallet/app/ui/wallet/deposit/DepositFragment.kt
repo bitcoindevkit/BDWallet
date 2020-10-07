@@ -49,6 +49,7 @@ class DepositFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         depositViewModel =
             ViewModelProviders.of(this).get(DepositViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_deposit, container, false)

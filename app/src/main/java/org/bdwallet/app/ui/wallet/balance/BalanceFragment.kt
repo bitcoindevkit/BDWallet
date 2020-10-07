@@ -16,16 +16,12 @@
 
 package org.bdwallet.app.ui.wallet.balance
 
-import android.Manifest
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.nfc.Tag
 import android.os.Bundle
-import android.os.Environment
-import android.os.StrictMode
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,8 +29,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import org.bdwallet.app.BDWApplication
@@ -43,10 +37,10 @@ import org.bdwallet.app.ui.wallet.history.HistoryActivity
 import org.bdwallet.app.ui.wallet.settings.SettingsActivity
 import retrofit2.Call
 import retrofit2.Response
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.net.URL
+import kotlinx.android.synthetic.main.fragment_balance.*
+//import java.util.logging.Handler
+import android.os.Handler;
+import kotlin.random.Random
 
 
 class BalanceFragment : Fragment() {
@@ -55,6 +49,7 @@ class BalanceFragment : Fragment() {
     lateinit var convertedValueTxtView: TextView
     lateinit var beforeconvertedValueTxtView: TextView
     lateinit var btcPrice: TextView
+    lateinit var mainHandler: Handler
     private val money = arrayOf("USD", "EUR", "GBP")
     private val coin = arrayOf(
         "BTC",
@@ -68,7 +63,15 @@ class BalanceFragment : Fragment() {
         "AUR",
         "XEM"
     )
-
+    private val updateTextTask = object : Runnable {
+        override fun run() {
+//            Log.e("run","run")
+            var amount = BDWApplication.instance.getBalance().toString()
+            convertedValueTxtView.text = amount
+            calculateValue(amount)
+            mainHandler.postDelayed(this, 1000)
+        }
+    }
 //    @SuppressLint("RestrictedApi")
     override fun onCreateView(
     inflater: LayoutInflater,
@@ -76,10 +79,10 @@ class BalanceFragment : Fragment() {
     savedInstanceState: Bundle?
 ): View? {
 
-        //CALL the QR generator
-//        generateQRcode()
+
         coinService = Common.getCoinService()
         super.onCreateView(inflater, container, savedInstanceState)
+        mainHandler = Handler(Looper.getMainLooper())
         balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_balance, container, false)
         ////
@@ -90,14 +93,17 @@ class BalanceFragment : Fragment() {
         convertedValueTxtView = root.findViewById(R.id.balance_crypto)
         btcPrice = root.findViewById(R.id.price_crypto)
 //        convertedValueTxtView.text = "1"
-        var amount:String = BDWApplication.instance.getBalance().toString()
-        convertedValueTxtView.text = amount
+//        var amount:String = BDWApplication.instance.getBalance().toString()
+//        convertedValueTxtView.text = amount
 
-        //TODO: Unable to test it untile getbalace could use
+
+    ///
+
+
 //        balanceViewModel.balance.observe(viewLifecycleOwner, Observer {
 //            beforeconvertedValueTxtView.text = it
 //        })
-        calculateValue(amount)
+//        calculateValue(amount)
         var walletActivity = activity as AppCompatActivity
 //        walletActivity.supportActionBar?.setShowHideAnimationEnabled(false)
         walletActivity.supportActionBar?.hide()
@@ -108,121 +114,18 @@ class BalanceFragment : Fragment() {
         return root
     }
 
-//    ///////////////////////////////////
-//    private fun generateQRcode(){
-//        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-//
-//        StrictMode.setThreadPolicy(policy)
-////        var address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
-//        var address:String = BDWApplication.instance.getNewAddress()
-//        writeToFile(address,"BTCAddress.txt")
-//
-//        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
-//        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-//
-//        //Write qrcode to file as png
-//        bitmapToFile(bmp, "QRCODE.png")
-//    }
-//
-////    private fun verifyStoragePermissions(activity: Activity) {
-////        // Check if we have write permission
-////        val REQUEST_EXTERNAL_STORAGE = 1
-////        val PERMISSIONS_STORAGE = arrayOf(
-////            Manifest.permission.READ_EXTERNAL_STORAGE,
-////            Manifest.permission.WRITE_EXTERNAL_STORAGE
-////        )
-////        val permission: Int =
-////            ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-////        if (permission != PackageManager.PERMISSION_GRANTED) {
-////            // We don't have permission so prompt the user
-////            ActivityCompat.requestPermissions(
-////                activity,
-////                PERMISSIONS_STORAGE,
-////                REQUEST_EXTERNAL_STORAGE
-////            )
-////        }
-////    }
-//    private fun writeToFile(address: String,fileNameToSave: String): File?{
-//        var file: File? = null
-//        return try {
-//            file = File(requireActivity().getExternalFilesDir(null)!!.absolutePath
-//                .toString() + File.separator + fileNameToSave
-//            )
-//
-//
-//            //WHERE the permission denied happened
-//            file.createNewFile()
-//
-//            //Convert bitmap to byte array
-//            val bos = ByteArrayOutputStream()
-//
-//
-//            //write the bytes in file
-//            val fos = FileOutputStream(file)
-//            println(file.absolutePath)
-//            fos.write(address.toByteArray())
-//            fos.flush()
-//            fos.close()
-//            file
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            file // it will return null
-//        }
-//}
-//    private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
-//        //create a file to write bitmap data
-////        verifyStoragePermissions(onResume());
-//        // Check whether this app has write external storage permission or not.
-//        val PERMISSIONS_STORAGE = arrayOf(
-//            Manifest.permission.READ_EXTERNAL_STORAGE,
-//            Manifest.permission.WRITE_EXTERNAL_STORAGE
-//        )
-//        // Check whether this app has write external storage permission or not.
-//        val writeExternalStoragePermission: Int = ContextCompat.checkSelfPermission(this.requireContext(),
-//            Manifest.permission.WRITE_EXTERNAL_STORAGE
-//        )
-//// If do not grant write external storage permission.
-//// If do not grant write external storage permission.
-//        if (writeExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
-//            // Request user to grant write external storage permission.
-//
-//            ActivityCompat.requestPermissions(this.requireActivity(),
-//                PERMISSIONS_STORAGE,
-//                1
-//            )
-//        }
-//
-//        var file: File? = null
-//        return try {
-//            file = File(requireActivity().getExternalFilesDir(null)!!.absolutePath
-//                    .toString() + File.separator + fileNameToSave
-//            )
-////            file.mkdir()
-//
-//            //WHERE the permission denied happened
-//            file.createNewFile()
-//
-//            //Convert bitmap to byte array
-//            val bos = ByteArrayOutputStream()
-//            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
-//            val bitmapdata = bos.toByteArray()
-//
-//            //write the bytes in file
-//            val fos = FileOutputStream(file)
-//            println(file.absolutePath)
-//            fos.write(bitmapdata)
-//            fos.flush()
-//            fos.close()
-//            file
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            file // it will return null
-//        }
-//    }
+    override fun onPause() {
+        Log.e("onPause","onPause")
+        super.onPause()
+        mainHandler.removeCallbacks(updateTextTask)
+    }
+
 
     override fun onResume() {
+        Log.e("ONRESUME","Resume")
         (activity as AppCompatActivity).supportActionBar!!.hide()
         super.onResume()
+        mainHandler.post(updateTextTask)
     }
     //////
     private fun calculateValue(userBalance: String){
@@ -247,11 +150,25 @@ class BalanceFragment : Fragment() {
     /////
 
     private fun showData(userBalance: String, coinName: String) {
-        println(coinName)
-        var result:Double = userBalance.toDouble() * coinName.toDouble()
-        btcPrice.setText("$ " + coinName)
-        beforeconvertedValueTxtView.setText("$ " + result.toString());
+        Thread(Runnable {var i=0;
+            while(i<Int.MAX_VALUE){
+                i++
+            }
+            this.activity?.runOnUiThread(java.lang.Runnable{
+                var result:Double = userBalance.toDouble() * coinName.toDouble()
+
+                btcPrice.setText("$ " + coinName)
+                beforeconvertedValueTxtView.setText("$ " + result.toString())
+            })
+        }).start()
+
+
+
     }
+
+
+
+
     private fun addButtonListener(settingsButton: ImageButton, historyButton: Button) {
         settingsButton.setOnClickListener {
             startActivity(Intent(requireContext(), SettingsActivity::class.java))
