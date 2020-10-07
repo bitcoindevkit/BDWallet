@@ -1,12 +1,21 @@
 package org.bdwallet.app.ui.login
 
 import android.app.AlertDialog
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Environment
+import android.os.StrictMode
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
 
 
 class LoginActivity : AppCompatActivity() {
