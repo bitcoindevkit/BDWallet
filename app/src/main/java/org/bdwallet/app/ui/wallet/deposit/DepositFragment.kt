@@ -17,6 +17,7 @@
 package org.bdwallet.app.ui.wallet.deposit
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
@@ -31,10 +32,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
+import java.io.File
 import java.net.URL
 
 
@@ -60,16 +61,18 @@ class DepositFragment : Fragment() {
 
         StrictMode.setThreadPolicy(policy)
 //        var address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
-        var address:String = BDWApplication.instance.getNewAddress()
+//        var address:String = BDWApplication.instance.getNewAddress()
+        var address:String = File("/storage/emulated/0/Android/data/org.bdwallet.app/files/BTCAddress.txt").readText(Charsets.UTF_8)
+
 //        depositViewModel.text.observe(viewLifecycleOwner, Observer {
 //            address = it
 //        })
         textView.text = address
 
-        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
-
-        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-        qr_code.setImageBitmap(bmp)
+//        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
+//
+//        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+        qr_code.setImageBitmap(readQRCode())
         addButtonListener(
             root.findViewById(R.id.share_btn),
             root.findViewById<TextView>(R.id.wallet_address).text.toString()
@@ -82,6 +85,13 @@ class DepositFragment : Fragment() {
         )
         return root
     }
+    private fun readQRCode(): Bitmap?{
+        val bitmap = BitmapFactory.decodeFile("/storage/emulated/0/Android/data/org.bdwallet.app/files/QRCODE.png")
+        return bitmap
+    }
+//    private fun readFileDirectlyAsText(fileName: String): String {
+//
+//    }
 
     private fun addButtonListener(button: Button, address: String) {
         button.setOnClickListener {

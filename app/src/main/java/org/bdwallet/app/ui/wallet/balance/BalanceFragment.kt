@@ -77,7 +77,7 @@ class BalanceFragment : Fragment() {
 ): View? {
 
         //CALL the QR generator
-        generateQRcode()
+//        generateQRcode()
         coinService = Common.getCoinService()
         super.onCreateView(inflater, container, savedInstanceState)
         balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
@@ -94,7 +94,6 @@ class BalanceFragment : Fragment() {
         convertedValueTxtView.text = amount
 
         //TODO: Unable to test it untile getbalace could use
-//        beforeconvertedValueTxtView.text = "12345"
 //        balanceViewModel.balance.observe(viewLifecycleOwner, Observer {
 //            beforeconvertedValueTxtView.text = it
 //        })
@@ -109,90 +108,117 @@ class BalanceFragment : Fragment() {
         return root
     }
 
-    ///////////////////////////////////
-    private fun generateQRcode(){
-        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-
-        StrictMode.setThreadPolicy(policy)
-//        var address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
-        var address:String = BDWApplication.instance.getNewAddress()
-        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
-        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-
-        //Write qrcode to file as png
-        bitmapToFile(bmp, "QRCODE.png")
-    }
-
-//    private fun verifyStoragePermissions(activity: Activity) {
-//        // Check if we have write permission
-//        val REQUEST_EXTERNAL_STORAGE = 1
+//    ///////////////////////////////////
+//    private fun generateQRcode(){
+//        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+//
+//        StrictMode.setThreadPolicy(policy)
+////        var address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
+//        var address:String = BDWApplication.instance.getNewAddress()
+//        writeToFile(address,"BTCAddress.txt")
+//
+//        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
+//        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+//
+//        //Write qrcode to file as png
+//        bitmapToFile(bmp, "QRCODE.png")
+//    }
+//
+////    private fun verifyStoragePermissions(activity: Activity) {
+////        // Check if we have write permission
+////        val REQUEST_EXTERNAL_STORAGE = 1
+////        val PERMISSIONS_STORAGE = arrayOf(
+////            Manifest.permission.READ_EXTERNAL_STORAGE,
+////            Manifest.permission.WRITE_EXTERNAL_STORAGE
+////        )
+////        val permission: Int =
+////            ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+////        if (permission != PackageManager.PERMISSION_GRANTED) {
+////            // We don't have permission so prompt the user
+////            ActivityCompat.requestPermissions(
+////                activity,
+////                PERMISSIONS_STORAGE,
+////                REQUEST_EXTERNAL_STORAGE
+////            )
+////        }
+////    }
+//    private fun writeToFile(address: String,fileNameToSave: String): File?{
+//        var file: File? = null
+//        return try {
+//            file = File(requireActivity().getExternalFilesDir(null)!!.absolutePath
+//                .toString() + File.separator + fileNameToSave
+//            )
+//
+//
+//            //WHERE the permission denied happened
+//            file.createNewFile()
+//
+//            //Convert bitmap to byte array
+//            val bos = ByteArrayOutputStream()
+//
+//
+//            //write the bytes in file
+//            val fos = FileOutputStream(file)
+//            println(file.absolutePath)
+//            fos.write(address.toByteArray())
+//            fos.flush()
+//            fos.close()
+//            file
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            file // it will return null
+//        }
+//}
+//    private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
+//        //create a file to write bitmap data
+////        verifyStoragePermissions(onResume());
+//        // Check whether this app has write external storage permission or not.
 //        val PERMISSIONS_STORAGE = arrayOf(
 //            Manifest.permission.READ_EXTERNAL_STORAGE,
 //            Manifest.permission.WRITE_EXTERNAL_STORAGE
 //        )
-//        val permission: Int =
-//            ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//        if (permission != PackageManager.PERMISSION_GRANTED) {
-//            // We don't have permission so prompt the user
-//            ActivityCompat.requestPermissions(
-//                activity,
+//        // Check whether this app has write external storage permission or not.
+//        val writeExternalStoragePermission: Int = ContextCompat.checkSelfPermission(this.requireContext(),
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE
+//        )
+//// If do not grant write external storage permission.
+//// If do not grant write external storage permission.
+//        if (writeExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
+//            // Request user to grant write external storage permission.
+//
+//            ActivityCompat.requestPermissions(this.requireActivity(),
 //                PERMISSIONS_STORAGE,
-//                REQUEST_EXTERNAL_STORAGE
+//                1
 //            )
 //        }
+//
+//        var file: File? = null
+//        return try {
+//            file = File(requireActivity().getExternalFilesDir(null)!!.absolutePath
+//                    .toString() + File.separator + fileNameToSave
+//            )
+////            file.mkdir()
+//
+//            //WHERE the permission denied happened
+//            file.createNewFile()
+//
+//            //Convert bitmap to byte array
+//            val bos = ByteArrayOutputStream()
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
+//            val bitmapdata = bos.toByteArray()
+//
+//            //write the bytes in file
+//            val fos = FileOutputStream(file)
+//            println(file.absolutePath)
+//            fos.write(bitmapdata)
+//            fos.flush()
+//            fos.close()
+//            file
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            file // it will return null
+//        }
 //    }
-    private fun bitmapToFile(bitmap: Bitmap, fileNameToSave: String): File? { // File name like "image.png"
-        //create a file to write bitmap data
-//        verifyStoragePermissions(onResume());
-        // Check whether this app has write external storage permission or not.
-        val PERMISSIONS_STORAGE = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-        // Check whether this app has write external storage permission or not.
-        val writeExternalStoragePermission: Int = ContextCompat.checkSelfPermission(this.requireContext(),
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-// If do not grant write external storage permission.
-// If do not grant write external storage permission.
-        if (writeExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
-            // Request user to grant write external storage permission.
-
-            ActivityCompat.requestPermissions(this.requireActivity(),
-                PERMISSIONS_STORAGE,
-                1
-            )
-        }
-
-        var file: File? = null
-        return try {
-            file = File(
-                Environment.getExternalStorageDirectory()
-                    .toString() + File.separator + fileNameToSave
-            )
-//            file.mkdir()
-
-            //WHERE the permission denied happened
-            file.createNewFile()
-
-            //Convert bitmap to byte array
-            val bos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
-            val bitmapdata = bos.toByteArray()
-
-            //write the bytes in file
-            val fos = FileOutputStream(file)
-            println(file.absolutePath)
-            fos.write(bitmapdata)
-            fos.flush()
-            fos.close()
-            file
-        } catch (e: Exception) {
-            e.printStackTrace()
-            file // it will return null
-        }
-    }
-    ///////////////////////////////////
 
     override fun onResume() {
         (activity as AppCompatActivity).supportActionBar!!.hide()
