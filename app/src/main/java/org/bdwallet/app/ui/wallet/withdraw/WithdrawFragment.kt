@@ -79,8 +79,8 @@ class WithdrawFragment : Fragment() {
         // otherwise, show an error toast
     private fun reviewBtnOnClickListener() {
         // Get the recipientAddress and btcAmount from the text inputs
-        val recipientAddress: String = this.root.findViewById<EditText>(R.id.input_recipient_address).text.toString()
-        val btcAmount: String = this.root.findViewById<EditText>(R.id.input_amount).text.toString()
+        val recipientAddress: String = this.root.findViewById<EditText>(R.id.input_recipient_address).text.toString().trim()
+        val btcAmount: String = this.root.findViewById<EditText>(R.id.input_amount).text.toString().trim()
 
         // TODO: implement these functions which check if the recipientAddress / btcAmount are valid
         if (!this.validRecipientAddress(recipientAddress)) {
@@ -136,7 +136,7 @@ class WithdrawFragment : Fragment() {
     // When the recipient address is invalid, show this toast to signal a problem to the user
     private fun showInvalidAddressToast() {
         // TODO make the toast more visible and more obvious that it's an error (maybe make it red)
-        val myToast = Toast.makeText(context,R.string.toast_invalid_address, Toast.LENGTH_SHORT)
+        val myToast: Toast = Toast.makeText(context,R.string.toast_invalid_address, Toast.LENGTH_SHORT)
         myToast.setGravity(Gravity.LEFT,200,200) // TODO this line causes a warning
         myToast.show()
     }
@@ -144,7 +144,7 @@ class WithdrawFragment : Fragment() {
     // When the wallet does not have sufficient balance, show this toast to signal a problem to the user
     private fun showInsufficientBalanceToast() {
         // TODO make the toast more visible and more obvious that it's an error (maybe make it red)
-        val myToast = Toast.makeText(context,R.string.toast_insufficient_balance, Toast.LENGTH_SHORT)
+        val myToast: Toast = Toast.makeText(context,R.string.toast_insufficient_balance, Toast.LENGTH_SHORT)
         myToast.setGravity(Gravity.LEFT,200,200) // TODO this line causes a warning
         myToast.show()
     }

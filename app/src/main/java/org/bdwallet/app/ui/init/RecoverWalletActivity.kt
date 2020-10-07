@@ -2,6 +2,7 @@ package org.bdwallet.app.ui.init
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -39,10 +40,10 @@ class RecoverWalletActivity : AppCompatActivity() {
     // Read the BIP39 file to initialize the list of valid words. Also initialize the viewList
     private fun initializeWordList() {
         val filename = "BIP39/en.txt"
-        val inputString = applicationContext.assets.open(filename).bufferedReader().use {
+        val inputString: String = applicationContext.assets.open(filename).bufferedReader().use {
             it.readText()
         }
-        this.wordList = inputString.split("\n")
+        this.wordList = inputString.split("\n").map{ it.trim().toLowerCase() }
         this.viewList = listOfNotNull<Int>(R.id.seed_text_1,R.id.seed_text_2, R.id.seed_text_3, R.id.seed_text_4, R.id.seed_text_5,
             R.id.seed_text_6, R.id.seed_text_7, R.id.seed_text_8, R.id.seed_text_9, R.id.seed_text_10, R.id.seed_text_11, R.id.seed_text_12)
     }
@@ -81,8 +82,8 @@ class RecoverWalletActivity : AppCompatActivity() {
     private fun checkSeedWords(): Boolean {
         var mnemonicWordList: MutableList<String> = mutableListOf()
         for (x in 0..11) {
-            val seedWord = findViewById<AutoCompleteTextView>(this.viewList[x]).text.toString().trim()
-            if (seedWord.isEmpty() || !this.wordList.contains(seedWord)) {
+            val seedWord: String = findViewById<AutoCompleteTextView>(this.viewList[x]).text.toString().trim().toLowerCase()
+            if (seedWord.isEmpty() || seedWord !in this.wordList) {
                 return false
             }
             mnemonicWordList.add(seedWord)
@@ -90,7 +91,9 @@ class RecoverWalletActivity : AppCompatActivity() {
         val mnemonicString: String = mnemonicWordList.joinToString(separator = " ")
         try {
             this.keys = BDWApplication.instance.createExtendedKeys(mnemonicString)
-        } catch (e: InvocationTargetException) {
+        } catch (e: Throwable) {
+            Log.d("EXCEPTION:", e.printStackTrace().toString())
+            Log.d("recovery mnemonicString which caused the exception:::", mnemonicString)
             return false
         }
         return true
@@ -98,13 +101,13 @@ class RecoverWalletActivity : AppCompatActivity() {
 
     // Call BDK library to load the wallet using the recovered private key
     private fun loadWallet() {
-        val descriptor = BDWApplication.instance.createDescriptor(this.keys)
+        val descriptor: String = BDWApplication.instance.createDescriptor(this.keys)
         BDWApplication.instance.createWallet(descriptor)
     }
 
     // Notify the user that the entered seed phrase is invalid
     private fun showInvalidPhraseToast() {
-        val myToast = Toast.makeText(applicationContext,R.string.toast_invalid_seed_phrase, Toast.LENGTH_SHORT)
+        val myToast: Toast = Toast.makeText(applicationContext,R.string.toast_invalid_seed_phrase, Toast.LENGTH_SHORT)
         myToast.setGravity(Gravity.LEFT,200,200)
         myToast.show()
     }
