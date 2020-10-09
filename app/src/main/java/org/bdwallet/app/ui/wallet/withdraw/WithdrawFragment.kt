@@ -18,6 +18,7 @@ package org.bdwallet.app.ui.wallet.withdraw
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
@@ -28,12 +29,18 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
+import org.bitcoindevkit.bdkjni.Types.*
 
 class WithdrawFragment : Fragment() {
     private lateinit var withdrawViewModel: WithdrawViewModel
     private lateinit var root: View
     private lateinit var reviewDialog: Dialog
+
+    private lateinit var recipientAddress: String
+    private lateinit var withdrawAmount: String
+    private lateinit var createTxResp: CreateTxResponse
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,59 +85,82 @@ class WithdrawFragment : Fragment() {
         // if it's passes, set display values in the review dialog and show the review dialog
         // otherwise, show an error toast
     private fun reviewBtnOnClickListener() {
-        // Get the recipientAddress and btcAmount from the text inputs
-        val recipientAddress: String = this.root.findViewById<EditText>(R.id.input_recipient_address).text.toString().trim()
-        val btcAmount: String = this.root.findViewById<EditText>(R.id.input_amount).text.toString().trim()
+        // Get the recipientAddress and withdrawAmount from the text inputs, set the feeRate
+        this.recipientAddress = this.root.findViewById<EditText>(R.id.input_recipient_address).text.toString().trim()
+        this.withdrawAmount = this.btcToSatoshiString(
+            this.root.findViewById<EditText>(R.id.input_amount).text.toString().trim()
+        )
+        val feeRate: Float = 1F // TODO change to be a dynamic value before moving to mainnnet
+        val addresses: List<Pair<String, String>> = listOf(Pair(this.recipientAddress, this.withdrawAmount))
 
-        // TODO: implement these functions which check if the recipientAddress / btcAmount are valid
-        if (!this.validRecipientAddress(recipientAddress)) {
+        // Check if the recipient address is valid
+        if (!this.validRecipientAddress(this.recipientAddress)) {
             this.showInvalidAddressToast()
-        } else if (!this.haveSufficientBalance(btcAmount)) {
-            this.showInsufficientBalanceToast()
-        } else {
-            // The transaction has been validated - set the display values before showing the reviewDialog
-            this.reviewDialog.findViewById<TextView>(R.id.recipient_text).text = recipientAddress
-            this.reviewDialog.findViewById<TextView>(R.id.amount_text).text = this.formatAmountText(btcAmount)
-
-            // TODO set fee display in the reviewDialog
-            // this.reviewDialog.findViewById<TextView>(R.id.fee_text).text = this.formatFeeText(...)
-            // TODO calculate the total withdraw after fee, and set total withdraw display in the reviewDialog
-            // val totalAmount = btcAmount - feeAmount
-            // this.reviewDialog.findViewById<TextView>(R.id.total_text).text = this.formatAmountText(totalAmount)
-
-            this.reviewDialog.show()
+            return
         }
+
+        // Attempt to create the transaction
+        try {
+            this.createTxResp = BDWApplication.instance.createTx(feeRate, addresses, false, null, null, null)
+        } catch (e: Throwable) {
+            // TODO more catch cases and errors to be added during testing
+                // TODO specifically catch the exception that means insufficient balance
+            Log.d("CREATE-TRANSACTION EXCEPTION", e.printStackTrace().toString())
+            this.showInsufficientBalanceToast()
+            return
+        }
+
+        // The transaction has been validated - set the display values before showing the reviewDialog
+        this.reviewDialog.findViewById<TextView>(R.id.recipient_text).text = this.recipientAddress
+        this.reviewDialog.findViewById<TextView>(R.id.amount_text).text = this.formatAmountText(this.withdrawAmount)
+        this.reviewDialog.findViewById<TextView>(R.id.fee_text).text = this.formatFeeText()
+        this.reviewDialog.findViewById<TextView>(R.id.total_text).text = this.formatAmountText(this.getTotalWithdraw())
+        this.reviewDialog.show()
     }
 
-    // Create and broadcast a transaction after it's been verified and reviewed by the user (using BDK)
+    // Sign and broadcast a transaction after it's been verified, created, and reviewed by the user (using BDK)
     private fun sendBtnOnClickListener() {
-        // TODO create / send the transaction - communicate with Steve to figure out how to do this
-        // var fee_rate: Float = 100 // TODO?
-        // var addresses: List<Pair<String, String>> = null // TODO?
-        // var utxos: List<String>? = null // TODO?
-        // val createResp: CreateTxResponse = BDWApplication.instance.createTx(fee_rate, addresses, false, utxos, null, null)
-        // val signResp: SignResponse = BDWApplication.instance.sign(createResp.psbt)
-        // val rawTx: RawTransaction = BDWApplication.instance.extract_psbt(signResp.psbt)
-        // val txid: Txid = BDWApplication.instance.broadcast(rawTx.transaction)
-        // TODO save txid?
+        try {
+            val signResp: SignResponse = BDWApplication.instance.sign(this.createTxResp.psbt)
+            val rawTx: RawTransaction = BDWApplication.instance.extract_psbt(signResp.psbt)
+            val txid: Txid = BDWApplication.instance.broadcast(rawTx.transaction)
+            // TODO save or display txid?
+        } catch (e: Throwable) {
+            // TODO more catch cases to be added during testing
+            Log.d("SEND-TRANSACTION EXCEPTION", e.printStackTrace().toString())
+        }
+        // TODO signal to the user whether the transaction was sent successfully or not
+    }
+
+    // Convert a BTC-formatted string (X.XXXXXXXX) to satoshi string
+    private fun btcToSatoshiString(btcAmount: String): String {
+        // TODO convert btcAmount to satoshiAmount
+        return "0"
+    }
+
+    // Return the total withdraw amount String in satoshis (entered withdraw amount plus total fees)
+    private fun getTotalWithdraw(): String {
+        // TODO this.withdrawAmount + this.createTxResp.details.fees
+        return "0"
+    }
+
+    // return BTC-formatted string with USD conversion for display in reviewDialog
+    private fun formatAmountText(satoshiAmount: String): String {
+        // TODO convert satoshiAmount to the format: X.XXXXXXXX BTC ($XX,XXX.XX USD)
+        return ""
+    }
+
+    // return the total fee BTC formatted string with percentage of withdrawal amount for display in reviewDialog
+    private fun formatFeeText(): String {
+        // TODO convert this.createTxResp.details.fees to the format: X.XXXXXXXX BTC (X.XXX%)
+        // TODO should it also display the USD value (maybe instead of the percentage)?
+        return ""
     }
 
     // Return true iff the recipientAddress is a valid Bitcoin address
     private fun validRecipientAddress(recipientAddress: String): Boolean {
         // TODO check if recipient address is valid
         return false
-    }
-
-    // Return true iff the wallet contains enough bitcoin to make the transaction (including the fee)
-    private fun haveSufficientBalance(btcAmount: String): Boolean {
-        // TODO check if wallet has sufficient balance
-        return false
-    }
-
-    // Given a bitcoin amount, return a formatted string with USD conversion for display in reviewDialog
-    private fun formatAmountText(btcAmount: String): String {
-        // TODO convert btcAmount to the format: X.XXXXXXXX BTC ($XX,XXX.XX USD)
-        return btcAmount
     }
 
     // When the recipient address is invalid, show this toast to signal a problem to the user

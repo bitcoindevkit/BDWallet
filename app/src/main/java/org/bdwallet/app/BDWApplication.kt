@@ -34,7 +34,7 @@ class BDWApplication : Application() {
     private lateinit var denominationType : String
 
     companion object {
-        lateinit var instance: BDWApplication // this is a global singleton for this class
+        lateinit var instance: BDWApplication // global singleton for this class
             private set
     }
 
@@ -162,17 +162,14 @@ class BDWApplication : Application() {
         unspendable: List<String>?=null,
         policy: Map<String, List<String>>?=null
     ): CreateTxResponse {
-        // TODO how do we use this function?
         return this.lib.create_tx(this.walletPtr, fee_rate, addressees, send_all, utxos, unspendable, policy)
     }
 
     fun sign(psbt: String, assume_height: Int?=null): SignResponse {
-        // TODO what is this function for?
         return this.lib.sign(this.walletPtr, psbt, assume_height)
     }
 
     fun extract_psbt(psbt: String): RawTransaction {
-        // TODO what is this function for?
         return this.lib.extract_psbt(this.walletPtr, psbt)
     }
 
