@@ -25,14 +25,16 @@ class SettingsActivity : AppCompatActivity() {
         return true
     }
 
+    //adds listener to BTC or SAT denomination switch and calls appropriate function in Wallet Instance
+
     private fun checkSwitch(){
         val sw1 = findViewById<Switch>(R.id.switch1)
 
         sw1.setOnCheckedChangeListener { _, isChecked ->
-            // val message = if (isChecked) "Switch1:ON" else "Switch1:OFF"
-            if(isChecked){
+
+            if(isChecked){ //switch from BTC to SAT
                 BDWApplication.instance.setDenomination("SAT")
-            } else {
+            } else { //from SAT to BTC
                 BDWApplication.instance.setDenomination("BTC")
             }
         }

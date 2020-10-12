@@ -22,25 +22,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
     }
-
-//    private fun checkSwitch() {
-//        var BTCtoSAT =  findPreference<SwitchPreferenceCompat>("sat_convert")
-//       // val walletPreference: SharedPreferences = BDWApplication.instance.getSharedPreferences("saved_wallet", Context.MODE_PRIVATE)
-//        var prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.context)
-//        prefs.get
-//        BTCtoSAT?.onPreferenceChangeListener?.onPreferenceChange(BTCtoSAT, true)
-//
-//        if (BTCtoSAT as Boolean){
-//            BDWApplication.instance.setDenomination("SAT")
-//        } else {
-//            BDWApplication.instance.setDenomination("BTC")
-//        }
-//
-//    }
-
-
-
-
+    //had to take out CompatPreferenceSwitch because it was unable to invoke BDWallet.Instance methods
 }
 
 
