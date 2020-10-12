@@ -19,6 +19,7 @@ package org.bdwallet.app
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import org.bitcoindevkit.bdkjni.Lib
 import org.bitcoindevkit.bdkjni.Types.*
 
@@ -201,6 +202,8 @@ class BDWApplication : Application() {
     // Update the denominationType preference and save to SharedPreferences
     fun setDenomination(denom : String) {
         this.denominationType = denom
+        println(denom)
+        Log.e("Denom Switch", denom)
         this.saveWalletPrefs() //persistent memory
     }
 
