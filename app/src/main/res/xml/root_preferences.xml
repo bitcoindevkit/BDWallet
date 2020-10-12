@@ -2,9 +2,6 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreferenceCompat
-        app:key="sat_convert"
-        app:title="Display BTC as SAT"/>
 
     <!--
     <ListPreference
