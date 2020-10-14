@@ -27,11 +27,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bitcoindevkit.bdkjni.Types.*
+import kotlin.text.StringBuilder
 
 class WithdrawFragment : Fragment() {
     private lateinit var withdrawViewModel: WithdrawViewModel
@@ -59,7 +59,18 @@ class WithdrawFragment : Fragment() {
 
         // Set onClickListener for the review, back, and send buttons
         this.root.findViewById<Button>(R.id.review_btn).setOnClickListener {
-            this.reviewBtnOnClickListener()
+            // Get, trim, and store inputs before triggering on-click listener
+            val recipientEditText = this.root.findViewById<EditText>(R.id.input_recipient_address)
+            val amountEditText = this.root.findViewById<EditText>(R.id.input_amount)
+            recipientEditText.setText(recipientEditText.text.toString().trim())
+            amountEditText.setText(amountEditText.text.toString().trim())
+            this.recipientAddress = recipientEditText.text.toString()
+            this.withdrawAmount = this.btcToSatoshiString(amountEditText.text.toString())
+
+            // Only show review dialog if inputs are not empty
+            if (this.recipientAddress.isNotEmpty() && this.withdrawAmount.isNotEmpty() && this.withdrawAmount != "0") {
+                this.reviewBtnOnClickListener()
+            }
         }
         this.reviewDialog.findViewById<TextView>(R.id.back_btn_text).setOnClickListener {
             this.reviewDialog.dismiss()
@@ -67,13 +78,6 @@ class WithdrawFragment : Fragment() {
         this.reviewDialog.findViewById<TextView>(R.id.send_btn_text).setOnClickListener {
             this.sendBtnOnClickListener()
         }
-
-        // TODO fix the text watcher to show BTC amount (X.XXXXXXXX) rather than $USD
-        val inputAmount: EditText = this.root.findViewById(R.id.input_amount)
-        inputAmount.addTextChangedListener(CurrencyTextWatcher(inputAmount))
-        this.withdrawViewModel.text.observe(viewLifecycleOwner, Observer {
-            //textView.text = it
-        })
 
         val walletActivity = activity as AppCompatActivity
         walletActivity.supportActionBar!!.show()
@@ -85,11 +89,6 @@ class WithdrawFragment : Fragment() {
         // if it's passes, set display values in the review dialog and show the review dialog
         // otherwise, show an error toast
     private fun reviewBtnOnClickListener() {
-        // Get the recipientAddress and withdrawAmount from the text inputs, set the feeRate
-        this.recipientAddress = this.root.findViewById<EditText>(R.id.input_recipient_address).text.toString().trim()
-        this.withdrawAmount = this.btcToSatoshiString(
-            this.root.findViewById<EditText>(R.id.input_amount).text.toString().trim()
-        )
         val feeRate: Float = 1F // TODO change to be a dynamic value before moving to mainnnet
         val addresses: List<Pair<String, String>> = listOf(Pair(this.recipientAddress, this.withdrawAmount))
 
@@ -105,12 +104,13 @@ class WithdrawFragment : Fragment() {
         } catch (e: Throwable) {
             // TODO more catch cases and errors to be added during testing
                 // TODO specifically catch the exception that means insufficient balance
-            Log.d("CREATE-TRANSACTION EXCEPTION", e.printStackTrace().toString())
+            Log.d("CREATE-TRANSACTION EXCEPTION", "MSG: ".plus(e.message))
+            e.printStackTrace()
             this.showInsufficientBalanceToast()
             return
         }
 
-        // The transaction has been validated - set the display values before showing the reviewDialog
+        // The transaction has been validated - set the dialog display values before showing the reviewDialog
         this.reviewDialog.findViewById<TextView>(R.id.recipient_text).text = this.recipientAddress
         this.reviewDialog.findViewById<TextView>(R.id.amount_text).text = this.formatAmountText(this.withdrawAmount)
         this.reviewDialog.findViewById<TextView>(R.id.fee_text).text = this.formatFeeText()
@@ -134,33 +134,44 @@ class WithdrawFragment : Fragment() {
 
     // Convert a BTC-formatted string (X.XXXXXXXX) to satoshi string
     private fun btcToSatoshiString(btcAmount: String): String {
-        // TODO convert btcAmount to satoshiAmount
-        return "0"
+        val decPos: Int = btcAmount.indexOfFirst { it == '.' }
+        if (decPos < 0) {
+            // Append 8 trailing zeros if there is no decimal
+            val result: String = btcAmount.plus("0".repeat(8)).trimStart{ it == '0' }
+            return (if (result.isEmpty()) "0" else result)
+        }
+        // Move decimal to the right 8 places if there is a decimal
+        var builder: StringBuilder = StringBuilder(btcAmount.substring(0, decPos))
+        for (i in (decPos+1)..(decPos+8)) {
+            builder.append(if (i < btcAmount.length) btcAmount[i] else "0")
+        }
+        val result: String = builder.toString().trimStart { it == '0' }
+        return (if (result.isEmpty()) "0" else result)
     }
 
     // Return the total withdraw amount String in satoshis (entered withdraw amount plus total fees)
     private fun getTotalWithdraw(): String {
-        // TODO this.withdrawAmount + this.createTxResp.details.fees
-        return "0"
+        val totalWithdraw: Long = this.withdrawAmount.toLong() + this.createTxResp.details.fees
+        return totalWithdraw.toString()
     }
 
     // return BTC-formatted string with USD conversion for display in reviewDialog
     private fun formatAmountText(satoshiAmount: String): String {
-        // TODO convert satoshiAmount to the format: X.XXXXXXXX BTC ($XX,XXX.XX USD)
-        return ""
+        // TODO convert satoshiAmount (XXXXXXXXX) to the format: X.XXXXXXXX BTC ($XX,XXX.XX USD)
+        return satoshiAmount
     }
 
     // return the total fee BTC formatted string with percentage of withdrawal amount for display in reviewDialog
     private fun formatFeeText(): String {
         // TODO convert this.createTxResp.details.fees to the format: X.XXXXXXXX BTC (X.XXX%)
         // TODO should it also display the USD value (maybe instead of the percentage)?
-        return ""
+        return this.createTxResp.details.fees.toString()
     }
 
     // Return true iff the recipientAddress is a valid Bitcoin address
     private fun validRecipientAddress(recipientAddress: String): Boolean {
         // TODO check if recipient address is valid
-        return false
+        return true
     }
 
     // When the recipient address is invalid, show this toast to signal a problem to the user
