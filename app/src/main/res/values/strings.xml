@@ -73,7 +73,7 @@
 
     <!--Withdraw fragment-->
     <string name="prompt_address">Recipient address</string>
-    <string name="prompt_amount">Amount</string>
+    <string name="prompt_amount">Amount (BTC)</string>
     <string name="prompt_password_send">Wallet password</string>
     <string name="replaceable_price_review">X.XXXXX BTC ($XX,XXX.XX USD)</string>
     <string name="replaceable_fee_review">X.XXXXX BTC (X.XXX%)</string>

@@ -108,7 +108,7 @@ class BalanceFragment : Fragment() {
 //        walletActivity.supportActionBar?.setShowHideAnimationEnabled(false)
         walletActivity.supportActionBar?.hide()
         walletActivity.window.statusBarColor = Color.TRANSPARENT
-        walletActivity.window.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+        walletActivity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         addButtonListener(root.findViewById(R.id.settings_btn), root.findViewById(R.id.history_btn))
         return root

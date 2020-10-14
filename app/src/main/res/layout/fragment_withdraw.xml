@@ -59,6 +59,7 @@
         android:ems="10"
         android:hint="@string/prompt_amount"
         android:inputType="numberDecimal"
+        android:digits="0123456789."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_recipient_address" />
