@@ -92,8 +92,7 @@ class RecoverWalletActivity : AppCompatActivity() {
         try {
             this.keys = BDWApplication.instance.createExtendedKeys(mnemonicString)
         } catch (e: Throwable) {
-            Log.d("EXCEPTION:", e.printStackTrace().toString())
-            Log.d("recovery mnemonicString which caused the exception:::", mnemonicString)
+            Log.d("createExtendedKeys EXCEPTION:", "MSG: ".plus(e.message).plus(" | mnemonic: ").plus(mnemonicString))
             return false
         }
         return true

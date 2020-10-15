@@ -87,26 +87,21 @@ class WithdrawFragment : Fragment() {
 
     // Check if the transaction inputs are valid:
         // if it's passes, set display values in the review dialog and show the review dialog
-        // otherwise, show an error toast
+        // otherwise, show an error toast and return
     private fun reviewBtnOnClickListener() {
         val feeRate: Float = 1F // TODO change to be a dynamic value before moving to mainnnet
         val addresses: List<Pair<String, String>> = listOf(Pair(this.recipientAddress, this.withdrawAmount))
-
-        // Check if the recipient address is valid
-        if (!this.validRecipientAddress(this.recipientAddress)) {
-            this.showInvalidAddressToast()
-            return
-        }
 
         // Attempt to create the transaction
         try {
             this.createTxResp = BDWApplication.instance.createTx(feeRate, addresses, false, null, null, null)
         } catch (e: Throwable) {
-            // TODO more catch cases and errors to be added during testing
-                // TODO specifically catch the exception that means insufficient balance
             Log.d("CREATE-TRANSACTION EXCEPTION", "MSG: ".plus(e.message))
-            e.printStackTrace()
-            this.showInsufficientBalanceToast()
+            if (e.message == "WalletError(InsufficientFunds)") {
+                this.showInsufficientBalanceToast()
+            } else if (e.message!!.substring(0, 8) == "Parsing(") {
+                this.showInvalidAddressToast()
+            }
             return
         }
 
@@ -127,7 +122,8 @@ class WithdrawFragment : Fragment() {
             // TODO save or display txid?
         } catch (e: Throwable) {
             // TODO more catch cases to be added during testing
-            Log.d("SEND-TRANSACTION EXCEPTION", e.printStackTrace().toString())
+            Log.d("SEND-TRANSACTION EXCEPTION", "MSG: ".plus(e.message))
+            e.printStackTrace()
         }
         // TODO signal to the user whether the transaction was sent successfully or not
     }
@@ -168,25 +164,15 @@ class WithdrawFragment : Fragment() {
         return this.createTxResp.details.fees.toString()
     }
 
-    // Return true iff the recipientAddress is a valid Bitcoin address
-    private fun validRecipientAddress(recipientAddress: String): Boolean {
-        // TODO check if recipient address is valid
-        return true
-    }
-
     // When the recipient address is invalid, show this toast to signal a problem to the user
     private fun showInvalidAddressToast() {
-        // TODO make the toast more visible and more obvious that it's an error (maybe make it red)
-        val myToast: Toast = Toast.makeText(context,R.string.toast_invalid_address, Toast.LENGTH_SHORT)
-        myToast.setGravity(Gravity.LEFT,200,200) // TODO this line causes a warning
+        val myToast: Toast = Toast.makeText(context, R.string.toast_invalid_address, Toast.LENGTH_SHORT)
         myToast.show()
     }
 
     // When the wallet does not have sufficient balance, show this toast to signal a problem to the user
     private fun showInsufficientBalanceToast() {
-        // TODO make the toast more visible and more obvious that it's an error (maybe make it red)
         val myToast: Toast = Toast.makeText(context,R.string.toast_insufficient_balance, Toast.LENGTH_SHORT)
-        myToast.setGravity(Gravity.LEFT,200,200) // TODO this line causes a warning
         myToast.show()
     }
 }
