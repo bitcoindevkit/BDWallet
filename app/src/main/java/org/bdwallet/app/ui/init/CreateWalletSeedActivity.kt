@@ -17,11 +17,14 @@ class CreateWalletSeedActivity : AppCompatActivity() {
         super.onStart()
         setContentView(R.layout.activity_create_wallet_seed)
         this.fillSeedWords()
-        this.addButtonListener()
+        findViewById<Button>(R.id.create_btn).setOnClickListener {
+            showReminderDialog()
+        }
         this.showBackupDialog()
         supportActionBar!!.setDisplayHomeAsUpEnabled(true) // enable back button on action bar
     }
 
+    // Generate mnemonic words and fill them into the respective TextViews
     private fun fillSeedWords() {
         this.keys = BDWApplication.instance.generateExtendedKey(12)
         val words: List<String> = this.keys.mnemonic.split(' ')
@@ -30,13 +33,6 @@ class CreateWalletSeedActivity : AppCompatActivity() {
             R.id.seed_text_11, R.id.seed_text_12)
         for (x in 0..11)
             findViewById<TextView>(seedViews[x]).text = words[x]
-    }
-
-    private fun addButtonListener() {
-        val createButton = findViewById<Button>(R.id.create_btn)
-        createButton.setOnClickListener {
-            showReminderDialog()
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -63,6 +59,7 @@ class CreateWalletSeedActivity : AppCompatActivity() {
             .setCancelable(false)
             .setNegativeButton(R.string.back_btn) { _, _ -> }
             .setPositiveButton(R.string.reminder_dialog_btn) { _, _ ->
+                // Once the user confirms, create the wallet using the previously generated keys
                 val descriptor: String = BDWApplication.instance.createDescriptor(this.keys)
                 BDWApplication.instance.createWallet(descriptor)
                 finish()

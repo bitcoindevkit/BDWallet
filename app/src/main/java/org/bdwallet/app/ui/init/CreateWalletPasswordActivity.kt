@@ -20,7 +20,6 @@ class CreateWalletPasswordActivity : AppCompatActivity() {
         val backButton = findViewById<Button>(R.id.back_btn)
         setPasswordButton.setOnClickListener {
             // TODO: check if passwords match and store to toml file
-
             startActivity(Intent(this, CreateWalletSeedActivity::class.java))
         }
         backButton.setOnClickListener {

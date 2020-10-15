@@ -1,25 +1,13 @@
 package org.bdwallet.app.ui.init
 
-import android.Manifest
 import android.app.Dialog
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.StrictMode
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.net.URL
 
 class InitActivity : AppCompatActivity() {
 
@@ -53,8 +41,4 @@ class InitActivity : AppCompatActivity() {
             startActivity(Intent(this, CreateWalletSeedActivity::class.java))
         }
     }
-
-
-
-
 }
