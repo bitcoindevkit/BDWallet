@@ -1,4 +1,4 @@
-package org.bdwallet.app.ui.wallet.balance
+package org.bdwallet.app.ui.wallet.cryptocompare
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,8 +1,8 @@
-package org.bdwallet.app.ui.wallet.balance
+package org.bdwallet.app.ui.wallet.cryptocompare
 
 
-import org.bdwallet.app.ui.wallet.balance.Coin
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 

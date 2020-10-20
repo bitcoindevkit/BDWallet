@@ -1,6 +1,5 @@
-package org.bdwallet.app.ui.wallet.balance
+package org.bdwallet.app.ui.wallet.cryptocompare
 
-import org.bdwallet.app.ui.wallet.balance.CoinService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
