@@ -21,15 +21,29 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.bdwallet.app.BDWApplication
+import org.bdwallet.app.ui.wallet.cryptocompare.Coin
+import org.bdwallet.app.ui.wallet.cryptocompare.Common
+import retrofit2.Call
+import retrofit2.HttpException
+import retrofit2.Response
 
 
 class BalanceViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _balance = MutableLiveData<String>().apply {
-        //TODO: Unable to test it untile getbalace could use
+    val _balance = MutableLiveData<String>().apply {
         value = BDWApplication.instance.getBalance().toString()
     }
-    //TODO: Unable to test it untile getbalace could use
-    val balance: LiveData<String> = _balance
 
+    val _curValue = MutableLiveData<String>()
+    val _price = MutableLiveData<String>()
+
+    fun setCurValue(curValue: String) {
+        _curValue.value = curValue
+    }
+
+    fun setPrice(price: String) {
+        _price.value = price
+    }
+
+    val balance: LiveData<String> = _balance
 }

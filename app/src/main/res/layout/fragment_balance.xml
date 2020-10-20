@@ -169,6 +169,7 @@
         android:textAlignment="center"
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontal_divider" />
@@ -199,5 +200,41 @@
         android:src="@drawable/android_dot_menu_white"
         app:layout_constraintEnd_toEndOf="@+id/cover_background_image"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_crypto_balance"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="34dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="40dp"
+        android:indeterminateDrawable="@drawable/progress"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cover_background_image" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_local_balance"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="34dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="40dp"
+        android:indeterminateDrawable="@drawable/progress"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/vertical_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cover_background_image" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_price"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="28dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="8dp"
+        android:indeterminateDrawable="@drawable/progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

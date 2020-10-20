@@ -46,10 +46,6 @@ class WalletActivity : AppCompatActivity() {
         generateQRcode()
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
-
 
     private fun generateQRcode(){
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
