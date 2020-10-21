@@ -35,7 +35,7 @@ class BalanceViewModel(application: Application) : AndroidViewModel(application)
     val _balance = MutableLiveData<String>().apply {
         value = BDWApplication.instance.getBalance().toString()
         if (convertToSats && value != "0") {
-            value = (value!!.toDouble() * 100000000).toString()
+            value = "%.8f".format(value!!.toDouble() * 100000000).trimEnd('0').trimEnd('.')
         }
     }
 

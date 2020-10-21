@@ -66,10 +66,11 @@ class WithdrawFragment : Fragment() {
             recipientEditText.setText(recipientEditText.text.toString().trim())
             amountEditText.setText(amountEditText.text.toString().trim())
             recipientAddress = recipientEditText.text.toString()
-
-            withdrawAmount = btcToSatoshiString(amountEditText.text.toString())
-            if (recipientAddress.isNotEmpty() && withdrawAmount.isNotEmpty() && withdrawAmount != "0") {
-                reviewBtnOnClickListener()
+            if (amountEditText.text.toString().isNotEmpty()) {
+                withdrawAmount = btcToSatoshiString(amountEditText.text.toString())
+                if (recipientAddress.isNotEmpty() && withdrawAmount.isNotEmpty() && withdrawAmount != "0") {
+                    reviewBtnOnClickListener()
+                }
             }
         }
         reviewDialog.findViewById<TextView>(R.id.back_btn_text).setOnClickListener {
@@ -130,23 +131,7 @@ class WithdrawFragment : Fragment() {
 
     // Convert a BTC-formatted string (X.XXXXXXXX) to satoshi string
     private fun btcToSatoshiString(btcAmount: String): String {
-        // don't have to overcomplicate, we already know it's not 0, so just convert to double and multiply
-        return (btcAmount.toDouble() * 100000000).toString()
-        /*
-        val decPos: Int = btcAmount.indexOfFirst { it == '.' }
-        if (decPos < 0) {
-            // Append 8 trailing zeros if there is no decimal
-            val result: String = btcAmount.plus("0".repeat(8)).trimStart{ it == '0' }
-            return (if (result.isEmpty()) "0" else result)
-        }
-        // Move decimal to the right 8 places if there is a decimal
-        var builder: StringBuilder = StringBuilder(btcAmount.substring(0, decPos))
-        for (i in (decPos+1)..(decPos+8)) {
-            builder.append(if (i < btcAmount.length) btcAmount[i] else "0")
-        }
-        val result: String = builder.toString().trimStart { it == '0' }
-        return (if (result.isEmpty()) "0" else result)
-         */
+        return "%.8f".format(btcAmount.toDouble() * 100000000).trimEnd('0').trimEnd('.')
     }
 
     // Return the total withdraw amount String in satoshis (entered withdraw amount plus total fees)
@@ -161,7 +146,7 @@ class WithdrawFragment : Fragment() {
         formatter.currency = Currency.getInstance("USD")
         formatter.maximumFractionDigits = 2
         val balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
-        val btc = if (satoshiAmount.toDouble() != 0.0) (satoshiAmount.toDouble() / 100000000).toString() else "0.0"
+        val btc = if (satoshiAmount.toDouble() != 0.0) "%.8f".format(satoshiAmount.toDouble() / 100000000).trimEnd('0').trimEnd('.') else "0.0"
         val formattedValue = formatter.format(balanceViewModel._price.value!!.toDouble() * btc.toDouble()).toString()
         return "$btc BTC ($formattedValue USD)"
     }
