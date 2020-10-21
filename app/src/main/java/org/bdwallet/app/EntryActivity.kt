@@ -32,8 +32,6 @@ class EntryActivity : AppCompatActivity() {
                 electrumUrl,
                 null
             )
-
-            val denominationType: String = savedWallet.getString("denomination_type", null)!!
         }
         startActivity(Intent(this, Class.forName(getNextActivityName(isWalletInitialized))))
     }

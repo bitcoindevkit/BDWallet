@@ -61,7 +61,7 @@ class BalanceFragment : Fragment() {
     private val updateTextTask = object : Runnable {
         override fun run() {
             val convertToSats = PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("sats_convert", false)
-            calculateValue(if (convertToSats && cryptoBalanceTextView.text != "0") (cryptoBalanceTextView.text.toString().toDouble() * 100000000).toString() else cryptoBalanceTextView.text.toString())
+            calculateValue(if (convertToSats && cryptoBalanceTextView.text != "0") "%.8f".format(cryptoBalanceTextView.text.toString().toDouble() * 100000000).trimEnd('0').trimEnd('.') else cryptoBalanceTextView.text.toString())
             mainHandler.postDelayed(this, 5000)
         }
     }
@@ -120,7 +120,7 @@ class BalanceFragment : Fragment() {
         val fromCoin = "BTC"
         Common.getCoinService().calculateValue(fromCoin, coinName).enqueue(object : retrofit2.Callback<Coin> {
             override fun onFailure(call: Call<Coin>?, t: Throwable?) {
-
+                // TODO: we should probably do something if user isn't connected to internet
             }
 
             override fun onResponse(call: Call<Coin>?, response: Response<Coin>?) {
