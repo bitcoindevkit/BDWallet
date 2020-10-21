@@ -42,6 +42,7 @@ import java.net.URL
 class DepositFragment : Fragment() {
 
     private lateinit var depositViewModel: DepositViewModel
+    lateinit var walletAddress: String
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(
@@ -61,14 +62,13 @@ class DepositFragment : Fragment() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
 
         StrictMode.setThreadPolicy(policy)
-//        var address:String = "1M5m1DuGw4Wyq1Nf8sfoKRM6uA4oREzpCX"
-//        var address:String = BDWApplication.instance.getNewAddress()
         var address:String = File("/storage/emulated/0/Android/data/org.bdwallet.app/files/BTCAddress.txt").readText(Charsets.UTF_8)
-
+        walletAddress = address
 //        depositViewModel.text.observe(viewLifecycleOwner, Observer {
 //            address = it
 //        })
         textView.text = address
+
 
 //        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
 //
