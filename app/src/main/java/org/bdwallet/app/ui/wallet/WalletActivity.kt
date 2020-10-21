@@ -1,15 +1,14 @@
 package org.bdwallet.app.ui.wallet
 
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Point
 import android.os.Bundle
 import android.os.StrictMode
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import android.view.WindowManager
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -20,7 +19,7 @@ import org.bdwallet.app.R
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.net.URL
+
 
 class WalletActivity : AppCompatActivity() {
 
@@ -51,22 +50,29 @@ class WalletActivity : AppCompatActivity() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
 
         StrictMode.setThreadPolicy(policy)
-
         var address:String = BDWApplication.instance.getNewAddress()
-        writeToFile(address,"BTCAddress.txt")
+        writeToFile(address, "BTCAddress.txt")
 
-        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
-        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-
-        //Write qrcode to file as png
-        bitmapToFile(bmp, "QRCODE.png")
+        //val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
+        //val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+        val manager = getSystemService(WINDOW_SERVICE) as WindowManager
+        val display = manager.defaultDisplay
+        val point = Point()
+        display.getSize(point)
+        val width: Int = point.x
+        val height: Int = point.y
+        var smallerDimension = if (width < height) width else height
+        smallerDimension = smallerDimension * 3 / 4
+        val qrgEncoder = QRGEncoder(address, null, QRGContents.Type.TEXT, smallerDimension)
+        bitmapToFile(qrgEncoder.bitmap, "QRCODE.png")
     }
 
-    private fun writeToFile(address: String,fileNameToSave: String): File?{
+    private fun writeToFile(address: String, fileNameToSave: String): File?{
         var file: File? = null
         return try {
-            file = File(this.getExternalFilesDir(null)!!.absolutePath
-                .toString() + File.separator + fileNameToSave
+            file = File(
+                this.getExternalFilesDir(null)!!.absolutePath
+                    .toString() + File.separator + fileNameToSave
             )
 
 
@@ -114,8 +120,9 @@ class WalletActivity : AppCompatActivity() {
 
         var file: File? = null
         return try {
-            file = File(this.getExternalFilesDir(null)!!.absolutePath
-                .toString() + File.separator + fileNameToSave
+            file = File(
+                this.getExternalFilesDir(null)!!.absolutePath
+                    .toString() + File.separator + fileNameToSave
             )
 //            file.mkdir()
 
