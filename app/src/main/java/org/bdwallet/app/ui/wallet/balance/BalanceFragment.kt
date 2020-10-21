@@ -61,7 +61,7 @@ class BalanceFragment : Fragment() {
     private val updateTextTask = object : Runnable {
         override fun run() {
             val convertToSats = PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("sats_convert", false)
-            calculateValue(if (convertToSats && cryptoBalanceTextView.text != "0") (cryptoBalanceTextView.text.toString().toDouble() / 100000000).toString() else cryptoBalanceTextView.text.toString())
+            calculateValue(if (convertToSats && cryptoBalanceTextView.text != "0") (cryptoBalanceTextView.text.toString().toDouble() * 100000000).toString() else cryptoBalanceTextView.text.toString())
             mainHandler.postDelayed(this, 5000)
         }
     }
