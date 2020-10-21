@@ -3,26 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <!--
-    <ListPreference
-        app:key="currency"
-        app:title="Local currency"
-        android:entries="@array/currency_array"
-        android:entryValues="@array/currency_array"
-        android:summary="Set your local currency to see the value of your Bitcoin"/>
-
-    <EditTextPreference
-        android:inputType="textPassword"
-        android:summary="Change your wallet's password"
-        app:key="password"
-        app:title="Password change" />
-        -->
-
-    <ListPreference
-        app:key="network"
-        app:title="Network change"
-        android:entries="@array/network_array"
-        android:entryValues="@array/network_array"
-        android:summary="Change the network to send and receive Bitcoin over"/>
+    <SwitchPreference
+        app:key="sats_convert"
+        app:title="Display BTC as SATS"/>
 
 </PreferenceScreen>

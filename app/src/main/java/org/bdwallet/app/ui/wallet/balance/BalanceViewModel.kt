@@ -30,8 +30,13 @@ import retrofit2.Response
 
 class BalanceViewModel(application: Application) : AndroidViewModel(application) {
 
+    var convertToSats = false
+
     val _balance = MutableLiveData<String>().apply {
         value = BDWApplication.instance.getBalance().toString()
+        if (convertToSats && value != "0") {
+            value = (value!!.toDouble() / 100000000).toString()
+        }
     }
 
     val _curValue = MutableLiveData<String>()
