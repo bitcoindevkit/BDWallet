@@ -41,6 +41,9 @@ import retrofit2.Response
 import android.os.Handler;
 import android.widget.ProgressBar
 import androidx.lifecycle.Observer
+import androidx.preference.PreferenceManager
+import kotlinx.android.synthetic.main.fragment_balance.*
+import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.ui.wallet.cryptocompare.Coin
 import org.bdwallet.app.ui.wallet.cryptocompare.Common
 
@@ -57,7 +60,8 @@ class BalanceFragment : Fragment() {
 
     private val updateTextTask = object : Runnable {
         override fun run() {
-            calculateValue(cryptoBalanceTextView.text.toString())
+            val convertToSats = PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("sats_convert", false)
+            calculateValue(if (convertToSats && cryptoBalanceTextView.text != "0") (cryptoBalanceTextView.text.toString().toDouble() / 100000000).toString() else cryptoBalanceTextView.text.toString())
             mainHandler.postDelayed(this, 5000)
         }
     }
@@ -82,11 +86,12 @@ class BalanceFragment : Fragment() {
         btcPriceTextView = root.findViewById(R.id.price_crypto)
         btcPriceProgressBar = root.findViewById(R.id.progress_bar_price)
         var walletActivity = activity as AppCompatActivity
+        walletActivity.supportActionBar?.setShowHideAnimationEnabled(false)
         walletActivity.supportActionBar?.hide()
         walletActivity.window.statusBarColor = Color.TRANSPARENT
         walletActivity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-
+        updateDenomLabel(root.findViewById(R.id.balance_crypto_label), PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("sats_convert", false))
         mainHandler.post(updateTextTask)
         addButtonListener(root.findViewById(R.id.settings_btn), root.findViewById(R.id.history_btn))
         return root
@@ -101,8 +106,13 @@ class BalanceFragment : Fragment() {
     override fun onResume() {
         (activity as AppCompatActivity).supportActionBar!!.hide()
         mainHandler.post(updateTextTask)
+        updateDenomLabel(balance_crypto_label, PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("sats_convert", false))
         super.onResume()
 
+    }
+
+    private fun updateDenomLabel(label: TextView, convertToSats: Boolean) {
+        label.text = if (convertToSats) "SATS BALANCE" else "BTC BALANCE"
     }
 
     private fun calculateValue(userBalance: String) {

@@ -34,7 +34,6 @@ class EntryActivity : AppCompatActivity() {
             )
 
             val denominationType: String = savedWallet.getString("denomination_type", null)!!
-            BDWApplication.instance.setDenomination(denominationType)
         }
         startActivity(Intent(this, Class.forName(getNextActivityName(isWalletInitialized))))
     }
