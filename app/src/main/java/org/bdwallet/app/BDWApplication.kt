@@ -53,10 +53,10 @@ class BDWApplication : Application() {
 
     // Set default wallet settings - TODO these will have to change eventually
     private fun setDefaults() {
-        this.name = "testnet"
-        this.network = "testnet"
+        this.name = getString(R.string.app_network)
+        this.network = getString(R.string.app_network)
         this.path = this.applicationContext.filesDir.toString()
-        this.electrumUrl = "tcp://testnet.aranguren.org:51001"
+        this.electrumUrl = getString(R.string.app_electrum_url)
     }
 
     // Get mapping from String to Network enum
