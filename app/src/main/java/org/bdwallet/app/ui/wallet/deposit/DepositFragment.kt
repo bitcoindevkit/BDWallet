@@ -22,27 +22,30 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import org.bdwallet.app.BDWApplication
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import com.google.zxing.WriterException
 import org.bdwallet.app.R
-import java.io.File
-import java.net.URL
 
+private const val TAG = "DepositFragment"
 
 class DepositFragment : Fragment() {
 
-    private lateinit var depositViewModel: DepositViewModel
-    lateinit var walletAddress: String
+
+    private val depositViewModel: DepositViewModel by activityViewModels()
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(
@@ -51,29 +54,42 @@ class DepositFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        depositViewModel =
-            ViewModelProviders.of(this).get(DepositViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_deposit, container, false)
-        val textView: TextView = root.findViewById(R.id.wallet_address)
-        val qr_code: ImageView = root.findViewById(R.id.qr_code);
+        val walletAddress: TextView = root.findViewById(R.id.wallet_address)
+        val qrCode: ImageView = root.findViewById(R.id.qr_code);
 
 
         //Test Mode
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
 
         StrictMode.setThreadPolicy(policy)
-        var address:String = File("/storage/emulated/0/Android/data/org.bdwallet.app/files/BTCAddress.txt").readText(Charsets.UTF_8)
-        walletAddress = address
+//        var address:String = File("/storage/emulated/0/Android/data/org.bdwallet.app/files/BTCAddress.txt").readText(Charsets.UTF_8)
+        //walletAddress = address
 //        depositViewModel.text.observe(viewLifecycleOwner, Observer {
 //            address = it
 //        })
-        textView.text = address
+//        textView.text = address
+
+        // update view when models change
+
+        depositViewModel.address.observe(viewLifecycleOwner, Observer<String>{ address ->
+            // update UI
+            walletAddress.text = address
+            val qrgEncoder = QRGEncoder(address, null, QRGContents.Type.TEXT, 100)
+            try {
+                val bitmap = qrgEncoder.bitmap
+                qrCode.setImageBitmap(bitmap)
+            } catch (e: WriterException) {
+                Log.v(TAG, e.toString())
+            }
+            Log.d(TAG, "New deposit address: $address")
+        })
 
 
 //        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
 //
 //        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-        qr_code.setImageBitmap(readQRCode())
+        qrCode.setImageBitmap(readQRCode())
         addButtonListener(
             root.findViewById(R.id.share_btn),
             root.findViewById<TextView>(R.id.wallet_address).text.toString()
@@ -86,6 +102,12 @@ class DepositFragment : Fragment() {
         )
         return root
     }
+
+    override fun onResume() {
+        super.onResume()
+        depositViewModel.refresh()
+    }
+
     private fun readQRCode(): Bitmap?{
         val bitmap = BitmapFactory.decodeFile("/storage/emulated/0/Android/data/org.bdwallet.app/files/QRCODE.png")
         return bitmap
