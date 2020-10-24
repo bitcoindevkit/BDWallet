@@ -50,7 +50,8 @@ class WalletActivity : AppCompatActivity() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
 
         StrictMode.setThreadPolicy(policy)
-        var address:String = BDWApplication.instance.getNewAddress()
+        val app = application as BDWApplication
+        var address:String = app.getNewAddress()
         writeToFile(address, "BTCAddress.txt")
 
         //val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
