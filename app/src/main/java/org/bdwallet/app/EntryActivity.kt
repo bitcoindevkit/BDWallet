@@ -21,14 +21,15 @@ class EntryActivity : AppCompatActivity() {
             val network: String = savedWallet.getString("network", null)!!
             val path: String = savedWallet.getString("path", null)!!
             val descriptor: String = savedWallet.getString("descriptor", null)!!
+            val changeDescriptor: String = savedWallet.getString("changeDescriptor", null)!!
             val electrumUrl: String = savedWallet.getString("electrum_url", null)!!
-
-            BDWApplication.instance.initialize(
+            val app = application as BDWApplication
+            app.initialize(
                 name,
                 network,
                 path,
                 descriptor,
-                null,
+                changeDescriptor,
                 electrumUrl,
                 null
             )
