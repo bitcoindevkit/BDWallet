@@ -18,7 +18,6 @@ package org.bdwallet.app.ui.wallet.balance
 
 import android.content.Intent
 import android.graphics.Color
-import android.icu.text.DecimalFormat
 import android.icu.text.NumberFormat
 import android.icu.util.Currency
 import android.os.Bundle
@@ -31,7 +30,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.history.HistoryActivity
 import org.bdwallet.app.ui.wallet.settings.SettingsActivity
@@ -40,16 +38,18 @@ import retrofit2.Response
 //import java.util.logging.Handler
 import android.os.Handler;
 import android.widget.ProgressBar
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.fragment_balance.*
-import org.bdwallet.app.BDWApplication
-import org.bdwallet.app.ui.wallet.cryptocompare.Coin
-import org.bdwallet.app.ui.wallet.cryptocompare.Common
+import org.bdwallet.app.ui.wallet.bitstamp.Bitstamp
+import org.bdwallet.app.ui.wallet.bitstamp.Quote
 
 
 class BalanceFragment : Fragment() {
-    private lateinit var balanceViewModel: BalanceViewModel
+
+    private val balanceViewModel: BalanceViewModel by activityViewModels()
+
     private lateinit var cryptoBalanceTextView: TextView
     private lateinit var localValueTextView: TextView
     private lateinit var btcPriceTextView: TextView
@@ -62,7 +62,7 @@ class BalanceFragment : Fragment() {
         override fun run() {
             val convertToSats = PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("sats_convert", false)
             calculateValue(if (convertToSats && cryptoBalanceTextView.text != "0") "%.8f".format(cryptoBalanceTextView.text.toString().toDouble() * 100000000).trimEnd('0').trimEnd('.') else cryptoBalanceTextView.text.toString())
-            mainHandler.postDelayed(this, 5000)
+            mainHandler.postDelayed(this, 60000)
         }
     }
 
@@ -73,7 +73,7 @@ class BalanceFragment : Fragment() {
         ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         mainHandler = Handler(Looper.getMainLooper())
-        balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
+        //balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_balance, container, false)
         localValueTextView = root.findViewById(R.id.balance_local)
         localValueProgressBar = root.findViewById(R.id.progress_bar_local_balance)
@@ -108,7 +108,9 @@ class BalanceFragment : Fragment() {
         mainHandler.post(updateTextTask)
         updateDenomLabel(balance_crypto_label, PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("sats_convert", false))
         super.onResume()
-
+//        val app = requireActivity().application as BDWApplication
+//        app.sync(100)
+        balanceViewModel.refresh_balance()
     }
 
     private fun updateDenomLabel(label: TextView, convertToSats: Boolean) {
@@ -118,13 +120,23 @@ class BalanceFragment : Fragment() {
     private fun calculateValue(userBalance: String) {
         val coinName = "USD"
         val fromCoin = "BTC"
-        Common.getCoinService().calculateValue(fromCoin, coinName).enqueue(object : retrofit2.Callback<Coin> {
-            override fun onFailure(call: Call<Coin>?, t: Throwable?) {
+//        Common.getCoinService().calculateValue(fromCoin, coinName).enqueue(object : retrofit2.Callback<Coin> {
+//            override fun onFailure(call: Call<Coin>?, t: Throwable?) {
+//                // TODO: we should probably do something if user isn't connected to internet
+//            }
+//
+//            override fun onResponse(call: Call<Coin>?, response: Response<Coin>?) {
+//                showData(userBalance, response!!.body()!!.USD)
+//            }
+//        })
+        val bitstamp = Bitstamp()
+        bitstamp.getTickerService().getQuote().enqueue(object : retrofit2.Callback<Quote> {
+            override fun onFailure(call: Call<Quote>?, t: Throwable?) {
                 // TODO: we should probably do something if user isn't connected to internet
             }
 
-            override fun onResponse(call: Call<Coin>?, response: Response<Coin>?) {
-                showData(userBalance, response!!.body()!!.USD)
+            override fun onResponse(call: Call<Quote>?, response: Response<Quote>?) {
+                showData(userBalance, response!!.body()!!.last)
             }
         })
     }

@@ -16,7 +16,6 @@
 
 <resources>
     <!--High-level app strings-->
-    <string name="app_name">BDWallet</string>
     <string name="logo_desc">logo</string>
     <string name="title_balance">Balance</string>
     <string name="title_deposit">Deposit</string>

@@ -31,19 +31,20 @@ class BDWApplication : Application() {
     private lateinit var network: String
     private lateinit var path: String
     private lateinit var descriptor: String
+    private lateinit var changeDescriptor: String
     private lateinit var electrumUrl: String
 
-    companion object {
-        lateinit var instance: BDWApplication // global singleton for this class
-            private set
-    }
+//    companion object {
+//        lateinit var instance: BDWApplication // global singleton for this class
+//            private set
+//    }
 
     override fun onCreate() {
         super.onCreate()
         Lib.load()
         this.lib = Lib()
         this.setDefaults()
-        instance = this
+//        instance = this
     }
 
     override fun onTerminate() {
@@ -53,10 +54,10 @@ class BDWApplication : Application() {
 
     // Set default wallet settings - TODO these will have to change eventually
     private fun setDefaults() {
-        this.name = "testnet"
-        this.network = "testnet"
+        this.name = getString(R.string.app_network)
+        this.network = getString(R.string.app_network)
         this.path = this.applicationContext.filesDir.toString()
-        this.electrumUrl = "tcp://testnet.aranguren.org:51001"
+        this.electrumUrl = getString(R.string.app_electrum_url)
     }
 
     // Get mapping from String to Network enum
@@ -75,7 +76,7 @@ class BDWApplication : Application() {
         network: String,
         path: String,
         descriptor: String,
-        change_descriptor: String?,
+        change_descriptor: String,
         electrum_url: String,
         electrum_proxy: String?,
     ) {
@@ -83,6 +84,7 @@ class BDWApplication : Application() {
         this.network = network
         this.path = path
         this.descriptor = descriptor
+        this.changeDescriptor = change_descriptor
         this.electrumUrl = electrum_url
 
         this.walletPtr = this.lib.constructor(
@@ -101,14 +103,14 @@ class BDWApplication : Application() {
     // To be called by the CreateWallet and RecoverWallet viewmodels
     // Constructs a new wallet with default values
     // Saves the wallet constructor parameters in SharedPreferences
-    fun createWallet(descriptor: String) {
+    fun createWallet(descriptor: String, changeDescriptor: String) {
         this.setDefaults()
         this.initialize(
             this.name,
             this.network,
             this.path,
             descriptor,
-            null,
+            changeDescriptor,
             this.electrumUrl,
             null
         )
@@ -123,6 +125,7 @@ class BDWApplication : Application() {
         editor.putString("network", this.network)
         editor.putString("path", this.path)
         editor.putString("descriptor", this.descriptor)
+        editor.putString("changeDescriptor", this.changeDescriptor)
         editor.putString("electrum_url", this.electrumUrl)
         editor.commit()
     }
@@ -194,5 +197,9 @@ class BDWApplication : Application() {
     // Concatenate tpriv to create descriptor
     fun createDescriptor(keys: ExtendedKeys): String {
         return ("wpkh(" + keys.ext_priv_key + "/0/*)")
+    }
+
+    fun createChangeDescriptor(keys: ExtendedKeys): String {
+        return ("wpkh(" + keys.ext_priv_key + "/1/*)")
     }
 }

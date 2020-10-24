@@ -27,13 +27,18 @@ private const val TAG = "DepositViewModel"
 
 class DepositViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        //val app = application as ExampleApp
+    private val app = application as BDWApplication
+    private val _address = MutableLiveData<String>().apply {
+
         //value = app.getDepositAddress()
         //Log.d(TAG, "deposit address: $value")
         //TODO: The address is not working.
-        value = BDWApplication.instance.getNewAddress()
-//        Log.d(TAG, "%%%%%%%%%deposit address: $value")
+        value = app.getNewAddress()
+        Log.d(TAG, "%%%%%%%%%deposit address: $value")
     }
-    val text: LiveData<String> = _text
+    val address: LiveData<String> = _address
+
+    fun refresh() {
+        _address.apply { value = app.getNewAddress() }
+    }
 }

@@ -21,23 +21,20 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.bdwallet.app.BDWApplication
-import org.bdwallet.app.ui.wallet.cryptocompare.Coin
-import org.bdwallet.app.ui.wallet.cryptocompare.Common
-import retrofit2.Call
-import retrofit2.HttpException
-import retrofit2.Response
 
 
 class BalanceViewModel(application: Application) : AndroidViewModel(application) {
 
-    var convertToSats = false
+    val app = application as BDWApplication
+
+    var convertToSats = MutableLiveData<Boolean>().apply {
+        value = false
+    }
 
     val _balance = MutableLiveData<String>().apply {
-        value = BDWApplication.instance.getBalance().toString()
-        if (convertToSats && value != "0") {
-            value = "%.8f".format(value!!.toDouble() * 100000000).trimEnd('0').trimEnd('.')
-        }
+        value = refresh_balance()
     }
+    val balance: LiveData<String> = _balance
 
     val _curValue = MutableLiveData<String>()
     val _price = MutableLiveData<String>()
@@ -50,5 +47,16 @@ class BalanceViewModel(application: Application) : AndroidViewModel(application)
         _price.value = price
     }
 
-    val balance: LiveData<String> = _balance
+    fun refresh_balance(): String {
+        val app = getApplication() as BDWApplication
+        app.sync(100)
+
+        val sats = app.getBalance()
+        if (sats > 0 && !convertToSats.value) {
+            val btc = sats/100000000f
+            return "%.8f".format(btc).trimEnd('0').trimEnd('.')
+        } else {
+            return sats.toString()
+        }
+    }
 }
