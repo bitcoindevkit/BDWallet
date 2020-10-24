@@ -29,6 +29,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import org.bdwallet.app.BDWApplication
@@ -38,7 +39,10 @@ import org.bitcoindevkit.bdkjni.Types.*
 import kotlin.text.StringBuilder
 
 class WithdrawFragment : Fragment() {
-    private lateinit var withdrawViewModel: WithdrawViewModel
+    //private lateinit var withdrawViewModel: WithdrawViewModel
+
+    private val withdrawViewModel: WithdrawViewModel by activityViewModels()
+
     private lateinit var root: View
     private lateinit var reviewDialog: Dialog
 
@@ -51,7 +55,7 @@ class WithdrawFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        withdrawViewModel = ViewModelProvider(this).get(WithdrawViewModel::class.java)
+        //withdrawViewModel = ViewModelProvider(this).get(WithdrawViewModel::class.java)
         // Inflate the fragment and set up the review dialog
         root = inflater.inflate(R.layout.fragment_withdraw, container, false)
         reviewDialog = Dialog(requireContext())
@@ -92,10 +96,10 @@ class WithdrawFragment : Fragment() {
     private fun reviewBtnOnClickListener() {
         val feeRate: Float = 1F // TODO change to be a dynamic value before moving to mainnnet
         val addresses: List<Pair<String, String>> = listOf(Pair(recipientAddress, withdrawAmount))
-
+        val app = requireActivity().application as BDWApplication
         // Attempt to create the transaction
         try {
-            createTxResp = BDWApplication.instance.createTx(feeRate, addresses, false, null, null, null)
+            createTxResp = app.createTx(feeRate, addresses, false, null, null, null)
         } catch (e: Throwable) {
             Log.d("CREATE-TRANSACTION EXCEPTION", "MSG: ".plus(e.message))
             if (e.message == "WalletError(InsufficientFunds)") {
@@ -116,10 +120,11 @@ class WithdrawFragment : Fragment() {
 
     // Sign and broadcast a transaction after it's been verified, created, and reviewed by the user (using BDK)
     private fun sendBtnOnClickListener() {
+        val app = requireActivity().application as BDWApplication
         try {
-            val signResp: SignResponse = BDWApplication.instance.sign(createTxResp.psbt)
-            val rawTx: RawTransaction = BDWApplication.instance.extract_psbt(signResp.psbt)
-            val txid: Txid = BDWApplication.instance.broadcast(rawTx.transaction)
+            val signResp: SignResponse = app.sign(createTxResp.psbt)
+            val rawTx: RawTransaction = app.extract_psbt(signResp.psbt)
+            val txid: Txid = app.broadcast(rawTx.transaction)
             // TODO save or display txid?
         } catch (e: Throwable) {
             // TODO more catch cases to be added during testing

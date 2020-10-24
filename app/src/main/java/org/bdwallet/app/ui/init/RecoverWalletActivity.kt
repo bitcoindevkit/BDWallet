@@ -89,8 +89,9 @@ class RecoverWalletActivity : AppCompatActivity() {
             mnemonicWordList.add(seedWord)
         }
         val mnemonicString: String = mnemonicWordList.joinToString(separator = " ")
+        val app = application as BDWApplication
         try {
-            this.keys = BDWApplication.instance.createExtendedKeys(mnemonicString)
+            this.keys = app.createExtendedKeys(mnemonicString)
         } catch (e: Throwable) {
             Log.d("createExtendedKeys EXCEPTION:", "MSG: ".plus(e.message).plus(" | mnemonic: ").plus(mnemonicString))
             return false
@@ -100,8 +101,10 @@ class RecoverWalletActivity : AppCompatActivity() {
 
     // Call BDK library to load the wallet using the recovered private key
     private fun loadWallet() {
-        val descriptor: String = BDWApplication.instance.createDescriptor(this.keys)
-        BDWApplication.instance.createWallet(descriptor)
+        val app = application as BDWApplication
+        val descriptor: String = app.createDescriptor(this.keys)
+        val changeDescriptor: String = app.createChangeDescriptor(this.keys)
+        app.createWallet(descriptor, changeDescriptor)
     }
 
     // Notify the user that the entered seed phrase is invalid

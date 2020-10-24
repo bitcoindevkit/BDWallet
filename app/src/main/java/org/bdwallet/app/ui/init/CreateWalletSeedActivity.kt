@@ -26,7 +26,8 @@ class CreateWalletSeedActivity : AppCompatActivity() {
 
     // Generate mnemonic words and fill them into the respective TextViews
     private fun fillSeedWords() {
-        this.keys = BDWApplication.instance.generateExtendedKey(12)
+        val app = application as BDWApplication
+        this.keys = app.generateExtendedKey(12)
         val words: List<String> = this.keys.mnemonic.split(' ')
         val seedViews: List<Int> = listOfNotNull<Int>(R.id.seed_text_1, R.id.seed_text_2, R.id.seed_text_3, R.id.seed_text_4,
             R.id.seed_text_5, R.id.seed_text_6, R.id.seed_text_7, R.id.seed_text_8, R.id.seed_text_9, R.id.seed_text_10,
@@ -53,6 +54,7 @@ class CreateWalletSeedActivity : AppCompatActivity() {
     }
 
     private fun showReminderDialog() {
+        val app = application as BDWApplication
         val alertDialog = AlertDialog.Builder(this)
             .setTitle(R.string.reminder_dialog_title)
             .setMessage(R.string.reminder_dialog_body)
@@ -60,8 +62,9 @@ class CreateWalletSeedActivity : AppCompatActivity() {
             .setNegativeButton(R.string.back_btn) { _, _ -> }
             .setPositiveButton(R.string.reminder_dialog_btn) { _, _ ->
                 // Once the user confirms, create the wallet using the previously generated keys
-                val descriptor: String = BDWApplication.instance.createDescriptor(this.keys)
-                BDWApplication.instance.createWallet(descriptor)
+                val descriptor: String = app.createDescriptor(this.keys)
+                val changeDescriptor: String = app.createChangeDescriptor(this.keys)
+                app.createWallet(descriptor, changeDescriptor)
                 finish()
                 startActivity(Intent(this, WalletActivity::class.java))
             }

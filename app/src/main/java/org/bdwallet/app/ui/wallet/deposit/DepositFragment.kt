@@ -44,7 +44,6 @@ private const val TAG = "DepositFragment"
 
 class DepositFragment : Fragment() {
 
-
     private val depositViewModel: DepositViewModel by activityViewModels()
 
     @RequiresApi(Build.VERSION_CODES.Q)
