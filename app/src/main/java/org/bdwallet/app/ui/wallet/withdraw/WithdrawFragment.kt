@@ -31,12 +31,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.balance.BalanceViewModel
 import org.bitcoindevkit.bdkjni.Types.*
-import kotlin.text.StringBuilder
 
 class WithdrawFragment : Fragment() {
     //private lateinit var withdrawViewModel: WithdrawViewModel
@@ -152,7 +150,7 @@ class WithdrawFragment : Fragment() {
         formatter.maximumFractionDigits = 2
         val balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
         val btc = if (satoshiAmount.toDouble() != 0.0) "%.8f".format(satoshiAmount.toDouble() / 100000000).trimEnd('0').trimEnd('.') else "0.0"
-        val formattedValue = formatter.format(balanceViewModel._price.value!!.toDouble() * btc.toDouble()).toString()
+        val formattedValue = formatter.format(balanceViewModel.fiatPrice.value!!.toDouble() * btc.toDouble()).toString()
         return "$btc BTC ($formattedValue USD)"
     }
 
