@@ -32,7 +32,7 @@ How to test with local REGTEST electrs server
    ```shell
    adb kill-server
    adb -L tcp:localhost:5038 reverse tcp:60401 tcp:60401
-   adb reverse --list
+   adb -L tcp:localhost:5038 reverse --list
    ```
 
 6. Open Android Studio "Build Variants" window (lower left)
