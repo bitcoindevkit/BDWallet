@@ -20,43 +20,103 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.preference.PreferenceManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.withContext
 import org.bdwallet.app.BDWApplication
+import org.bdwallet.app.ui.wallet.bitstamp.Bitstamp
+import java.math.BigDecimal
+import java.math.MathContext.DECIMAL64
+import java.math.RoundingMode.HALF_EVEN
 
 
-class BalanceViewModel(application: Application) : AndroidViewModel(application) {
+class BalanceViewModel(application: Application) : AndroidViewModel(application),
+    CoroutineScope by MainScope() {
 
     val app = application as BDWApplication
+    val bitstamp = Bitstamp()
+    val rounding = HALF_EVEN
+    val btcScale = 8
+    val fiatScale = 2
 
-    var convertToSats = MutableLiveData<Boolean>().apply {
+    private val _convertToSats = MutableLiveData<Boolean>().apply {
+        value = PreferenceManager.getDefaultSharedPreferences(app)
+            .getBoolean("sats_convert", false)
+    }
+    val convertToSats: LiveData<Boolean> = Transformations.distinctUntilChanged(_convertToSats)
+
+    private val _satBalance = MutableLiveData<Long>().apply {
+        value = 0
+    }
+    val satBalance: LiveData<Long> = Transformations.distinctUntilChanged(_satBalance)
+
+    val btcBalance: LiveData<BigDecimal> = Transformations.map(satBalance) { sats ->
+        if (sats > 0) {
+            BigDecimal.valueOf(sats).divide(BigDecimal.valueOf(100000000))
+                .setScale(btcScale, rounding)
+                .stripTrailingZeros()
+        } else {
+            BigDecimal.ZERO
+        }
+    }
+
+    val walletBalance: LiveData<String> =
+        Transformations.switchMap(convertToSats) { convertToSats ->
+            if (convertToSats) {
+                Transformations.map(satBalance) { sats ->
+                    sats.toString()
+                }
+            } else {
+                Transformations.map(btcBalance) { btc ->
+                    btc.toPlainString()
+                }
+            }
+        }
+
+    private val _btcRefreshing = MutableLiveData<Boolean>().apply {
         value = false
     }
+    val btcRefreshing: LiveData<Boolean> = _btcRefreshing
 
-    val _balance = MutableLiveData<String>().apply {
-        value = refresh_balance()
+    private val _fiatPrice = MutableLiveData<BigDecimal>().apply {
+        value = BigDecimal.ZERO
     }
-    val balance: LiveData<String> = _balance
+    val fiatPrice: LiveData<BigDecimal> = Transformations.distinctUntilChanged(_fiatPrice)
 
-    val _curValue = MutableLiveData<String>()
-    val _price = MutableLiveData<String>()
-
-    fun setCurValue(curValue: String) {
-        _curValue.value = curValue
-    }
-
-    fun setPrice(price: String) {
-        _price.value = price
+    val fiatValue: LiveData<BigDecimal> = Transformations.map(fiatPrice) { price ->
+        price.multiply(btcBalance.value ?: BigDecimal.ZERO, DECIMAL64)
+            .setScale(fiatScale, rounding)
     }
 
-    fun refresh_balance(): String {
-        val app = getApplication() as BDWApplication
+    private val _fiatRefreshing = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+    val fiatRefreshing: LiveData<Boolean> = _fiatRefreshing
+
+    suspend fun refreshSatBalance() {
+        withContext(Dispatchers.Main) {
+            _btcRefreshing.value = true
+        }
         app.sync(100)
+        val balance = app.getBalance()
+        withContext(Dispatchers.Main) {
+            _satBalance.value = balance
+            _btcRefreshing.value = false
+        }
+    }
 
-        val sats = app.getBalance()
-        if (sats > 0 && !convertToSats.value) {
-            val btc = sats/100000000f
-            return "%.8f".format(btc).trimEnd('0').trimEnd('.')
-        } else {
-            return sats.toString()
+    suspend fun refreshFiatPrice() {
+        withContext(Dispatchers.Main) {
+            _fiatRefreshing.value = true
+        }
+        // TODO handle errors such as if user isn't connected to the internet
+        val quote = bitstamp.getTickerService().getQuote()
+        withContext(Dispatchers.Main) {
+            _fiatPrice.value = BigDecimal(quote.last, DECIMAL64).setScale(fiatScale, rounding)
+            _fiatRefreshing.value = false
         }
     }
 }
