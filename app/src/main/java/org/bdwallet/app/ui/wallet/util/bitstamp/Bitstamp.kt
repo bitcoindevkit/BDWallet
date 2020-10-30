@@ -1,4 +1,4 @@
-package org.bdwallet.app.ui.wallet.bitstamp
+package org.bdwallet.app.ui.wallet.util.bitstamp
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -18,6 +18,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         finish()
+        //startActivity(Intent(applicationContext, WalletActivity::class.java))
         return true
     }
 }

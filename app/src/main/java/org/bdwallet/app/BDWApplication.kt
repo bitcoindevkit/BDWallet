@@ -34,29 +34,24 @@ class BDWApplication : Application() {
     private lateinit var changeDescriptor: String
     private lateinit var electrumUrl: String
 
-//    companion object {
-//        lateinit var instance: BDWApplication // global singleton for this class
-//            private set
-//    }
-
     override fun onCreate() {
         super.onCreate()
         Lib.load()
-        this.lib = Lib()
-        this.setDefaults()
+        lib = Lib()
+        setDefaults()
 //        instance = this
     }
 
     override fun onTerminate() {
         super.onTerminate()
-        this.lib.destructor(this.walletPtr)
+        lib.destructor(walletPtr)
     }
 
     // Set default wallet settings - TODO these will have to change eventually
     private fun setDefaults() {
-        this.name = getString(R.string.app_network)
+        this.name = getString(R.string.app_name)
         this.network = getString(R.string.app_network)
-        this.path = this.applicationContext.filesDir.toString()
+        this.path = applicationContext.filesDir.toString()
         this.electrumUrl = getString(R.string.app_electrum_url)
     }
 
@@ -87,10 +82,10 @@ class BDWApplication : Application() {
         this.changeDescriptor = change_descriptor
         this.electrumUrl = electrum_url
 
-        this.walletPtr = this.lib.constructor(
+        walletPtr = lib.constructor(
             WalletConstructor(
                 name,
-                this.getNetworkMap().getValue(network),
+                getNetworkMap().getValue(network),
                 path,
                 descriptor,
                 change_descriptor,
@@ -104,55 +99,55 @@ class BDWApplication : Application() {
     // Constructs a new wallet with default values
     // Saves the wallet constructor parameters in SharedPreferences
     fun createWallet(descriptor: String, changeDescriptor: String) {
-        this.setDefaults()
-        this.initialize(
-            this.name,
-            this.network,
-            this.path,
+        setDefaults()
+        initialize(
+            name,
+            network,
+            path,
             descriptor,
             changeDescriptor,
-            this.electrumUrl,
+            electrumUrl,
             null
         )
-        this.saveWalletPrefs()
+        saveWalletPrefs()
     }
 
     // Save the constructor parameters in SharedPreferences so that wallet can be reloaded
     private fun saveWalletPrefs() {
         val editor: SharedPreferences.Editor = getSharedPreferences("saved_wallet", Context.MODE_PRIVATE).edit()
         editor.putBoolean("initialized", true)
-        editor.putString("name", this.name)
-        editor.putString("network", this.network)
-        editor.putString("path", this.path)
-        editor.putString("descriptor", this.descriptor)
-        editor.putString("changeDescriptor", this.changeDescriptor)
-        editor.putString("electrum_url", this.electrumUrl)
+        editor.putString("name", name)
+        editor.putString("network", network)
+        editor.putString("path", path)
+        editor.putString("descriptor", descriptor)
+        editor.putString("changeDescriptor", changeDescriptor)
+        editor.putString("electrum_url", electrumUrl)
         editor.commit()
     }
 
     // Returns a new public address for depositing into this wallet
     fun getNewAddress(): String {
-        return this.lib.get_new_address(this.walletPtr)
+        return lib.get_new_address(walletPtr)
     }
 
     fun sync(max_address: Int?=null) {
         // TODO what is this function for?
-        this.lib.sync(this.walletPtr, max_address)
+        lib.sync(walletPtr, max_address)
     }
 
     // Returns the list of UTXOs that are spendable by this wallet
     fun listUnspent(): List<UTXO> {
-        return this.lib.list_unspent(this.walletPtr)
+        return lib.list_unspent(walletPtr)
     }
 
     // Returns the total balance of this wallet (the sum of UTXOs)
     fun getBalance(): Long {
-        return this.lib.get_balance(this.walletPtr)
+        return lib.get_balance(walletPtr)
     }
 
     fun listTransactions(): List<TransactionDetails> {
         // TODO does this give the transaction history??
-        return this.lib.list_transactions(this.walletPtr)
+        return lib.list_transactions(walletPtr)
     }
 
     fun createTx(
@@ -163,35 +158,35 @@ class BDWApplication : Application() {
         unspendable: List<String>?=null,
         policy: Map<String, List<String>>?=null
     ): CreateTxResponse {
-        return this.lib.create_tx(this.walletPtr, fee_rate, addressees, send_all, utxos, unspendable, policy)
+        return lib.create_tx(walletPtr, fee_rate, addressees, send_all, utxos, unspendable, policy)
     }
 
     fun sign(psbt: String, assume_height: Int?=null): SignResponse {
-        return this.lib.sign(this.walletPtr, psbt, assume_height)
+        return lib.sign(walletPtr, psbt, assume_height)
     }
 
     fun extract_psbt(psbt: String): RawTransaction {
-        return this.lib.extract_psbt(this.walletPtr, psbt)
+        return lib.extract_psbt(walletPtr, psbt)
     }
 
     // Broadcasts a transaction to the bitcoin network
     fun broadcast(raw_tx: String): Txid {
-        return this.lib.broadcast(this.walletPtr, raw_tx)
+        return this.lib.broadcast(walletPtr, raw_tx)
     }
 
     fun publicDescriptors(): PublicDescriptorsResponse {
         // TODO what is this function for?
-        return this.lib.public_descriptors(this.walletPtr)
+        return lib.public_descriptors(walletPtr)
     }
 
     // Generate a new mnemonic and tpriv (for creating wallet)
     fun generateExtendedKey(mnemonicWordCount: Int): ExtendedKeys {
-        return this.lib.generate_extended_key(this.getNetworkMap().getValue(this.network), mnemonicWordCount)
+        return this.lib.generate_extended_key(getNetworkMap().getValue(network), mnemonicWordCount)
     }
 
     // Use a mnemonic to calculate the tpriv (for recovering wallet)
     fun createExtendedKeys(mnemonic: String): ExtendedKeys {
-        return this.lib.create_extended_keys(this.getNetworkMap().getValue(this.network), mnemonic)
+        return this.lib.create_extended_keys(getNetworkMap().getValue(network), mnemonic)
     }
 
     // Concatenate tpriv to create descriptor

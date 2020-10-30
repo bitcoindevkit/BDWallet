@@ -130,6 +130,7 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
 
     private fun addButtonListener(settingsButton: ImageButton, historyButton: Button) {
         settingsButton.setOnClickListener {
+            //requireActivity().finish()
             startActivity(Intent(requireContext(), SettingsActivity::class.java))
         }
         historyButton.setOnClickListener {
