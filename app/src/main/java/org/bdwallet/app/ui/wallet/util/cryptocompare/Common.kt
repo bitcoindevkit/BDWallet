@@ -1,4 +1,4 @@
-package org.bdwallet.app.ui.wallet.cryptocompare
+package org.bdwallet.app.ui.wallet.util.cryptocompare
 
 import retrofit2.Call
 import retrofit2.Callback
