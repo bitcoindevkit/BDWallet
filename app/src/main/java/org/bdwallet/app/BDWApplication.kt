@@ -37,9 +37,8 @@ class BDWApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         Lib.load()
-        lib = Lib()
+        this.lib = Lib()
         setDefaults()
-//        instance = this
     }
 
     override fun onTerminate() {
@@ -47,7 +46,7 @@ class BDWApplication : Application() {
         lib.destructor(walletPtr)
     }
 
-    // Set default wallet settings - TODO these will have to change eventually
+    // Set default wallet settings (strings located in R file)
     private fun setDefaults() {
         this.name = getString(R.string.app_name)
         this.network = getString(R.string.app_network)
@@ -130,8 +129,8 @@ class BDWApplication : Application() {
         return lib.get_new_address(walletPtr)
     }
 
+    // Sync with the blockchain to show balance & new incoming transactions
     fun sync(max_address: Int?=null) {
-        // TODO what is this function for?
         lib.sync(walletPtr, max_address)
     }
 
@@ -140,16 +139,18 @@ class BDWApplication : Application() {
         return lib.list_unspent(walletPtr)
     }
 
-    // Returns the total balance of this wallet (the sum of UTXOs)
+    // Returns the total balance of this wallet in satoshis (the sum of UTXOs)
     fun getBalance(): Long {
         return lib.get_balance(walletPtr)
     }
 
+    // Return the wallet's transaction history
     fun listTransactions(): List<TransactionDetails> {
-        // TODO does this give the transaction history??
         return lib.list_transactions(walletPtr)
     }
 
+    // Create a transaction 'template' to be signed and broadcasted
+    // Throws an exception if insufficient balance or invalid recipient address
     fun createTx(
         fee_rate: Float,
         addressees: List<Pair<String, String>>,
@@ -171,22 +172,22 @@ class BDWApplication : Application() {
 
     // Broadcasts a transaction to the bitcoin network
     fun broadcast(raw_tx: String): Txid {
-        return this.lib.broadcast(walletPtr, raw_tx)
+        return lib.broadcast(walletPtr, raw_tx)
     }
 
+    // TODO what is this function for?
     fun publicDescriptors(): PublicDescriptorsResponse {
-        // TODO what is this function for?
         return lib.public_descriptors(walletPtr)
     }
 
     // Generate a new mnemonic and tpriv (for creating wallet)
     fun generateExtendedKey(mnemonicWordCount: Int): ExtendedKeys {
-        return this.lib.generate_extended_key(getNetworkMap().getValue(network), mnemonicWordCount)
+        return lib.generate_extended_key(getNetworkMap().getValue(network), mnemonicWordCount)
     }
 
     // Use a mnemonic to calculate the tpriv (for recovering wallet)
     fun createExtendedKeys(mnemonic: String): ExtendedKeys {
-        return this.lib.create_extended_keys(getNetworkMap().getValue(network), mnemonic)
+        return lib.create_extended_keys(getNetworkMap().getValue(network), mnemonic)
     }
 
     // Concatenate tpriv to create descriptor

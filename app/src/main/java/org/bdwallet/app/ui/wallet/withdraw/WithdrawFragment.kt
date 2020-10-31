@@ -37,8 +37,6 @@ import org.bdwallet.app.ui.wallet.balance.BalanceViewModel
 import org.bitcoindevkit.bdkjni.Types.*
 
 class WithdrawFragment : Fragment() {
-    //private lateinit var withdrawViewModel: WithdrawViewModel
-
     private val withdrawViewModel: WithdrawViewModel by activityViewModels()
 
     private lateinit var root: View
@@ -53,7 +51,6 @@ class WithdrawFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //withdrawViewModel = ViewModelProvider(this).get(WithdrawViewModel::class.java)
         // Inflate the fragment and set up the review dialog
         root = inflater.inflate(R.layout.fragment_withdraw, container, false)
         reviewDialog = Dialog(requireContext())
@@ -125,7 +122,6 @@ class WithdrawFragment : Fragment() {
             val txid: Txid = app.broadcast(rawTx.transaction)
             // TODO save or display txid?
         } catch (e: Throwable) {
-            // TODO more catch cases to be added during testing
             Log.d("SEND-TRANSACTION EXCEPTION", "MSG: ".plus(e.message))
             e.printStackTrace()
         }
