@@ -21,7 +21,7 @@ class CreateWalletSeedActivity : AppCompatActivity() {
             showReminderDialog()
         }
         showBackupDialog()
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true) // enable back button on action bar
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     // Generate mnemonic words and fill them into the respective TextViews
