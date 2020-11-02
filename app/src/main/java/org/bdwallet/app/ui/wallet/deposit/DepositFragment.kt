@@ -81,18 +81,19 @@ class DepositFragment : Fragment() {
             } catch (e: WriterException) {
                 Log.v(TAG, e.toString())
             }
-            Log.d(TAG, "New deposit address: $address")
+            addButtonListener(
+                root.findViewById(R.id.share_btn),
+                address
+            )
+//            Log.d(TAG, "New deposit address: $address")
         })
 
 
 //        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
 //
 //        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-        qrCode.setImageBitmap(readQRCode())
-        addButtonListener(
-            root.findViewById(R.id.share_btn),
-            root.findViewById<TextView>(R.id.wallet_address).text.toString()
-        )
+//        qrCode.setImageBitmap(readQRCode())
+
         val walletActivity = activity as AppCompatActivity
         walletActivity.supportActionBar!!.show()
         walletActivity.window.statusBarColor = ContextCompat.getColor(
