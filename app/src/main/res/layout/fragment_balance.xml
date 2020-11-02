@@ -69,13 +69,13 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
+    <WebView
         android:id="@+id/balance_graph"
         android:layout_width="309dp"
         android:layout_height="182dp"
         android:layout_marginBottom="20dp"
         android:contentDescription="@string/logo_desc"
-        android:src="@drawable/temp_graph"
+
         app:layout_constraintBottom_toTopOf="@+id/history_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"

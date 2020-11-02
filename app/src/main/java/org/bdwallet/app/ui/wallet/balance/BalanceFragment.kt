@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
@@ -48,7 +49,7 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
     private lateinit var cryptoBalanceProgressBar: ProgressBar
     private lateinit var localValueProgressBar: ProgressBar
     private lateinit var btcPriceProgressBar: ProgressBar
-
+    private lateinit var priceGraph: WebView
     init {
         lifecycleScope.launch {
             whenStarted {
@@ -76,7 +77,10 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
         cryptoBalanceProgressBar = root.findViewById(R.id.progress_bar_crypto_balance)
         btcPriceTextView = root.findViewById(R.id.price_crypto)
         btcPriceProgressBar = root.findViewById(R.id.progress_bar_price)
-
+        priceGraph = root.findViewById(R.id.balance_graph)
+        priceGraph.getSettings().setJavaScriptEnabled(true);
+        var webData: String = "<div class=\"nomics-ticker-widget\" data-name=\"Bitcoin\" data-base=\"BTC\" data-quote=\"USD\"></div><script src=\"https://widget.nomics.com/embed.js\"></script>"
+        priceGraph.loadData(webData, "text/html", "UTF-8");
         balanceViewModel.convertToSats.observe(viewLifecycleOwner, { isSats ->
             balanceCryptoLabel.text = if (isSats) "SATS BALANCE" else "BTC BALANCE"
         })
