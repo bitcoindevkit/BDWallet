@@ -36,6 +36,8 @@ import kotlinx.coroutines.*
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.history.HistoryActivity
 import org.bdwallet.app.ui.wallet.settings.SettingsActivity
+import java.text.NumberFormat
+import java.util.*
 
 
 class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
@@ -78,40 +80,51 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
         btcPriceTextView = root.findViewById(R.id.price_crypto)
         btcPriceProgressBar = root.findViewById(R.id.progress_bar_price)
         priceGraph = root.findViewById(R.id.balance_graph)
-        priceGraph.getSettings().setJavaScriptEnabled(true);
-        var webData: String = "<div class=\"nomics-ticker-widget\" data-name=\"Bitcoin\" data-base=\"BTC\" data-quote=\"USD\"></div><script src=\"https://widget.nomics.com/embed.js\"></script>"
+        priceGraph.settings.javaScriptEnabled = true
+        var webData = "<div id=\"bitcoinium-widget\" widget-coin=\"BTC\" widget-align=\"center\" widget-size=\"small\" widget-initial-pair=\"BTC_BITSTAMP_USD\"></div><script type=\"text/javascript\" src=\"https://bitcoinium.com/assets/js/bitcoinium-widget-min.js\"></script>"
         priceGraph.loadData(webData, "text/html", "UTF-8");
+
+        val currencyFormatter = NumberFormat.getCurrencyInstance()
+        currencyFormatter.currency = Currency.getInstance("USD")
+        currencyFormatter.maximumFractionDigits = 2
+        val numberFormatter = NumberFormat.getNumberInstance(Locale.US)
+
         balanceViewModel.convertToSats.observe(viewLifecycleOwner, { isSats ->
             balanceCryptoLabel.text = if (isSats) "SATS BALANCE" else "BTC BALANCE"
         })
 
         balanceViewModel.walletBalance.observe(viewLifecycleOwner, { walletBalance ->
-            cryptoBalanceTextView.text = walletBalance
+            cryptoBalanceTextView.text = numberFormatter.format(walletBalance.toLong())
         })
 
         balanceViewModel.fiatValue.observe(viewLifecycleOwner, { fiat ->
-            localValueTextView.text = fiat.toPlainString()
+            localValueTextView.text = currencyFormatter.format(fiat)
         })
 
         balanceViewModel.fiatPrice.observe(viewLifecycleOwner, { price ->
-            btcPriceTextView.text = price.toPlainString()
+            btcPriceTextView.text = currencyFormatter.format(price)
         })
 
         balanceViewModel.btcRefreshing.observe(viewLifecycleOwner, { refreshing ->
             if (refreshing) {
                 cryptoBalanceProgressBar.visibility = View.VISIBLE
+                cryptoBalanceTextView.visibility = View.INVISIBLE
+                btcPriceProgressBar.visibility = View.VISIBLE
+                localValueProgressBar.visibility = View.VISIBLE
+                btcPriceTextView.visibility = View.INVISIBLE
+                localValueTextView.visibility = View.INVISIBLE
             } else {
-                cryptoBalanceProgressBar.visibility = View.GONE
+                cryptoBalanceProgressBar.visibility = View.INVISIBLE
+                cryptoBalanceTextView.visibility = View.VISIBLE
             }
         })
 
         balanceViewModel.fiatRefreshing.observe(viewLifecycleOwner, { refreshing ->
-            if (refreshing) {
-                btcPriceProgressBar.visibility = View.VISIBLE
-                localValueProgressBar.visibility = View.VISIBLE
-            } else {
-                btcPriceProgressBar.visibility = View.GONE
-                localValueProgressBar.visibility = View.GONE
+            if (!refreshing) {
+                btcPriceProgressBar.visibility = View.INVISIBLE
+                localValueProgressBar.visibility = View.INVISIBLE
+                btcPriceTextView.visibility = View.VISIBLE
+                localValueTextView.visibility = View.VISIBLE
             }
         })
 
@@ -134,7 +147,6 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
 
     private fun addButtonListener(settingsButton: ImageButton, historyButton: Button) {
         settingsButton.setOnClickListener {
-            //requireActivity().finish()
             startActivity(Intent(requireContext(), SettingsActivity::class.java))
         }
         historyButton.setOnClickListener {

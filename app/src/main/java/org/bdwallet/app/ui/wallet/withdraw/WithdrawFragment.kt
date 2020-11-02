@@ -31,10 +31,19 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenStarted
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.balance.BalanceViewModel
+import org.bdwallet.app.ui.wallet.util.bitstamp.Bitstamp
 import org.bitcoindevkit.bdkjni.Types.*
+import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 
 class WithdrawFragment : Fragment() {
     private val withdrawViewModel: WithdrawViewModel by activityViewModels()
@@ -45,6 +54,17 @@ class WithdrawFragment : Fragment() {
     private lateinit var recipientAddress: String
     private lateinit var withdrawAmount: String
     private lateinit var createTxResp: CreateTxResponse
+
+    init {
+        lifecycleScope.launch {
+            whenStarted {
+                while (isActive) { // cancellable computation loop
+                    withdrawViewModel.refreshFiatPrice()
+                    delay(60000)
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,7 +109,7 @@ class WithdrawFragment : Fragment() {
         // if it's passes, set display values in the review dialog and show the review dialog
         // otherwise, show an error toast and return
     private fun reviewBtnOnClickListener() {
-        val feeRate: Float = 1F // TODO change to be a dynamic value before moving to mainnnet
+        val feeRate = 1F // TODO change to be a dynamic value before moving to mainnnet
         val addresses: List<Pair<String, String>> = listOf(Pair(recipientAddress, withdrawAmount))
         val app = requireActivity().application as BDWApplication
         // Attempt to create the transaction
@@ -107,9 +127,9 @@ class WithdrawFragment : Fragment() {
 
         // The transaction has been validated - set the dialog display values before showing the reviewDialog
         reviewDialog.findViewById<TextView>(R.id.recipient_text).text = recipientAddress
-        reviewDialog.findViewById<TextView>(R.id.amount_text).text = formatAmountText(withdrawAmount)
+        reviewDialog.findViewById<TextView>(R.id.amount_text).text = withdrawAmount
         reviewDialog.findViewById<TextView>(R.id.fee_text).text = formatFeeText()
-        reviewDialog.findViewById<TextView>(R.id.total_text).text = formatAmountText(getTotalWithdraw())
+        reviewDialog.findViewById<TextView>(R.id.total_text).text = getTotalWithdraw()
         reviewDialog.show()
     }
 
@@ -140,14 +160,15 @@ class WithdrawFragment : Fragment() {
     }
 
     // return BTC-formatted string with USD conversion for display in reviewDialog
-    private fun formatAmountText(satoshiAmount: String): String {
+    private suspend fun formatAmountText(satoshiAmount: String): String {
         val formatter = NumberFormat.getCurrencyInstance()
         formatter.currency = Currency.getInstance("USD")
         formatter.maximumFractionDigits = 2
-        val balanceViewModel = ViewModelProvider(this).get(BalanceViewModel::class.java)
-        val btc = if (satoshiAmount.toDouble() != 0.0) "%.8f".format(satoshiAmount.toDouble() / 100000000).trimEnd('0').trimEnd('.') else "0.0"
-        val formattedValue = formatter.format(balanceViewModel.fiatPrice.value!!.toDouble() * btc.toDouble()).toString()
-        return "$btc BTC ($formattedValue USD)"
+        val quote = Bitstamp().getTickerService().getQuote()
+        val rounding = RoundingMode.HALF_EVEN
+        val fiatScale = 2
+        val formattedValue = formatter.format(BigDecimal(quote.last, MathContext.DECIMAL64).setScale(fiatScale, rounding) * satoshiAmount.toBigDecimal())
+        return "$satoshiAmount BTC ($formattedValue USD)"
     }
 
     // return the total fee BTC formatted string with percentage of withdrawal amount for display in reviewDialog

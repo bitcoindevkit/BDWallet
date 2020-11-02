@@ -55,21 +55,14 @@ class DepositFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_deposit, container, false)
         val walletAddress: TextView = root.findViewById(R.id.wallet_address)
-        val qrCode: ImageView = root.findViewById(R.id.qr_code);
+        val qrCode: ImageView = root.findViewById(R.id.qr_code)
+        val shareBtn: Button = root.findViewById(R.id.share_btn)
 
 
         //Test Mode
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
 
         StrictMode.setThreadPolicy(policy)
-//        var address:String = File("/storage/emulated/0/Android/data/org.bdwallet.app/files/BTCAddress.txt").readText(Charsets.UTF_8)
-        //walletAddress = address
-//        depositViewModel.text.observe(viewLifecycleOwner, Observer {
-//            address = it
-//        })
-//        textView.text = address
-
-        // update view when models change
 
         depositViewModel.address.observe(viewLifecycleOwner, Observer<String>{ address ->
             // update UI
@@ -82,17 +75,13 @@ class DepositFragment : Fragment() {
                 Log.v(TAG, e.toString())
             }
             addButtonListener(
-                root.findViewById(R.id.share_btn),
+                shareBtn,
                 address
             )
-//            Log.d(TAG, "New deposit address: $address")
+            Log.d(TAG, "New deposit address: $address")
         })
 
-
-//        val url = URL("https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address=" + address)
-//
-//        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-//        qrCode.setImageBitmap(readQRCode())
+        qrCode.setImageBitmap(readQRCode())
 
         val walletActivity = activity as AppCompatActivity
         walletActivity.supportActionBar!!.show()
@@ -103,18 +92,10 @@ class DepositFragment : Fragment() {
         return root
     }
 
-    override fun onResume() {
-        super.onResume()
-        depositViewModel.refresh()
-    }
-
     private fun readQRCode(): Bitmap?{
         val bitmap = BitmapFactory.decodeFile("/storage/emulated/0/Android/data/org.bdwallet.app/files/QRCODE.png")
         return bitmap
     }
-//    private fun readFileDirectlyAsText(fileName: String): String {
-//
-//    }
 
     private fun addButtonListener(button: Button, address: String) {
         button.setOnClickListener {

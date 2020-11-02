@@ -34,6 +34,8 @@ package org.bdwallet.app.ui.wallet.balance
 
 
 import android.app.Application
+import android.nfc.Tag
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -50,6 +52,7 @@ import java.math.BigDecimal
 import java.math.MathContext.DECIMAL64
 import java.math.RoundingMode.HALF_EVEN
 
+private const val TAG = "BalanceViewModel"
 
 class BalanceViewModel(application: Application) : AndroidViewModel(application),
     CoroutineScope by MainScope() {

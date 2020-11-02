@@ -53,6 +53,7 @@ android {
             resValue "string", "app_name", "BD Wallet | REGTEST"
             resValue "string", "app_network", "regtest"
             resValue "string", "app_electrum_url", "tcp://127.0.0.1:60401"
+            isDefault true
         }
 
         dev {
@@ -62,7 +63,6 @@ android {
             resValue "string", "app_name", "BD Wallet | TESTNET"
             resValue "string", "app_network", "testnet"
             resValue "string", "app_electrum_url", "tcp://testnet.aranguren.org:51001"
-            isDefault true
         }
     }
 
