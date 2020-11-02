@@ -122,11 +122,13 @@ class BalanceViewModel(application: Application) : AndroidViewModel(application)
         withContext(Dispatchers.Main) {
             _btcRefreshing.value = true
         }
-        app.sync(100)
-        val balance = app.getBalance()
-        withContext(Dispatchers.Main) {
-            _satBalance.value = balance
-            _btcRefreshing.value = false
+        withContext(Dispatchers.IO) {
+            app.sync(100)
+            val balance = app.getBalance()
+            withContext(Dispatchers.Main) {
+                _satBalance.value = balance
+                _btcRefreshing.value = false
+            }
         }
     }
 
@@ -134,11 +136,13 @@ class BalanceViewModel(application: Application) : AndroidViewModel(application)
         withContext(Dispatchers.Main) {
             _fiatRefreshing.value = true
         }
-        // TODO handle errors such as if user isn't connected to the internet
-        val quote = bitstamp.getTickerService().getQuote()
-        withContext(Dispatchers.Main) {
-            _fiatPrice.value = BigDecimal(quote.last, DECIMAL64).setScale(fiatScale, rounding)
-            _fiatRefreshing.value = false
+        withContext(Dispatchers.IO) {
+            // TODO handle errors such as if user isn't connected to the internet
+            val quote = bitstamp.getTickerService().getQuote()
+            withContext(Dispatchers.Main) {
+                _fiatPrice.value = BigDecimal(quote.last, DECIMAL64).setScale(fiatScale, rounding)
+                _fiatRefreshing.value = false
+            }
         }
     }
 }
