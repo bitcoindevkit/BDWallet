@@ -21,50 +21,46 @@ import android.icu.text.NumberFormat
 import android.icu.util.Currency
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenStarted
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
-import org.bdwallet.app.ui.wallet.balance.BalanceViewModel
 import org.bdwallet.app.ui.wallet.util.bitstamp.Bitstamp
 import org.bitcoindevkit.bdkjni.Types.*
 import java.math.BigDecimal
-import java.math.MathContext
-import java.math.RoundingMode
+import java.math.MathContext.DECIMAL64
+import java.math.RoundingMode.HALF_EVEN
+import java.util.*
+
+private const val TAG = "WithdrawFragment"
 
 class WithdrawFragment : Fragment() {
     private val withdrawViewModel: WithdrawViewModel by activityViewModels()
 
-    private lateinit var root: View
+    private lateinit var recipientAddressTextView: TextView
+    private lateinit var inputAmountTextView: TextView
+    private lateinit var reviewButton: Button
     private lateinit var reviewDialog: Dialog
 
     private lateinit var recipientAddress: String
-    private lateinit var withdrawAmount: String
+    private lateinit var withdrawSatAmount: String
+    private lateinit var withdrawBtcAmount: String
     private lateinit var createTxResp: CreateTxResponse
+    private lateinit var btcPriceUsd: BigDecimal
 
-    init {
-        lifecycleScope.launch {
-            whenStarted {
-                while (isActive) { // cancellable computation loop
-                    withdrawViewModel.refreshFiatPrice()
-                    delay(60000)
-                }
-            }
-        }
-    }
+    private val currencyFormatter = NumberFormat.getCurrencyInstance()
+    private val numberFormatter = NumberFormat.getNumberInstance(Locale.US)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,32 +68,44 @@ class WithdrawFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the fragment and set up the review dialog
-        root = inflater.inflate(R.layout.fragment_withdraw, container, false)
+        val root = inflater.inflate(R.layout.fragment_withdraw, container, false)
+        recipientAddressTextView = root.findViewById(R.id.input_recipient_address)
+        inputAmountTextView = root.findViewById(R.id.input_amount)
+        reviewButton = root.findViewById(R.id.review_btn)
+
         reviewDialog = Dialog(requireContext())
         reviewDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         reviewDialog.setCancelable(false)
         reviewDialog.setContentView(R.layout.dialog_review)
-
-        // Set onClickListener for the review, back, and send buttons
-        root.findViewById<Button>(R.id.review_btn).setOnClickListener {
-            val recipientEditText = root.findViewById<EditText>(R.id.input_recipient_address)
-            val amountEditText = root.findViewById<EditText>(R.id.input_amount)
-            recipientEditText.setText(recipientEditText.text.toString().trim())
-            amountEditText.setText(amountEditText.text.toString().trim())
-            recipientAddress = recipientEditText.text.toString()
-            if (amountEditText.text.toString().isNotEmpty()) {
-                withdrawAmount = btcToSatoshiString(amountEditText.text.toString())
-                if (recipientAddress.isNotEmpty() && withdrawAmount.isNotEmpty() && withdrawAmount != "0") {
-                    reviewBtnOnClickListener()
-                }
-            }
-        }
         reviewDialog.findViewById<TextView>(R.id.back_btn_text).setOnClickListener {
             reviewDialog.dismiss()
         }
         reviewDialog.findViewById<TextView>(R.id.send_btn_text).setOnClickListener {
-            sendBtnOnClickListener()
+            broadcastTransaction()
         }
+
+
+        lifecycleScope.launch {
+            val result =  Bitstamp().getTickerService().getQuote()
+            btcPriceUsd = BigDecimal(result.last, DECIMAL64).setScale(2, HALF_EVEN)
+        }
+
+        // Set onClickListener for the review, back, and send buttons
+        reviewButton.setOnClickListener {
+            recipientAddress = recipientAddressTextView.text.toString().trim()
+            withdrawBtcAmount = inputAmountTextView.text.toString().trim()
+            if (withdrawBtcAmount.isNotEmpty() && recipientAddress.isNotEmpty()) {
+                withdrawSatAmount = withdrawBtcAmount.toBigDecimal(DECIMAL64)
+                    .multiply(BigDecimal.valueOf(100000000))
+                    .toString()
+                if (withdrawSatAmount != "0") {
+                    verifyTransaction()
+                }
+            }
+        }
+
+        currencyFormatter.currency = Currency.getInstance("USD")
+        currencyFormatter.maximumFractionDigits = 2
 
         val walletActivity = activity as AppCompatActivity
         walletActivity.supportActionBar!!.show()
@@ -108,10 +116,13 @@ class WithdrawFragment : Fragment() {
     // Check if the transaction inputs are valid:
         // if it's passes, set display values in the review dialog and show the review dialog
         // otherwise, show an error toast and return
-    private fun reviewBtnOnClickListener() {
+    private fun verifyTransaction() {
         val feeRate = 1F // TODO change to be a dynamic value before moving to mainnnet
-        val addresses: List<Pair<String, String>> = listOf(Pair(recipientAddress, withdrawAmount))
+        val addresses: List<Pair<String, String>> = listOf(Pair(recipientAddress, withdrawSatAmount))
         val app = requireActivity().application as BDWApplication
+        Log.d(TAG, "Recipient: $recipientAddress")
+        Log.d(TAG, "Withdraw (SAT): $withdrawSatAmount")
+        Log.d(TAG, "Withdraw (BTC): $withdrawBtcAmount")
         // Attempt to create the transaction
         try {
             createTxResp = app.createTx(feeRate, addresses, false, null, null, null)
@@ -127,14 +138,14 @@ class WithdrawFragment : Fragment() {
 
         // The transaction has been validated - set the dialog display values before showing the reviewDialog
         reviewDialog.findViewById<TextView>(R.id.recipient_text).text = recipientAddress
-        reviewDialog.findViewById<TextView>(R.id.amount_text).text = withdrawAmount
+        reviewDialog.findViewById<TextView>(R.id.amount_text).text = formatAmountText()
         reviewDialog.findViewById<TextView>(R.id.fee_text).text = formatFeeText()
-        reviewDialog.findViewById<TextView>(R.id.total_text).text = getTotalWithdraw()
+        reviewDialog.findViewById<TextView>(R.id.total_text).text = formatTotalWithdraw()
         reviewDialog.show()
     }
 
     // Sign and broadcast a transaction after it's been verified, created, and reviewed by the user (using BDK)
-    private fun sendBtnOnClickListener() {
+    private fun broadcastTransaction() {
         val app = requireActivity().application as BDWApplication
         try {
             val signResp: SignResponse = app.sign(createTxResp.psbt)
@@ -146,36 +157,35 @@ class WithdrawFragment : Fragment() {
             e.printStackTrace()
         }
         showTransactionSuccessToast()
-    }
-
-    // Convert a BTC-formatted string (X.XXXXXXXX) to satoshi string
-    private fun btcToSatoshiString(btcAmount: String): String {
-        return "%.8f".format(btcAmount.toDouble() * 100000000).trimEnd('0').trimEnd('.')
+        reviewDialog.dismiss()
     }
 
     // Return the total withdraw amount String in satoshis (entered withdraw amount plus total fees)
-    private fun getTotalWithdraw(): String {
-        val totalWithdraw: Long = withdrawAmount.toLong() + createTxResp.details.fees
-        return totalWithdraw.toString()
+    private fun formatTotalWithdraw(): String {
+        val feeInBtc = createTxResp.details.fees.toBigDecimal(DECIMAL64).divide(BigDecimal.valueOf(100000000))
+            .setScale(8, HALF_EVEN)
+            .stripTrailingZeros()
+        val totalInBtc= withdrawBtcAmount.toBigDecimal(DECIMAL64) + feeInBtc
+        val totalInUsd = totalInBtc.multiply(btcPriceUsd, DECIMAL64).setScale(2, HALF_EVEN)
+        return "$totalInBtc BTC (${currencyFormatter.format(totalInUsd)} USD)"
     }
 
     // return BTC-formatted string with USD conversion for display in reviewDialog
-    private suspend fun formatAmountText(satoshiAmount: String): String {
-        val formatter = NumberFormat.getCurrencyInstance()
-        formatter.currency = Currency.getInstance("USD")
-        formatter.maximumFractionDigits = 2
-        val quote = Bitstamp().getTickerService().getQuote()
-        val rounding = RoundingMode.HALF_EVEN
-        val fiatScale = 2
-        val formattedValue = formatter.format(BigDecimal(quote.last, MathContext.DECIMAL64).setScale(fiatScale, rounding) * satoshiAmount.toBigDecimal())
-        return "$satoshiAmount BTC ($formattedValue USD)"
+    private fun formatAmountText(): String {
+        val formattedValue = withdrawBtcAmount.toBigDecimal(DECIMAL64)
+            .multiply(btcPriceUsd, DECIMAL64)
+            .setScale(3, HALF_EVEN)
+        return "${withdrawBtcAmount.toBigDecimal(DECIMAL64)} BTC (${currencyFormatter.format(formattedValue)} USD)"
     }
 
     // return the total fee BTC formatted string with percentage of withdrawal amount for display in reviewDialog
     private fun formatFeeText(): String {
-        // TODO convert this.createTxResp.details.fees to the format: X.XXXXXXXX BTC (X.XXX%)
-        // TODO should it also display the USD value (maybe instead of the percentage)?
-        return this.createTxResp.details.fees.toString()
+        val feeInSats = createTxResp.details.fees.toString()
+        val feeInBtc = feeInSats.toBigDecimal(DECIMAL64).divide(BigDecimal.valueOf(100000000))
+            .setScale(8, HALF_EVEN)
+            .stripTrailingZeros()
+        val feeInUsd = feeInBtc.multiply(btcPriceUsd, DECIMAL64).setScale(8, HALF_EVEN)
+        return "$feeInBtc BTC (${currencyFormatter.format(feeInUsd)} USD)"
     }
 
     // When the recipient address is invalid, show this toast to signal a problem to the user
