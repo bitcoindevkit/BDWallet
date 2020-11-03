@@ -67,7 +67,7 @@ class DepositFragment : Fragment() {
         depositViewModel.address.observe(viewLifecycleOwner, Observer<String>{ address ->
             // update UI
             walletAddress.text = address
-            val qrgEncoder = QRGEncoder(address, null, QRGContents.Type.TEXT, 100)
+            val qrgEncoder = QRGEncoder(address, null, QRGContents.Type.TEXT, 250)
             try {
                 val bitmap = qrgEncoder.bitmap
                 qrCode.setImageBitmap(bitmap)
@@ -81,7 +81,6 @@ class DepositFragment : Fragment() {
             Log.d(TAG, "New deposit address: $address")
         })
 
-        qrCode.setImageBitmap(readQRCode())
 
         val walletActivity = activity as AppCompatActivity
         walletActivity.supportActionBar!!.show()
@@ -90,11 +89,6 @@ class DepositFragment : Fragment() {
             R.color.darkBlue
         )
         return root
-    }
-
-    private fun readQRCode(): Bitmap?{
-        val bitmap = BitmapFactory.decodeFile("/storage/emulated/0/Android/data/org.bdwallet.app/files/QRCODE.png")
-        return bitmap
     }
 
     private fun addButtonListener(button: Button, address: String) {

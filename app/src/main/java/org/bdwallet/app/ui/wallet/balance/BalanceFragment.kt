@@ -37,6 +37,7 @@ import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.history.HistoryActivity
 import org.bdwallet.app.ui.wallet.settings.SettingsActivity
 import java.math.MathContext
+import java.math.RoundingMode
 import java.text.NumberFormat
 import java.util.*
 
@@ -88,6 +89,7 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
         val currencyFormatter = NumberFormat.getCurrencyInstance()
         currencyFormatter.currency = Currency.getInstance("USD")
         currencyFormatter.maximumFractionDigits = 2
+        currencyFormatter.roundingMode = RoundingMode.HALF_EVEN
         val numberFormatter = NumberFormat.getNumberInstance(Locale.US)
         numberFormatter.maximumFractionDigits = 8
 
