@@ -36,6 +36,7 @@ import kotlinx.coroutines.*
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.history.HistoryActivity
 import org.bdwallet.app.ui.wallet.settings.SettingsActivity
+import java.math.MathContext
 import java.text.NumberFormat
 import java.util.*
 
@@ -88,13 +89,14 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
         currencyFormatter.currency = Currency.getInstance("USD")
         currencyFormatter.maximumFractionDigits = 2
         val numberFormatter = NumberFormat.getNumberInstance(Locale.US)
+        numberFormatter.maximumFractionDigits = 8
 
         balanceViewModel.convertToSats.observe(viewLifecycleOwner, { isSats ->
             balanceCryptoLabel.text = if (isSats) "SATS BALANCE" else "BTC BALANCE"
         })
 
         balanceViewModel.walletBalance.observe(viewLifecycleOwner, { walletBalance ->
-            cryptoBalanceTextView.text = numberFormatter.format(walletBalance.toLong())
+            cryptoBalanceTextView.text = numberFormatter.format(walletBalance.toBigDecimal(MathContext.DECIMAL64))
         })
 
         balanceViewModel.fiatValue.observe(viewLifecycleOwner, { fiat ->
