@@ -91,6 +91,11 @@ class DepositFragment : Fragment() {
         return root
     }
 
+    override fun onResume() {
+        super.onResume()
+        depositViewModel.refresh()
+    }
+
     private fun addButtonListener(button: Button, address: String) {
         button.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
