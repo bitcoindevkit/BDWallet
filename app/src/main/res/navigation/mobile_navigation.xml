@@ -40,4 +40,10 @@
         android:label="@string/title_withdraw"
         tools:layout="@layout/fragment_withdraw" />
 
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="org.bdwallet.app.ui.wallet.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings"/>
+
 </navigation>

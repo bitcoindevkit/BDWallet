@@ -123,4 +123,5 @@
 
     <!-- Setting Preferences -->
     <string name="display_btc_as_sat">Display BTC as SAT</string>
+    <string name="title_settings">Settings</string>
 </resources>
