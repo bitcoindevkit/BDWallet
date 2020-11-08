@@ -32,12 +32,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
-import org.bdwallet.app.ui.wallet.util.bitstamp.Bitstamp
-import org.bitcoindevkit.bdkjni.Types.*
+import org.bdwallet.app.ui.wallet.WalletViewModel
+import org.bitcoindevkit.bdkjni.Types.CreateTxResponse
+import org.bitcoindevkit.bdkjni.Types.RawTransaction
+import org.bitcoindevkit.bdkjni.Types.SignResponse
+import org.bitcoindevkit.bdkjni.Types.Txid
 import java.math.BigDecimal
 import java.math.MathContext.DECIMAL64
 import java.math.RoundingMode.HALF_EVEN
@@ -46,7 +47,7 @@ import java.util.*
 private const val TAG = "WithdrawFragment"
 
 class WithdrawFragment : Fragment() {
-    private val withdrawViewModel: WithdrawViewModel by activityViewModels()
+    private val walletViewModel: WalletViewModel by activityViewModels()
 
     private lateinit var recipientAddressTextView: TextView
     private lateinit var inputAmountTextView: TextView
@@ -84,12 +85,6 @@ class WithdrawFragment : Fragment() {
             broadcastTransaction()
         }
 
-
-        lifecycleScope.launch {
-            val result =  Bitstamp().getTickerService().getQuote()
-            btcPriceUsd = BigDecimal(result.last, DECIMAL64).setScale(2, HALF_EVEN)
-        }
-
         // Set onClickListener for the review, back, and send buttons
         reviewButton.setOnClickListener {
             recipientAddress = recipientAddressTextView.text.toString().trim()
@@ -109,16 +104,18 @@ class WithdrawFragment : Fragment() {
 
         val walletActivity = activity as AppCompatActivity
         walletActivity.supportActionBar!!.show()
-        walletActivity.window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.darkBlue)
+        walletActivity.window.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.darkBlue)
         return root
     }
 
     // Check if the transaction inputs are valid:
-        // if it's passes, set display values in the review dialog and show the review dialog
-        // otherwise, show an error toast and return
+    // if it's passes, set display values in the review dialog and show the review dialog
+    // otherwise, show an error toast and return
     private fun verifyTransaction() {
         val feeRate = 1F // TODO change to be a dynamic value before moving to mainnnet
-        val addresses: List<Pair<String, String>> = listOf(Pair(recipientAddress, withdrawSatAmount))
+        val addresses: List<Pair<String, String>> =
+            listOf(Pair(recipientAddress, withdrawSatAmount))
         val app = requireActivity().application as BDWApplication
         Log.d(TAG, "Recipient: $recipientAddress")
         Log.d(TAG, "Withdraw (SAT): $withdrawSatAmount")
@@ -162,10 +159,11 @@ class WithdrawFragment : Fragment() {
 
     // Return the total withdraw amount String in satoshis (entered withdraw amount plus total fees)
     private fun formatTotalWithdraw(): String {
-        val feeInBtc = createTxResp.details.fees.toBigDecimal(DECIMAL64).divide(BigDecimal.valueOf(100000000))
-            .setScale(8, HALF_EVEN)
-            .stripTrailingZeros()
-        val totalInBtc= withdrawBtcAmount.toBigDecimal(DECIMAL64) + feeInBtc
+        val feeInBtc =
+            createTxResp.details.fees.toBigDecimal(DECIMAL64).divide(BigDecimal.valueOf(100000000))
+                .setScale(8, HALF_EVEN)
+                .stripTrailingZeros()
+        val totalInBtc = withdrawBtcAmount.toBigDecimal(DECIMAL64) + feeInBtc
         val totalInUsd = totalInBtc.multiply(btcPriceUsd, DECIMAL64).setScale(2, HALF_EVEN)
         return "$totalInBtc BTC (${currencyFormatter.format(totalInUsd)} USD)"
     }
@@ -175,7 +173,11 @@ class WithdrawFragment : Fragment() {
         val formattedValue = withdrawBtcAmount.toBigDecimal(DECIMAL64)
             .multiply(btcPriceUsd, DECIMAL64)
             .setScale(3, HALF_EVEN)
-        return "${withdrawBtcAmount.toBigDecimal(DECIMAL64)} BTC (${currencyFormatter.format(formattedValue)} USD)"
+        return "${withdrawBtcAmount.toBigDecimal(DECIMAL64)} BTC (${
+            currencyFormatter.format(
+                formattedValue
+            )
+        } USD)"
     }
 
     // return the total fee BTC formatted string with percentage of withdrawal amount for display in reviewDialog
@@ -190,13 +192,15 @@ class WithdrawFragment : Fragment() {
 
     // When the recipient address is invalid, show this toast to signal a problem to the user
     private fun showInvalidAddressToast() {
-        val myToast: Toast = Toast.makeText(context, R.string.toast_invalid_address, Toast.LENGTH_SHORT)
+        val myToast: Toast =
+            Toast.makeText(context, R.string.toast_invalid_address, Toast.LENGTH_SHORT)
         myToast.show()
     }
 
     // When the wallet does not have sufficient balance, show this toast to signal a problem to the user
     private fun showInsufficientBalanceToast() {
-        val myToast: Toast = Toast.makeText(context,R.string.toast_insufficient_balance, Toast.LENGTH_SHORT)
+        val myToast: Toast =
+            Toast.makeText(context, R.string.toast_insufficient_balance, Toast.LENGTH_SHORT)
         myToast.show()
     }
 

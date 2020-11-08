@@ -238,4 +238,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/horizontal_divider" />
 
+<!--    <Switch-->
+<!--        android:id="@+id/switch_display_sats"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="140dp"-->
+<!--        android:text="Display BTC as SATS"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
