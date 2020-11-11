@@ -17,8 +17,6 @@
 package org.bdwallet.app.ui.wallet.deposit
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
@@ -39,12 +37,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.zxing.WriterException
 import org.bdwallet.app.R
+import org.bdwallet.app.ui.wallet.WalletViewModel
 
 private const val TAG = "DepositFragment"
 
 class DepositFragment : Fragment() {
 
-    private val depositViewModel: DepositViewModel by activityViewModels()
+    private val walletViewModel: WalletViewModel by activityViewModels()
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(
@@ -64,7 +63,7 @@ class DepositFragment : Fragment() {
 
         StrictMode.setThreadPolicy(policy)
 
-        depositViewModel.address.observe(viewLifecycleOwner, Observer<String>{ address ->
+        walletViewModel.newAddress().observe(viewLifecycleOwner, Observer<String> { address ->
             // update UI
             walletAddress.text = address
             val qrgEncoder = QRGEncoder(address, null, QRGContents.Type.TEXT, 250)
@@ -89,11 +88,6 @@ class DepositFragment : Fragment() {
             R.color.darkBlue
         )
         return root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        depositViewModel.refresh()
     }
 
     private fun addButtonListener(button: Button, address: String) {
