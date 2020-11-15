@@ -66,11 +66,23 @@ class WalletViewModel(application: Application) : AndroidViewModel(application),
         .map { sats -> satToBtc(sats) }
         .shareIn(viewModelScope, SharingStarted.Lazily, 1)
 
-    private val sharedFiatQuote = newFiatQuoteFlow()
+    private val sharedQuoteFlow: Flow<Quote> = newFiatQuoteFlow()
         .shareIn(viewModelScope, SharingStarted.Lazily, 1)
 
-    private val sharedFiatPrice: SharedFlow<BigDecimal> = sharedFiatQuote
+    private val sharedFiatPrice: SharedFlow<BigDecimal> = sharedQuoteFlow
         .map { quote -> BigDecimal(quote.last, DECIMAL64).setScale(FIAT_SCALE, ROUNDING) }
+        .shareIn(viewModelScope, SharingStarted.Lazily, 1)
+
+    private val sharedFiatHigh: SharedFlow<BigDecimal> = sharedQuoteFlow
+        .map { quote -> BigDecimal(quote.high, DECIMAL64).setScale(FIAT_SCALE, ROUNDING) }
+        .shareIn(viewModelScope, SharingStarted.Lazily, 1)
+
+    private val sharedFiatLow: SharedFlow<BigDecimal> = sharedQuoteFlow
+        .map { quote -> BigDecimal(quote.low, DECIMAL64).setScale(FIAT_SCALE, ROUNDING) }
+        .shareIn(viewModelScope, SharingStarted.Lazily, 1)
+
+    private val sharedFiatVolume: SharedFlow<BigDecimal> = sharedQuoteFlow
+        .map { quote -> BigDecimal(quote.volume, DECIMAL64).setScale(FIAT_SCALE, ROUNDING) }
         .shareIn(viewModelScope, SharingStarted.Lazily, 1)
 
     val walletBalance: LiveData<Number> =
@@ -91,6 +103,12 @@ class WalletViewModel(application: Application) : AndroidViewModel(application),
             .asLiveData()
 
     val fiatPrice: LiveData<BigDecimal> = sharedFiatPrice.asLiveData()
+
+    val fiatHigh: LiveData<BigDecimal> = sharedFiatHigh.asLiveData()
+
+    val fiatLow: LiveData<BigDecimal> = sharedFiatLow.asLiveData()
+
+    val fiatVolume: LiveData<BigDecimal> = sharedFiatVolume.asLiveData()
 
     val fiatValue: LiveData<BigDecimal> = sharedFiatPrice
         .combine(sharedBtcBalance) { price, btc ->

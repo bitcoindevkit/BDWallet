@@ -1,6 +1,7 @@
 package org.bdwallet.app.ui.wallet
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -31,5 +32,10 @@ class WalletActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        navigateUpTo(Intent(this, WalletActivity::class.java))
+        return super.onSupportNavigateUp()
     }
 }

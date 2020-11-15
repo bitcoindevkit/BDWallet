@@ -99,6 +99,9 @@
     <string name="balance_btc_label">BTC BALANCE</string>
     <string name="price_btc_label">BTC PRICE</string>
     <string name="balance_usd_label">USD VALUE</string>
+    <string name="btc_high_label">HIGH</string>
+    <string name="btc_low_label">LOW</string>
+    <string name="btc_volume_label">VOLUME</string>
 
     <!--History activity-->
     <string name="history_empty_title">NOTHING HERE!</string>

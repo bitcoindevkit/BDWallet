@@ -49,10 +49,9 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
     private lateinit var cryptoBalanceTextView: TextView
     private lateinit var localValueTextView: TextView
     private lateinit var btcPriceTextView: TextView
-    private lateinit var cryptoBalanceProgressBar: ProgressBar
-    private lateinit var localValueProgressBar: ProgressBar
-    private lateinit var btcPriceProgressBar: ProgressBar
-    private lateinit var priceGraph: WebView
+    private lateinit var btcHighTextView: TextView
+    private lateinit var btcLowTextView: TextView
+    private lateinit var btcVolumeTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,16 +66,11 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
         val root = inflater.inflate(R.layout.fragment_balance, container, false)
         balanceCryptoLabel = root.findViewById(R.id.balance_crypto_label)
         localValueTextView = root.findViewById(R.id.balance_local)
-        localValueProgressBar = root.findViewById(R.id.progress_bar_local_balance)
         cryptoBalanceTextView = root.findViewById(R.id.balance_crypto)
-        cryptoBalanceProgressBar = root.findViewById(R.id.progress_bar_crypto_balance)
         btcPriceTextView = root.findViewById(R.id.price_crypto)
-        btcPriceProgressBar = root.findViewById(R.id.progress_bar_price)
-        priceGraph = root.findViewById(R.id.balance_graph)
-        priceGraph.settings.javaScriptEnabled = true
-        var webData =
-            "<div id=\"bitcoinium-widget\" widget-coin=\"BTC\" widget-align=\"center\" widget-size=\"small\" widget-initial-pair=\"BTC_BITSTAMP_USD\"></div><script type=\"text/javascript\" src=\"https://bitcoinium.com/assets/js/bitcoinium-widget-min.js\"></script>"
-        priceGraph.loadData(webData, "text/html", "UTF-8");
+        btcHighTextView = root.findViewById(R.id.crypto_high)
+        btcLowTextView = root.findViewById(R.id.crypto_low)
+        btcVolumeTextView = root.findViewById(R.id.crypto_volume)
 
         val currencyFormatter = NumberFormat.getCurrencyInstance()
         val btcFormatter = NumberFormat.getInstance()
@@ -103,28 +97,17 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
             btcPriceTextView.text = currencyFormatter.format(price)
         })
 
-//        walletViewModel.btcRefreshing.observe(viewLifecycleOwner, { refreshing ->
-//            if (refreshing) {
-//                cryptoBalanceProgressBar.visibility = View.VISIBLE
-//                cryptoBalanceTextView.visibility = View.INVISIBLE
-//                btcPriceProgressBar.visibility = View.VISIBLE
-//                localValueProgressBar.visibility = View.VISIBLE
-//                btcPriceTextView.visibility = View.INVISIBLE
-//                localValueTextView.visibility = View.INVISIBLE
-//            } else {
-        cryptoBalanceProgressBar.visibility = View.INVISIBLE
-        cryptoBalanceTextView.visibility = View.VISIBLE
-//            }
-//        })
+        walletViewModel.fiatHigh.observe(viewLifecycleOwner, { price ->
+            btcHighTextView.text = currencyFormatter.format(price)
+        })
 
-//        walletViewModel.fiatRefreshing.observe(viewLifecycleOwner, { refreshing ->
-//            if (!refreshing) {
-        btcPriceProgressBar.visibility = View.INVISIBLE
-        localValueProgressBar.visibility = View.INVISIBLE
-        btcPriceTextView.visibility = View.VISIBLE
-        localValueTextView.visibility = View.VISIBLE
-//            }
-//        })
+        walletViewModel.fiatLow.observe(viewLifecycleOwner, { price ->
+            btcLowTextView.text = currencyFormatter.format(price)
+        })
+
+        walletViewModel.fiatVolume.observe(viewLifecycleOwner, { price ->
+            btcVolumeTextView.text = btcFormatter.format(price)
+        })
 
         var walletActivity = activity as AppCompatActivity
         walletActivity.supportActionBar?.setShowHideAnimationEnabled(false)

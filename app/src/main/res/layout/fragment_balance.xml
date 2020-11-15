@@ -22,6 +22,93 @@
     android:background="@android:color/white"
     tools:context=".ui.wallet.balance.BalanceFragment">
 
+    <TextView
+        android:id="@+id/crypto_high_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/btc_high_label"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.224"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price_crypto" />
+
+    <TextView
+        android:id="@+id/crypto_volume_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/btc_volume_label"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price_crypto" />
+
+    <TextView
+        android:id="@+id/crypto_low_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/btc_low_label"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.775"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/price_crypto" />
+
+    <TextView
+        android:id="@+id/crypto_high"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="136dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.186"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_divider" />
+
+    <TextView
+        android:id="@+id/crypto_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="229dp"
+        android:fontFamily="@font/roboto_medium"
+        android:textAlignment="center"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_divider" />
+
+    <TextView
+        android:id="@+id/crypto_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="136dp"
+        android:fontFamily="@font/roboto_medium"
+        android:gravity="center"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.815"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_divider" />
+
     <ImageView
         android:id="@+id/cover_background_image"
         android:layout_width="451dp"
@@ -71,28 +158,73 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <WebView
-        android:id="@+id/balance_graph"
-        android:layout_width="317dp"
-        android:layout_height="279dp"
-        android:layout_marginBottom="28dp"
-
-        android:contentDescription="@string/logo_desc"
-        app:layout_constraintBottom_toBottomOf="@+id/history_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageView
         android:id="@+id/horizontal_divider"
         android:layout_width="250dp"
         android:layout_height="1dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:contentDescription="@string/logo_desc"
         android:src="@drawable/dark_blue_rectangle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/balance_crypto_label" />
+
+    <TextView
+        android:id="@+id/balance_crypto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/roboto_medium"
+        android:textAlignment="center"
+        android:textColor="@color/mediumBlue"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cover_background_image" />
+
+    <TextView
+        android:id="@+id/balance_crypto_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/balance_btc_label"
+        android:textColor="@color/mediumBlue"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/balance_crypto" />
+
+    <TextView
+        android:id="@+id/balance_local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/roboto_medium"
+        android:textAlignment="center"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="28sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toEndOf="@+id/vertical_divider"
+        app:layout_constraintTop_toBottomOf="@id/cover_background_image" />
+
+    <TextView
+        android:id="@+id/balance_local_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/balance_usd_label"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toEndOf="@+id/vertical_divider"
+        app:layout_constraintTop_toBottomOf="@+id/balance_local" />
 
     <ImageView
         android:id="@+id/vertical_divider"
@@ -106,72 +238,17 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/balance_crypto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/roboto_medium"
-        android:textAlignment="center"
-        android:textColor="@color/mediumBlue"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cover_background_image" />
-
-    <TextView
-        android:id="@+id/balance_local"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/roboto_medium"
-        android:textAlignment="center"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/vertical_divider"
-        app:layout_constraintTop_toBottomOf="@id/cover_background_image" />
-
-    <TextView
-        android:id="@+id/balance_crypto_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/balance_btc_label"
-        android:textColor="@color/mediumBlue"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/balance_crypto" />
-
-    <TextView
-        android:id="@+id/balance_local_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:fontFamily="@font/roboto"
-        android:text="@string/balance_usd_label"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/vertical_divider"
-        app:layout_constraintTop_toBottomOf="@+id/balance_local" />
-
-    <TextView
         android:id="@+id/price_crypto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/roboto_medium"
         android:textAlignment="center"
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontal_divider" />
 
@@ -202,51 +279,15 @@
         app:layout_constraintEnd_toEndOf="@+id/cover_background_image"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar_crypto_balance"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="34dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="40dp"
-        android:indeterminateDrawable="@drawable/progress"
-        app:layout_constraintEnd_toStartOf="@+id/vertical_divider"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cover_background_image" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar_local_balance"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="34dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="40dp"
-        android:indeterminateDrawable="@drawable/progress"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/vertical_divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cover_background_image" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar_price"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="28dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="8dp"
-        android:indeterminateDrawable="@drawable/progress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontal_divider" />
-
-<!--    <Switch-->
-<!--        android:id="@+id/switch_display_sats"-->
-<!--        android:layout_width="250dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_marginTop="140dp"-->
-<!--        android:text="Display BTC as SATS"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.5"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <Switch-->
+    <!--        android:id="@+id/switch_display_sats"-->
+    <!--        android:layout_width="250dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginTop="140dp"-->
+    <!--        android:text="Display BTC as SATS"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
