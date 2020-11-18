@@ -73,13 +73,12 @@ class BalanceFragment : Fragment(), CoroutineScope by MainScope() {
         btcVolumeTextView = root.findViewById(R.id.crypto_volume)
 
         val currencyFormatter = NumberFormat.getCurrencyInstance()
-        val btcFormatter = NumberFormat.getInstance()
+        val btcFormatter = NumberFormat.getNumberInstance(Locale.US)
+        btcFormatter.maximumFractionDigits = 8
 
         currencyFormatter.currency = Currency.getInstance("USD")
         currencyFormatter.maximumFractionDigits = 2
         currencyFormatter.roundingMode = RoundingMode.HALF_EVEN
-        val numberFormatter = NumberFormat.getNumberInstance(Locale.US)
-        numberFormatter.maximumFractionDigits = 8
 
         walletViewModel.convertToSats.observe(viewLifecycleOwner, { isSats ->
             balanceCryptoLabel.text = if (isSats) "SATS BALANCE" else "BTC BALANCE"
