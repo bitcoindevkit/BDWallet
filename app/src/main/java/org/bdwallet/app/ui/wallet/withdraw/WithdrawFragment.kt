@@ -32,9 +32,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.WalletViewModel
+import org.bdwallet.app.ui.wallet.util.bitstamp.Bitstamp
 import org.bitcoindevkit.bdkjni.Types.CreateTxResponse
 import org.bitcoindevkit.bdkjni.Types.RawTransaction
 import org.bitcoindevkit.bdkjni.Types.SignResponse
@@ -46,7 +50,7 @@ import java.util.*
 
 private const val TAG = "WithdrawFragment"
 
-class WithdrawFragment : Fragment() {
+class WithdrawFragment : Fragment(), CoroutineScope by MainScope() {
     private val walletViewModel: WalletViewModel by activityViewModels()
 
     private lateinit var recipientAddressTextView: TextView
@@ -92,11 +96,17 @@ class WithdrawFragment : Fragment() {
             if (withdrawBtcAmount.isNotEmpty() && recipientAddress.isNotEmpty()) {
                 withdrawSatAmount = withdrawBtcAmount.toBigDecimal(DECIMAL64)
                     .multiply(BigDecimal.valueOf(100000000))
+                    .longValueExact()
                     .toString()
                 if (withdrawSatAmount != "0") {
                     verifyTransaction()
                 }
             }
+        }
+
+        launch {
+            val bitstamp = Bitstamp()
+            btcPriceUsd = bitstamp.getTickerService().getQuote().bid.toBigDecimal()
         }
 
         currencyFormatter.currency = Currency.getInstance("USD")
@@ -127,7 +137,9 @@ class WithdrawFragment : Fragment() {
             Log.d("CREATE-TRANSACTION EXCEPTION", "MSG: ".plus(e.message))
             if (e.message == "WalletError(InsufficientFunds)") {
                 showInsufficientBalanceToast()
-            } else if (e.message!!.substring(0, 8) == "Parsing(") {
+            } else if (e.message!!.contains("ParseIntError")) {
+                showInvalidAmountToast()
+            } else if (e.message!!.contains("Parsing(")) {
                 showInvalidAddressToast()
             }
             return
@@ -194,6 +206,13 @@ class WithdrawFragment : Fragment() {
     private fun showInvalidAddressToast() {
         val myToast: Toast =
             Toast.makeText(context, R.string.toast_invalid_address, Toast.LENGTH_SHORT)
+        myToast.show()
+    }
+
+    // When the amount is invalid, show this toast to signal a problem to the user
+    private fun showInvalidAmountToast() {
+        val myToast: Toast =
+            Toast.makeText(context, R.string.toast_invalid_amount, Toast.LENGTH_SHORT)
         myToast.show()
     }
 
