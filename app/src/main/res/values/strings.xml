@@ -80,6 +80,7 @@
     <string name="toast_invalid_seed_phrase">Invalid seed phrase</string>
     <string name="toast_invalid_address">Invalid recipient address</string>
     <string name="toast_insufficient_balance">Insufficient wallet balance</string>
+    <string name="toast_invalid_amount">Invalid amount value</string>
     <string name="payment_dialog_title">Payment Review</string>
     <string name="payment_dialog_recipient">Recipient:</string>
     <string name="payment_dialog_amount">Amount:</string>
