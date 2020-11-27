@@ -33,6 +33,7 @@ class BDWApplication : Application() {
     private lateinit var descriptor: String
     private lateinit var changeDescriptor: String
     private lateinit var electrumUrl: String
+    private var electrumProxy: String? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -52,6 +53,7 @@ class BDWApplication : Application() {
         this.network = getString(R.string.app_network)
         this.path = applicationContext.filesDir.toString()
         this.electrumUrl = getString(R.string.app_electrum_url)
+        this.electrumProxy = getString(R.string.app_electrum_proxy).ifEmpty { null }
     }
 
     // Get mapping from String to Network enum
@@ -80,6 +82,7 @@ class BDWApplication : Application() {
         this.descriptor = descriptor
         this.changeDescriptor = change_descriptor
         this.electrumUrl = electrum_url
+        this.electrumProxy = electrum_proxy
 
         walletPtr = lib.constructor(
             WalletConstructor(
@@ -106,7 +109,7 @@ class BDWApplication : Application() {
             descriptor,
             changeDescriptor,
             electrumUrl,
-            null
+            electrumProxy
         )
         saveWalletPrefs()
     }
@@ -121,6 +124,7 @@ class BDWApplication : Application() {
         editor.putString("descriptor", descriptor)
         editor.putString("changeDescriptor", changeDescriptor)
         editor.putString("electrum_url", electrumUrl)
+        editor.putString("electrum_proxy", electrumProxy)
         editor.commit()
     }
 
