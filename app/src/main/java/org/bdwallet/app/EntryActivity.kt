@@ -23,6 +23,7 @@ class EntryActivity : AppCompatActivity() {
             val descriptor: String = savedWallet.getString("descriptor", null)!!
             val changeDescriptor: String = savedWallet.getString("changeDescriptor", null)!!
             val electrumUrl: String = savedWallet.getString("electrum_url", null)!!
+            val electrumProxy: String? = savedWallet.getString("electrum_proxy", null)
             val app = application as BDWApplication
             app.initialize(
                 name,
@@ -31,7 +32,7 @@ class EntryActivity : AppCompatActivity() {
                 descriptor,
                 changeDescriptor,
                 electrumUrl,
-                null
+                electrumProxy
             )
         }
         startActivity(Intent(this, Class.forName(getNextActivityName(isWalletInitialized))))
