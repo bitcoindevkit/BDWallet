@@ -114,7 +114,6 @@
         android:layout_width="451dp"
         android:layout_height="238dp"
         android:contentDescription="@string/logo_desc"
-        android:src="@drawable/mountain_cover"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -271,11 +270,11 @@
         android:layout_width="41dp"
         android:layout_height="38dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="50dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/logo_desc"
         android:scaleType="fitCenter"
-        android:src="@drawable/android_dot_menu_white"
+        android:src="@drawable/ic_round_account_circle_24"
         app:layout_constraintEnd_toEndOf="@+id/cover_background_image"
         app:layout_constraintTop_toTopOf="parent" />
 

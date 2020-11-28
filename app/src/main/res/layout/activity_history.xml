@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/logo_desc"
                 android:visibility="invisible"
-                app:srcCompat="@drawable/android_dot_menu_white" />
+                app:srcCompat="@drawable/ic_round_account_circle_24" />
         </LinearLayout>
     </ScrollView>
 
