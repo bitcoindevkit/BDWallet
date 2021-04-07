@@ -185,21 +185,21 @@ class BDWApplication : Application() {
     }
 
     // Generate a new mnemonic and tpriv (for creating wallet)
-    fun generateExtendedKey(mnemonicWordCount: Int): ExtendedKeys {
-        return lib.generate_extended_key(getNetworkMap().getValue(network), mnemonicWordCount)
+    fun generateExtendedKey(mnemonicWordCount: Int, password: String?): ExtendedKey {
+        return lib.generate_extended_key(getNetworkMap().getValue(network), mnemonicWordCount, password)
     }
 
     // Use a mnemonic to calculate the tpriv (for recovering wallet)
-    fun createExtendedKeys(mnemonic: String): ExtendedKeys {
-        return lib.create_extended_keys(getNetworkMap().getValue(network), mnemonic)
+    fun restoreExtendedKey(mnemonic: String, password: String?): ExtendedKey {
+        return lib.restore_extended_key(getNetworkMap().getValue(network), mnemonic, password)
     }
 
     // Concatenate tpriv to create descriptor
-    fun createDescriptor(keys: ExtendedKeys): String {
-        return ("wpkh(" + keys.ext_priv_key + "/0/*)")
+    fun createDescriptor(keys: ExtendedKey): String {
+        return ("wpkh(" + keys.xprv + "/0/*)")
     }
 
-    fun createChangeDescriptor(keys: ExtendedKeys): String {
-        return ("wpkh(" + keys.ext_priv_key + "/1/*)")
+    fun createChangeDescriptor(keys: ExtendedKey): String {
+        return ("wpkh(" + keys.xprv + "/1/*)")
     }
 }

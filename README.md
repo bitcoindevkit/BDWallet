@@ -1,5 +1,19 @@
 
-How to test with local REGTEST electrs server
+### Build
+
+1. Clone [`bdk-jni` project](https://github.com/bitcoindevkit/bdk-jni)
+
+1. Follow README instruction to publish .aar files to local maven repository
+
+1. Build with gradle
+
+   ```
+   ./gradlew build
+   ```
+
+### Test
+
+#### With local REGTEST electrs server
 
 1. Install [docker desktop](https://www.docker.com/get-started)
 

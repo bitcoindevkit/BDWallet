@@ -11,7 +11,7 @@ import org.bdwallet.app.ui.wallet.WalletActivity
 import org.bitcoindevkit.bdkjni.Types.*
 
 class CreateWalletSeedActivity : AppCompatActivity() {
-    private lateinit var keys: ExtendedKeys
+    private lateinit var keys: ExtendedKey
 
     override fun onStart() {
         super.onStart()
@@ -27,7 +27,7 @@ class CreateWalletSeedActivity : AppCompatActivity() {
     // Generate mnemonic words and fill them into the respective TextViews
     private fun fillSeedWords() {
         val app = application as BDWApplication
-        this.keys = app.generateExtendedKey(12)
+        this.keys = app.generateExtendedKey(12, null)
         val words: List<String> = keys.mnemonic.split(' ')
         val seedViews: List<Int> = listOfNotNull<Int>(R.id.seed_text_1, R.id.seed_text_2, R.id.seed_text_3, R.id.seed_text_4,
             R.id.seed_text_5, R.id.seed_text_6, R.id.seed_text_7, R.id.seed_text_8, R.id.seed_text_9, R.id.seed_text_10,

@@ -12,15 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import org.bdwallet.app.BDWApplication
 import org.bdwallet.app.R
 import org.bdwallet.app.ui.wallet.WalletActivity
-import org.bitcoindevkit.bdkjni.Types.ExtendedKeys
-
-
-import java.lang.reflect.InvocationTargetException
+import org.bitcoindevkit.bdkjni.Types.ExtendedKey
 
 
 class RecoverWalletActivity : AppCompatActivity() {
     private lateinit var viewList : List<Int>
-    private lateinit var keys: ExtendedKeys
+    private lateinit var key: ExtendedKey
     private lateinit var wordList : List<String>
 
     override fun onSupportNavigateUp(): Boolean {
@@ -91,7 +88,7 @@ class RecoverWalletActivity : AppCompatActivity() {
         val mnemonicString: String = mnemonicWordList.joinToString(separator = " ")
         val app = application as BDWApplication
         try {
-            this.keys = app.createExtendedKeys(mnemonicString)
+            this.key = app.restoreExtendedKey(mnemonicString, null)
         } catch (e: Throwable) {
             Log.d("createExtendedKeys EXCEPTION:", "MSG: ".plus(e.message).plus(" | mnemonic: ").plus(mnemonicString))
             return false
@@ -102,8 +99,8 @@ class RecoverWalletActivity : AppCompatActivity() {
     // Call BDK library to load the wallet using the recovered private key
     private fun loadWallet() {
         val app = application as BDWApplication
-        val descriptor: String = app.createDescriptor(this.keys)
-        val changeDescriptor: String = app.createChangeDescriptor(this.keys)
+        val descriptor: String = app.createDescriptor(this.key)
+        val changeDescriptor: String = app.createChangeDescriptor(this.key)
         app.createWallet(descriptor, changeDescriptor)
     }
 
