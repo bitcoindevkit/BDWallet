@@ -62,7 +62,7 @@ android {
             versionNameSuffix "-testnet"
             resValue "string", "app_name", "BD Wallet | TESTNET"
             resValue "string", "app_network", "testnet"
-            resValue "string", "app_electrum_url", "tcp://testnet.aranguren.org:51001"
+            resValue "string", "app_electrum_url", "ssl://electrum.blockstream.info:60002"
             resValue "string", "app_electrum_proxy", ""
         }
 
@@ -72,7 +72,7 @@ android {
             versionNameSuffix "-tor"
             resValue "string", "app_name", "BD Wallet | TOR"
             resValue "string", "app_network", "testnet"
-            resValue "string", "app_electrum_url", "tcp://testnet.aranguren.org:51001"
+            resValue "string", "app_electrum_url", "tcp://electrum.blockstream.info:60002"
             resValue "string", "app_electrum_proxy", "socks5://127.0.0.1:9050"
         }
     }
