@@ -30,7 +30,8 @@ How to test with local REGTEST electrs server
 5. From localhost command line stop and restart adb with port forwarding
 
    ```shell
-   adb kill-server
+   adb -P 5037 kill-server
+   adb -P 5038 devices -l
    adb -L tcp:localhost:5038 reverse tcp:60401 tcp:60401
    adb -L tcp:localhost:5038 reverse --list
    ```
@@ -40,3 +41,11 @@ How to test with local REGTEST electrs server
 7. Select Active Build Variant "localDebug"
 
 8. Run or Debug "app"
+
+9. Create a new wallet
+
+10. Send testnet coins to emulated wallet
+
+   ```shell
+   rtcli sendtoaddress bcrt1qfs7ug9d9xa8hrj8tdtxqsrylgw3fvw637xrepu 2.345
+   ```
