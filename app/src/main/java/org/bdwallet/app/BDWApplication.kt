@@ -19,7 +19,6 @@ package org.bdwallet.app
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import org.bitcoindevkit.bdkjni.Lib
 import org.bitcoindevkit.bdkjni.Types.*
 
@@ -195,11 +194,11 @@ class BDWApplication : Application() {
     }
 
     // Concatenate tpriv to create descriptor
-    fun createDescriptor(keys: ExtendedKey): String {
-        return ("wpkh(" + keys.xprv + "/0/*)")
+    fun createDescriptor(key: ExtendedKey): String {
+        return ("wpkh(" + key.xprv + "/0/*)")
     }
-
-    fun createChangeDescriptor(keys: ExtendedKey): String {
-        return ("wpkh(" + keys.xprv + "/1/*)")
+    
+    fun createChangeDescriptor(key: ExtendedKey): String {
+        return ("wpkh(" + key.xprv + "/1/*)")
     }
 }
