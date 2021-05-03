@@ -1,9 +1,15 @@
 
+### Install bdk-jni
+
+1a. Clone [`bdk-jni` project](https://github.com/bitcoindevkit/bdk-jni)
+
+2a. Follow README instruction to publish .aar files to local maven repository
+
+OR
+
+1b. Copy `bdk-jni-debug-0.2.0.aar` to `app/libs` folder in BDWallet project 
+
 ### Build
-
-1. Clone [`bdk-jni` project](https://github.com/bitcoindevkit/bdk-jni)
-
-1. Follow README instruction to publish .aar files to local maven repository
 
 1. Build with gradle
 
@@ -36,30 +42,29 @@
     rtcli getnewaddress  
     rtstop
     ```
+   
+1. Use "AVD Manager" to lauch a virtual device (eg. "Pixel 3a API 30" or similar)  
 
-4. Configure Android Studio ADB
-
-   "Use existing manually managed server" on port 5038
-
-5. From localhost command line stop and restart adb with port forwarding
+1. From localhost command line setup adb with port forwarding, use same adb version as Android Studio
 
    ```shell
-   adb -P 5037 kill-server
-   adb -P 5038 devices -l
-   adb -L tcp:localhost:5038 reverse tcp:60401 tcp:60401
-   adb -L tcp:localhost:5038 reverse --list
+   ~/Android/Sdk/platform-tools/adb devices -l
+   ~/Android/Sdk/platform-tools/adb -L tcp:localhost:5037 reverse tcp:60401 tcp:60401
+   ~/Android/Sdk/platform-tools/adb -L tcp:localhost:5037 reverse --list
    ```
 
-6. Open Android Studio "Build Variants" window (lower left)
+1. Open Android Studio "Build Variants" window (lower left)
 
-7. Select Active Build Variant "localDebug"
+1. Select Active Build Variant "localDebug"
 
-8. Run or Debug "app"
+1. Run or Debug "app"
 
-9. Create a new wallet
+1. Create a new wallet and create a deposit address
 
-10. Send testnet coins to emulated wallet
+1. Send regtest coins to emulated wallet, and generate a block
 
    ```shell
-   rtcli sendtoaddress bcrt1qfs7ug9d9xa8hrj8tdtxqsrylgw3fvw637xrepu 2.345
+   rtcli sendtoaddress <deposit address> 2.345
+   rtcli getnewaddress
+   rtcli generatetoaddress 1 <newaddress>
    ```
